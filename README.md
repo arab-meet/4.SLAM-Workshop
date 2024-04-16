@@ -18,12 +18,12 @@ Write brief here
 Write brief here
 
 
-## [D - GraphSLAM(Cartographer)](<VSCode/VSCode.md>)
+## [D - GraphSLAM(Cartographer)](<GraphSLAM(Cartographer)/GraphSLAM(Cartographer).md>)
 
 Write brief here
 
 
-## [E - SLAM integration with ROS)](<VSCode/VSCode.md>)
+## [E - SLAM integration with ROS](<SLAM integration with ROS/SLAM integration with ROS.md>)
 
 Write brief here
 
