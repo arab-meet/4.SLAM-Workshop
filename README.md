@@ -20,6 +20,7 @@
 * differant between classical and modern slam
 * slam toolbox (gmapping, cartographer,hektor slam) based in sensors
 * 3d mapping (orb slam, octomap, rtabmap) and how use it
+* multi mapping 
   
 ### contain all data related to Mapping and SLAM topic.
 
