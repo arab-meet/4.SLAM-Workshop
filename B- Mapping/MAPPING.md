@@ -6,7 +6,14 @@ Review :
 
 ## What is Mapping?
 
-Mapping in mobile robotics refers to the process of creating a spatial representation of the environment in which a robot operates. It's a crucial component of robot navigation and interaction with the world.
+Mapping in mobile robotics refers to the process of creating  representation of the environment in which a robot operates. It's a crucial component of robot navigation and interaction with the world.
+
+Robots without Map:
+[where am i](./images/where_am_i.gif)
+
+becouse of that we need Map for our enviroment our world to allow robots knows his location on this map.
+
+brain of the robot is computer and the computer can't understand the environment as it is, we need to convert this environment to something that computer can understand like `0 or 1`, this is a map it is `digital representation` for environment.
 
 **image for map**
 
