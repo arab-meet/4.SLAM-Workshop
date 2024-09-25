@@ -4,7 +4,26 @@ Author:MO3TAZ
 
 Review :
 
-## What is Mapping?
+## Understand Mapping problem?
+
+### imaging with me you are a **pirate**
+
+<img src="./images/pirate.jpg" alt="pirate" width="200"/>
+
+### and your goal is **treasure**
+
+<img src="./images/treasure.jpg" alt="treasure" width="200"/>
+
+### What would you need to get to the treasure?
+
+**answer is map**
+
+<img src="./images/map.jpg" alt="map" width="200"/>
+
+
+**this is same problem that robot face**
+**He need a map to able to know where he is `(localization)` and where he will go**
+
 
 Mapping in mobile robotics refers to the process of creating  representation of the environment in which a robot operates. It's a crucial component of robot navigation and interaction with the world.
 
@@ -18,31 +37,21 @@ brain of the robot is computer and the computer can't understand the environment
 
 **image for map**
 
-## Why Do We Need Maps in Mobile Robots?
-
-Maps are essential for mobile robots for several reasons:
-
-
-1. **Localization**: By comparing sensor data to a map, robots can determine their position within the environment.
-2. **Navigation**: Maps allow robots to plan paths and move efficiently from one point to another.
-3. **Obstacle Avoidance**: Maps help robots identify and avoid obstacles in their path.
-4. **Task Planning**: For complex tasks, maps provide spatial context for decision-making.
-5. **Human-Robot Interaction**: Maps can be used to communicate spatial information between robots and human operators.
-
-**gif for robot navigation**
 
 ## Types of Mapping
 
 There are several types of mapping techniques used in mobile robotics:
+1. **Topological Mapping**: Represents the environment as a graph of connected locations(stations).
+![topo map](./images/topological_representation.png)
 
-1. **Metric Mapping**: Creates precise, to-scale representations of the environment.
+scale here doesn't need to be accurate becouse of that this representation is lightweight
+but as you can see there is no much details to allow you to go to from green station to red station 
+becouse of that there is useful representation is **metric representation**
 
-**pic**
+2. **Metric Mapping**: this representation use precise coordinates like longitude and latitude coordinates but becouse this representation is precise it's pretty sensitive to noise 
+![topo map](./images/world.png)
 
-2. **Topological Mapping**: Represents the environment as a graph of connected locations.
-**pic**
-4. **3D Mapping**: Creates three-dimensional representations of the environment.
-**pic**
+
 
 ## Occupancy Grid Maps
 
