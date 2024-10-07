@@ -1,6 +1,8 @@
 Auther: Rashidy
 Reviwer: KG
 
+---
+
 # Localization
 
 **Localization theory for mobile robots** involves algorithms and mathematical models used to estimate the robot's **pose**—its position and orientation— within an environment. It integrates data from various sensors—like GPS, LIDAR, Cameras, IMUs and odometry—to provide accurate positioning. Key concepts include:
@@ -13,6 +15,8 @@ This theory helps robots navigate complex environments by continuously updating 
 
 ![alt text](images/Loca2.jpg)
 
+---
+
 ## Localization Challenges
 
 There are three different types of localization challenges:
@@ -23,13 +27,18 @@ There are three different types of localization challenges:
 
 ![alt text](images/Glob&Loca.jpg)
 
-**2. Global Localization**
+### **2. Global Localization**
+
 **In global localization**, the robot starts with **no prior knowledge** of it's initial pose and must determine its position relative to a ground truth map. This challenge includes dealing with the **aliasing problem**, where different locations may appear similar due to sensor limitations.
 to addressing this challenge, algorithms such as the **Extended Kalman Filter, Monte Carlo methods**  (Particle Filters) can be utilized to address these issues.
 
-**3. Kidnapped Robot Problem** The **kidnapped robot problem** resembles global localization but with the added complexity that the robot can be unexpectedly "kidnapped" and relocated to a different spot on the map at any time, The robot must then correctly **relocalize** itself on the map. Algorithms robust to this problem can recover from significant errors or unexpected changes.
+### **3. Kidnapped Robot Problem**
+
+The **kidnapped robot problem** resembles global localization but with the added complexity that the robot can be unexpectedly "kidnapped" and relocated to a different spot on the map at any time, The robot must then correctly **relocalize** itself on the map. Algorithms robust to this problem can recover from significant errors or unexpected changes.
 
 > **Note:** In this course, we will focus exclusively on **static** (unchanging) environments, where conditions consistently align with the ground truth map. In contrast, **dynamic** environments involve objects within the map that may move over time, making localization and navigation more complex due to additional uncertainties requiring adaptive algorithms.
+
+---
 
 ## Sensors Used in Localization
 
@@ -153,6 +162,8 @@ to addressing this challenge, algorithms such as the **Extended Kalman Filter, M
   - Requires infrastructure setup.
   - Less accurate due to signal variability.
 
+---
+
 ## Examples and Applications
 
 - **Autonomous Cars**: Use LIDAR and cameras to localize and navigate roads.
@@ -162,6 +173,8 @@ to addressing this challenge, algorithms such as the **Extended Kalman Filter, M
 - **Warehouse Robots**: Use QR codes or markers on the floor for precise localization.
 
 - **Drones**: Employ GPS and visual odometry for outdoor navigation.
+
+---
 
 ## References for Further Reading
 
