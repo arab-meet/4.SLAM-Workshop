@@ -33,7 +33,7 @@ to addressing this challenge, algorithms such as the **Extended Kalman Filter, M
 
 ## Sensors Used in Localization
 
-### 1.Laser Scanners (LIDAR)
+### 1. Laser Scanners (LIDAR)
 
 ![alt text](images/Lidar.jpg)
 
@@ -48,7 +48,7 @@ to addressing this challenge, algorithms such as the **Extended Kalman Filter, M
   - Performance can degrade in adverse weather conditions like rain, fog, or snow.
     -Difficulty in detecting transparent or reflective surfaces.
 
-### 2-Cameras (Visual Odometry)
+### 2. Cameras (Visual Odometry)
 
 ![alt text](images/Camera.jpg)
 
