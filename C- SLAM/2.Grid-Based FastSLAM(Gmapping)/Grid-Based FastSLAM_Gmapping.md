@@ -3,224 +3,262 @@
 
 Author: Wafaa Mohamed
 
-Review :
+Review : KG
 
 # 1. SLAM
 
-### what is SLAM :
+## what is SLAM
 
-Simultaneous Localization and Mapping is the problem of making the robot constructs a map of the environment, while simultaneously localizing itself relative to this map. This problem is more challenging than localization and mapping, since neither the map nor the robot's poses are provided.
+**Simultaneous Localization and Mapping (SLAM)** is the problem of constructing a map of an unknown environment while simultaneously localizing the robot within that map. This problem is more challenging than either localization or mapping alone, since neither the map nor the robot's poses are provided.
 
 **Localization:**
 
 * *Assumption* : Known Map
-* *Estimation* : Robot's Trajectory
+* *Estimation* : Robot's Pose (position and orientation)
 
 **Mapping:**
 
-* *Assumption* : Robot's Trajectory
-* *Estimation* : Map
+* *Assumption* : Known Robot's Poses (Trajectory)
+* *Estimation* : Map of the Environment
 
 **SLAM:**
 
-* *Assumption* : Sensor Dara
-* *Estimation* : Map and Robot's Trajectory
-
+* *Assumption* : Sensor Data
+* *Estimation* : Map and Robot's Poses (Trajectory)
+  
 ### SLAM Algorithms
 
-SLAM algorithms can be categorized into several types, each with its own approach to solving the SLAM problem for example :
+SLAM algorithms can be categorized into several types, each with its own approach to solving the SLAM problem. Examples include:
 
 * Extended Kalman Filter (EKF)
 * GraphSLAM
 * FastSLAM
-  In this session we will be talking about FastSLAM which uses a particle feature approach along with the low dimentional extended kalman filter to solve the SLAM problem
 
-### Localization :
+In this session we will be talking about **FastSLAM** which uses a particle feature approach along with the low dimentional extended kalman filter to solve the SLAM problem efficiently.
 
-It is the problem of determining a robot's position and orientation within a givin map for an environment environment.
+## Localization
 
-so as mentioned the robot estimates its position as(x,y,theta) given the map it's doing this with specific algorithms , the most common algoritms are :
+Localization is the problem of determining a robot's position and orientation within a given map of the environment.
+
+Common algorithms used for localization include:
 
 * **Extended Kalman Filter (EKF)**
 * **Monte Carlo Localization (MCL):**
-  Particle filter localization maintains a set of particles, each representing a possible pose of the robot.
 
-  The robot generates many random guesses as to where it is going to move next. These guesses are known as particles. Each particle contains a full description of a possible future pose. When the robot observes the environment it's in (via sensor readings), it discards particles that don't match with these readings, and generates more particles close to those that look more probable. This way, in the end, most of the particles will converge in the most probable pose that the robot is in. So the more robot moves, the more data it will get from sensors, hence the localization will be more precise.
+  * MCL uses a particle filter to maintain a set of particles, each representing a possible pose of the robot.
 
-  The estimated pose will be determined with : P(xt|zt,ut)
+  * The robot updates these particles based on motion commands and sensor measurements.
+  * Particles that are inconsistent with sensor data are given low weights and are less likely to be propagated.
+  * Over time, the particles converge to represent the most probable pose of the robot.
 
-### Mapping:
+The estimated pose is represented probabilistically as \( P(x_t | z_{1:t}, u_{1:t-1}) \), where \( x_t \) is the robot's pose at time \( t \), \( z_{1:t} \) are the sensor measurements up to time \( t \), and \( u_{1:t-1} \) are the control inputs up to time \( t-1 \).
 
-It is the task of creating a map of an unknown environment. so the robot will use sensor measurements and with aid of certain algorithm to reate a map for a place for example the ocuupancy grid map we have mentioned before.
+## Mapping
 
-The map will be determined with : P(m∣zt,xt)
+Mapping is the task of creating a map of an unknown environment. the robot uses sensor measurements and algorithms such as occupancy grid mapping to build the map.
 
-**Now we will use SLAM to map the environment given measurements and localize the robot relative to this map.**
+The map estimation is represented as \( P(m | x_{1:t}, z_{1:t}) \), where \( m \) is the map, \( x_{1:t} \) are the robot's poses, and \( z_{1:t} \) are the sensor measurements.
 
-### SLAM Forms:
+**Now we will use SLAM to map the environment given measurements and localize the robot relative to this map when both the map and the robot's trajectory are unknown.**
 
-SLam comes into two forms :
+## Forms of SLAM
 
-1. Online SLAM
-2. Full SLAM
+SLam comes into two forms:
 
-### Graphical Representation for the online Slam Problem
+1. **Online SLAM**
+2. **Full SLAM**
 
-Robot estimates its current pose and the map using current measurements and controls.So it solves instantenous poses independently from previous measurements and controls
+### Online SLAM
 
-<img src="images/Graphical_Representation_online.png" alt="drawing" />
+In **Online SLAM**, the robot estimates its current pose and the map using all measurements and controls up to the current time. It focuses on the current state without retaining the entire trajectory history.
 
-- At time t-1, the robot will estimate its current pose and  (X t-1), and the map (m), giving its current easurements (Zt-1) and controls (Ut-1).
-- Then, at time t, the robot will estimate its new pose (Xt) and the map (m), given only its current measurements (Zt), and controls (Ut),  the previous measurements and controls are not taken into consideration when computing the new estimate of the pose and the map.
-- And at time, t+1, the robot will estimate its current pose (Xt+1) and the map (m) ,given the measurements (Zt+1) and controls (Ut+1).
-- This problem can be modeled with the probability equation:
+### Full SLAM
 
-<img src="images/slam_equation.png" alt="drawing" style="display: block; margin: 0 auto;" />
+In **Full SLAM**, the robot estimates its entire trajectory and the map using all measurements and controls collected over time. It retains and estimates all past poses, leading to a higher computational complexity.
 
-### Graphical Representation for the Full Slam Problem
+### Graphical Representation of SLAM Problems
 
-Robot estimates its entire trajectory and the map using all the measurements and controls.
+#### Online SLAM Problem
 
-<img src="images/Graphical_Representation_full.png" alt="drawing" />
+In Online SLAM, the robot estimates its current pose and the map using all past measurements and controls up to the current time.
 
-- At time t-1, the robot will estimate the robot pose xt-1 and map m, given the measurements zt-1 and controls ut-1.
-- At time t, the robot will estimate the entire path (Xt-1:t) and map m, given all the measurements (Zt-1:t) and controls (Ut-1:t).
-- At time t+1, the robot will estimate the entire path (Xt-1:t+1) and map m, given all the measurements (Zt-1:t+1) and controls (Ut-1:t+1).
-- This problem can be modeled with the probability equation
-- Thus, with full SLAM problem we estimate all the variables that occur throughout the robot travel time.
+<img src="images/Graphical_Representation_online.png" alt="Graphical Representation of Online SLAM" />
 
-<img src="images/slam_eq_full.png" alt="drawing" style="display: block; margin: 0 auto;" />
+This problem can be modeled with the probability equation:
 
-# 2. What is Gmapping?:
+\[
+P(x_t, m | z_{1:t}, u_{1:t}) = P(x_t | x_{t-1}, u_t) \cdot P(m | x_t, z_t)
+\]
 
-The gmapping ROS package is an implementation of a  SLAM algorithm called Grid-Based FastSLAM that allows us to create a 2D map using the laser and pose data that the robot is providing while moving around an environment.
+#### Full SLAM Problem
 
-<img src="images/gmapping.png" alt="drawing" width="500" height="300"/>
+In Full SLAM, the robot estimates its entire trajectory and the map using all measurements and controls.
 
-- Let's speak  about  Grid-Based FastSLAM
+<img src="images/Graphical_Representation_full.png" alt="Graphical Representation of Full SLAM" />
+
+This problem can be modeled with the probability equation:
+
+\[
+P(x_{0:t}, m | z_{1:t}, u_{1:t})
+\]
+
+Where:
+
+* \( x_{0:t} \) is the sequence of robot poses from time 0 to \( t \).
+* \( m \) is the map of the environment.
+* \( z_{1:t} \) are the measurements from time 1 to \( t \).
+* \( u_{1:t} \) are the control inputs from time 1 to \( t \).
+
+## 2. What is Gmapping?
+
+The **Gmapping** ROS package is an implementation of a SLAM algorithm called **Grid-Based FastSLAM**. It allows us to create a 2D map using laser and odometry data that the robot provides while moving around an environment.
+
+<img src="images/gmapping.png" alt="Gmapping" width="500" height="300"/>
+
+Let's explore **Grid-Based FastSLAM** in more detail.
 
 # 3. FastSLAM Algorithm
 
-Grid-Based FastSLAM is an instance/extension of FastSLAM, itis an algorithm to solve the **full SLAM** problem (Robot estimates its entire trajectory and the map using all the measurements and controls.)
+**Grid-Based FastSLAM** is an extension of the FastSLAM algorithm. It solves the **Full SLAM** problem by estimating the robot's entire trajectory and the map using all measurements and controls.
 
-It does this using Paricle filter and occupancy grid mapping algorithm
+It achieves this using a **Rao-Blackwellized particle filter** approach and occupancy grid mapping.
 
-### 3.2. Particle Filter :
+## 3.1. FastSLAM Overview
 
-- it's used to estimate the robot pose, it first initializes a set of particles in random locations and orientations within the map and then iterates some steps until the particles have converged to the position of the robot we are going to talk about Particle filter in more in details in localization sessions
-- It's important to know thar each particle is representing a hypothesized pose and map of the environment.
+FastSLAM decomposes the SLAM problem into two parts:
 
-![alt text](images/Particle_Filter.png)
+1. **Robot Pose Estimation**: Uses a particle filter to estimate the robot's trajectory.
+2. **Mapping**: Each particle maintains its own map, which is updated using observations and the particle's estimated trajectory.
 
-#### 3.3. Occupancy Grid Mapping Algorithm:
+In landmark-based FastSLAM, each landmark is estimated independently using EKFs.
 
-- In addition, each particle maintains its own map. The grid-based FastSLAM algorithm will update each particle by solving the mapping with known poses problem using the occupancy grid mapping algorithm.
-- occupancy grid mapping is an approach to create map it implements the binary bayes filter to estimate the occupancy value of each cell.
+## 3.2. Particle Filter
 
-<img src="images/OGM.png" alt="drawing" width="200" height="200"/>
+- A particle filter is used to estimate the robot's pose.
+- It initializes a set of particles, each representing a possible robot pose (x, y, θ).
+- At each time step, particles are propagated based on the motion model, reweighted based on sensor measurements, and resampled.
+- Each particle represents a hypothesis of the robot's trajectory and map.
 
-**So it's working as following each cell will have occupancy variable :**
+![Particle Filter](images/Particle_Filter.png)
 
-<img src="images/map.png" alt="drawing""/>
+## 3.3. Occupancy Grid Mapping Algorithm
 
-**m(x,y) = {free , occupied} -> {0,1}**
+- In **Grid-Based FastSLAM**, instead of landmarks, we use an occupancy grid map.
+- Each particle maintains its own occupancy grid map, which is updated using the particle's estimated trajectory and sensor measurements.
+- Occupancy grid mapping uses a binary Bayes filter to estimate the occupancy probability of each cell.
 
-**Black Color : Cell is occupied:p(mx,y) = 1.**
+<img src="images/OGM.png" alt="Occupancy Grid Map" width="200" height="200"/>
 
-**White Color : Cell is not occupied p(mx,y) = 0.**
+Each cell in the map has an occupancy value representing the probability that the cell is occupied.
 
-<img src="images/ogm.png" alt="drawing""/>
+- **Occupied**: \( p(m_{x,y}) = 1 \)
+- **Free**: \( p(m_{x,y}) = 0 \)
 
-#### Measurement Model p(z|m_xy)
+<img src="images/map.png" alt="Occupancy Map" />
 
-1. **p(z = 1 , m =1 )**
+**Black Color**: Cell is occupied (\( p(m_{x,y}) = 1 \)).
 
-* This is a **True occupied** measurement: This refers to the probability of state z being occupied (z = 1) given a measurement m_x,y of 1.
+**White Color**: Cell is free (\( p(m_{x,y}) = 0 \)).
 
-2. **p(z = 0 , m =1 )**
+<img src="images/ogm.png" alt="Occupancy Grid Mapping" />
 
-* This is a **False free** measurement: This signifies the probability of state z being unoccupied (z = 0) given a measurement m_x,y of 1.
+### Measurement Model \( p(z_t | x_t, m) \)
 
-3. **p(z = 1 , m =0 )**
+The measurement model defines the probability of receiving a measurement \( z_t \) given the robot's pose \( x_t \) and the map \( m \).
 
-* This is a **False occupied** measurement: This denotes the probability of state z being occupied (z = 1) given a measurement m_x,y of 0.
+In occupancy grid mapping, we use an inverse sensor model to update the occupancy probabilities based on measurements.
 
-4. **p(z = 0 , m =0 )**
+### Probability Update Using Bayes' Rule
 
-* This is a **True free** measurement: This refers to the probability of state z being unoccupied (z = 0) given a measurement m_x,y of 0.
+We update the occupancy probability for each cell using Bayes' rule:
 
-#### Probability
+\[
+p(m_{x,y} | z_{1:t}, x_{1:t}) = \frac{p(z_t | x_t, m_{x,y}) \cdot p(m_{x,y} | z_{1:t-1}, x_{1:t-1})}{p(z_t | z_{1:t-1}, x_{1:t})}
+\]
 
-![drawing](images/Bayes_Rule.png)
+## 3.4. FastSLAM Variants
 
-### 3.4. FastSLAM Instances:
+FastSLAM has multiple variants:
 
-- FastSLAM has Multiple instances FastSLAM 1.0 , FastSLAM 2.0 and grid-based FastSLAM
-- **FastSLAM 1.0:** it is simple and easy to implement,it is known to be inefficient  and uses a lrge number of particle.
-- **FastSLAM 2.0:** overcomes the inefficiency of FastSLAM 1.0 and uses low number of particles.
-- Both of FastSLAM 1.0 and FastSLAM 2.0 are Landmark-Based algorithms which means it must always assume that there are known landmark positions, and thus with FastSLAM we are not able to model an arbitrary environment.
-- **Grid-Based FastSLAM:**  it's an extension of fast slam except that it's a non Landmark-Based algorithm so we an model the environment using grid maps without predefining any landmark position.
+- **FastSLAM 1.0**: Simple to implement but requires a large number of particles for accuracy.
+- **FastSLAM 2.0**: More efficient than FastSLAM 1.0, using fewer particles by incorporating improved proposal distributions.
+- Both FastSLAM 1.0 and 2.0 are **Landmark-Based** algorithms, assuming known landmark positions.
+
+**Grid-Based FastSLAM** extends FastSLAM to work with occupancy grid maps, allowing us to model arbitrary environments without predefined landmarks.
 
 # 4. Grid-Based FastSLAM Algorithm
 
-- So by extending the FastSLAM algorithm to occupancy grid maps, you can now solve the SLAM problem in an arbitrary environment
-- **Rao-Blackwellized particle filter approach is used to estimate the robot's trajectory (path) and the map of the environment.**
+By extending the FastSLAM algorithm to occupancy grid maps, we can solve the SLAM problem in arbitrary environments.
 
-<img src="images/grid_based_algorithm_equation.png" alt="drawing" />
+The **Rao-Blackwellized particle filter** is used to estimate both the robot's trajectory and the map.
 
-#### Robot Trajectory:
+The joint posterior over robot poses and maps is factorized as:
 
-uses particle filter to estimate the robot trajectory, so each particle holds a guess of the robot trajectory.
+\[
+p(x_{0:t}, m | z_{1:t}, u_{1:t}) = p(m | x_{0:t}, z_{1:t}) \cdot p(x_{0:t} | z_{1:t}, u_{1:t})
+\]
 
-#### Map:
+### Robot Trajectory
 
-In addition, each particle maintains its own map. The grid-based FastSLAM algorithm will update each particle by solving the mapping with known poses problem using the occupancy grid mapping algorithm.
+- Estimated using a particle filter.
+- Each particle represents a possible robot trajectory \( x_{0:t}^{[k]} \).
 
-## The Algorithm:
+### Map
 
-In this algorithm there are three different techniques needed :
+- For each particle, the map is estimated using the occupancy grid mapping algorithm, given the particle's trajectory and the sensor measurements.
 
-1. **Sampling Motion-`$$p(x_{t} | x_{t-1}^{[k]} , u_{t})$$`:** Estimates the current pose given the k-th particle previous pose and the current controls u.
-2. **Map Estimation-`$$p(m_{t} | z_{t}, x_{t}^{[k]} , m_{t-1}^{[k]})$$`:** Estimates the current map given the current measurements, the current k-th particle pose, and the previous k-th particle map
-3. **Importance Weight-`$$p(z_{t} | x_{t}^{[k]} , m^{[k]})$$`:** Estimates the current likelihood of the measurement given the current k-th particle pose and the current k-th particle map.
+## The Algorithm
 
-<img src="images/techniques.png" alt="drawing" />
+The Grid-Based FastSLAM algorithm involves three main steps for each particle \( k \):
 
-### The Algorithm will be as following :
+1. **Sampling Motion Model**: Sample the new pose \( x_t^{[k]} \) based on the previous pose \( x_{t-1}^{[k]} \) and control input \( u_t \).
+   \[
+   x_t^{[k]} \sim p(x_t | x_{t-1}^{[k]}, u_t)
+   \]
+2. **Importance Weighting**: Compute the importance weight \( w_t^{[k]} \) based on the likelihood of the measurement \( z_t \) given the new pose and map.
+   \[
+   w_t^{[k]} = p(z_t | x_t^{[k]}, m^{[k]})
+   \]
+3. **Map Update**: Update the map \( m^{[k]} \) using the new pose and measurement.
+   \[
+   m^{[k]} = \text{update\_map}(m^{[k]}, x_t^{[k]}, z_t)
+   \]
 
-It's composed of two sections with two for loops :
+### Algorithm Steps
 
-1. first section includes motion , sensor and map update steps
-2. second section includes the re-sampling process
+1. **Initialization**: Generate \( M \) particles with initial poses and maps.
 
-* At each iteration the algorithm takes the previous pose , control and measurement as inputs
+2. **For each time step \( t \)**:
+   - **For each particle \( k \)**:
+     - **Motion Update**: Sample new pose \( x_t^{[k]} \) from the motion model.
+     - **Measurement Update**:
+       - Compute importance weight \( w_t^{[k]} \) based on measurement likelihood.
+     - **Map Update**:
+       - Update the map \( m^{[k]} \) using the occupancy grid mapping algorithm.
+   - **Resampling**:
+     - Normalize the weights \( w_t^{[k]} \).
+     - Resample particles based on their weights to form a new particle set.
 
-<img src="images/grid_based_fastSLAM_Algorithm.png" alt="drawing" />
+3. **Output**: The estimated map and the most probable robot trajectory.
 
-#### First section of the algorithm:
+### Resampling Step
 
-* Initially, the hypothetical belief is obtained by randomly generating M particles.
-* Then, in the first section,each particle implements the three techniques to estimate the k particles  current pose, likelihood of the measurement, and the map.
-* Each particle begins by implementing the sampling technique in the sample motion model to estimate the current pose of the k particle. xt
-* Next, in the measurement update step,each particle implements the importance weight technique in the measurement model map function to estimate the current likelihood of the k particle measurement. *wt*
-* Moving on to the map update step, each particle will implement the map estimation technique into updated occupancy grid map function to estimate the current k particle map. *mt*
-* This map estimation problem will be solved under the occupancy grid mapping algorithm.
-* So, the newly estimated k particle pose map and likelihood of the measurements are all added to the hypothetical belief.
+- Particles with higher weights (better agreement with measurements) are more likely to be selected.
+- Resampling helps to focus computational resources on the most promising hypotheses.
 
-#### Second section of the algorithm:
+# 5. More About Gmapping
 
-* re-sampling process happen through re-sampling wheel.
-* the particles with measurement values close to the robot's measurement value survive and are redrawn in the next iteration,while the others die.
-* The surviving particles poses end map are added to the system belief.
-* Finally, the algorithm outputs the new belief and another cycle of iterations starts implementing the newly completed belief,the next motion and the new sensor measurements.
+- The **gmapping** package contains a ROS node called **slam_gmapping** that reads data from the laser scanner and the robot's odometry (or transforms) to create an occupancy grid map in real-time.
+- It subscribes to two topics:
+  - **/scan**: For laser scanner data.
+  - **/tf**: For transform messages providing the robot's position and orientation.
+- By analyzing laser data and robot poses, it calculates the distance to nearby obstacles and updates the occupancy grid map.
+- The generated map is published on the **/map** topic using the **nav_msgs/OccupancyGrid** message type, making it available for other components in the system.
+- **Gmapping** supports **loop closure**, which is critical for correcting errors in the robot's trajectory by recognizing previously visited locations.
+  - It achieves loop closure using **scan matching**, comparing current laser scans with past data to identify similarities.
+  - When a loop closure is detected, Gmapping adjusts the robot's estimated trajectory and updates the map to improve accuracy.
 
-# 5. More About Gmapping :
+<img src="images/loop_closure.png" alt="Loop Closure in Gmapping" width="600" height="500"/>
 
-- The gmapping package contains a ROS Node called slam_gmapping that basically reads data from the laser and the transforms of the robot, and turns it into an occupancy grid map (OGM).
-- so it subscribes to two topics: the /scan topic for laser scanner data and the /tf messages for position information relative to a starting point. By analyzing laser data and robot positions, it calculates the distance to nearby obstacles. This data is then used to create a simple map indicating occupied and free areas, which it shares on the /map topic using the nav_msgs/OccupancyGrid message type, making it available for other components of the system to utilize..
-- It creates the map real-time that means we can visualize the map while it's being built
-- Also Gmapping supports **loop closure,** a critical process for correcting errors in the robot's trajectory by recognizing previously visited locations. It achieves loop closure using scan matching, comparing current laser scans with past data to identify similarities. When a loop closure is detected, GMapping adjusts the robot's estimated trajectory and updates the map to improve accuracy.
-
-<img src="images/loop_closure.png" alt="drawing" width="600" height="500"/>
 
 ### [&lt;-Back to main](../../README.md)
