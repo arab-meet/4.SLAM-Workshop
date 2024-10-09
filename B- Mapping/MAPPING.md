@@ -57,29 +57,85 @@ becouse of that there is useful representation is **metric representation**
 
 Occupancy grid maps are a popular type of metric map used in mobile robotics. They divide the environment into a grid of cells, where each cell represents the probability of that space being occupied by an obstacle.
 
-features of occupancy grid maps:
 
-- **Probabilistic Representation**: Each cell contains a probability value.
-- **Regular Grid Structure**: The environment is divided into equally sized cells.
-- **Updateable**: The map can be easily updated as the robot gathers new sensor data.
-- **Computationally Efficient**: Grid structure allows for fast computations.
+- occupancy grid mapping is an approach to create map it implements the binary bayes filter to estimate the occupancy value of each cell.
 
-**img**
+<img src="images/OGM.png" alt="drawing" width="200" height="200"/>
 
-## Problems in Mapping
+**So it's working as following each cell will have occupancy variable :**
 
-While mapping is crucial for mobile robotics, it comes with several challenges:
+<img src="images/map.png" alt="drawing"/>
 
-1. **Sensor Uncertainty**: Robot sensors are not perfect and introduce errors into measurements.
-2. **Dynamic Environments**: Real-world environments change over time, which can make maps outdated.
-3. **Computational Complexity**: Creating and updating maps in real-time can be computationally expensive.
+**m(x,y) = {free , occupied} -> {0,1}**
+
+- **mₓ,y**: This is the state of the grid cell at position (x, y). It can also take two values:
+  -**Black Color** `mₓ,y = 1`: The grid cell is believed to be occupied (there is an obstacle).
+  -**White Color** `mₓ,y = 0`: The grid cell is believed to be free (there is no obstacle).
+
+<img src="images/ogm_map.png" alt="drawing"/>
+
+#### Probability
+
+![drawing](images/Bayes_Rule.png)
+
+## Posterior: p(m_x,y|z)
+- Probability that a cell (x,y) is occupied given the sensor measurement z
+- This is what we want to calculate for each cell in the grid map
+
+## Likelihood: p(z|m_x,y)
+- Probability of getting the sensor measurement z if the cell (x,y) is occupied
+- Models the sensor's behavior and accuracy
+
+## Prior: p(m_x,y)
+- Initial belief about the occupancy of cell (x,y) before considering the sensor data
+- for example  0.5 for occupied and 0.5 Free
+## Evidence: p(z)
+- Probability of getting the sensor measurement z regardless of the cell's state
 
 
-**gif for mapping problem**
+#### Measurement Model p(z|m_xy)
 
-In conclusion, mapping is a fundamental aspect of mobile robotics that enables robots to understand and interact with their environment. While it presents several challenges, ongoing research continues to improve mapping techniques, making robots more capable and reliable in various applications.
+In an occupancy grid map, we are trying to estimate whether a grid cell is **occupied** or **free** based on sensor measurements. Here's what each term means:
 
-**gif for creating map**
+- **z**: This is the sensor measurement (the reading from a sensor like a LiDAR, sonar, or depth camera). It can take two values:
+  - `z = 1`: The sensor detects that the space is occupied (e.g., the sensor has "hit" an obstacle).
+  - `z = 0`: The sensor detects that the space is free (e.g., the sensor has not detected an obstacle).
+
+
+## True Occupied Measurement: p(z = 1 | mₓ,y = 1)
+
+This is the probability that the sensor measurement **z** detects an obstacle (`z = 1`) given that the grid cell at `(x, y)` is actually occupied (`mₓ,y = 1`).
+
+- **True occupied measurement**: This happens when both the sensor reading and the actual state of the grid cell indicate occupancy (i.e., `z = 1` and `mₓ,y = 1`).
+  - This probability is typically high, meaning if the grid cell is truly occupied, the sensor is very likely to detect it as occupied.
+
+
+
+1. **p(z = 1 | mₓ,y = 1)**
+
+   * This is a **True occupied** measurement: It represents the probability that the sensor measurement **z** indicates the space is occupied (z = 1) given that the grid cell at position (x, y) is actually occupied (mₓ,y = 1).
+
+   * This probability is typically high, meaning the sensor is likely to correctly detect an obstacle when the grid cell is truly occupied.
+
+2. **p(z = 0 | mₓ,y = 1)**
+
+   * This is a **False free** measurement: It represents the probability that the sensor measurement **z** indicates the space is free (z = 0) even though the grid cell at position (x, y) is actually occupied (mₓ,y = 1).
+
+   * This probability is typically low, as it's an error case where the sensor fails to detect an obstacle in an occupied cell.
+
+3. **p(z = 1 | mₓ,y = 0)**
+
+   * This is a **False occupied** measurement: It represents the probability that the sensor measurement **z** indicates the space is occupied (z = 1) even though the grid cell at position (x, y) is actually free (mₓ,y = 0).
+
+   * This probability is typically low, as it's an error case where the sensor falsely detects an obstacle in a free space.
+
+4. **p(z = 0 | mₓ,y = 0)**
+
+   * This is a **True free** measurement: It represents the probability that the sensor measurement **z** indicates the space is free (z = 0) given that the grid cell at position (x, y) is actually free (mₓ,y = 0).
+   * This probability is typically high, as the sensor correctly identifies that the space is unoccupied.
+
+
+**gif for creating map for rahal robot**
 
 
 
