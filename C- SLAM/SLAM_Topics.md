@@ -1,6 +1,6 @@
 FastSLAM
 
-## [1- Intro](1.Intro.md)
+## [1- SLAM Introduction](1.SLAM%20Introduction/1.Intro.md)
 
 Write brief here
 
