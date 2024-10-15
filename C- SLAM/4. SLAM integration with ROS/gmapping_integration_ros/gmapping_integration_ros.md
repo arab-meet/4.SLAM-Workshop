@@ -1,6 +1,6 @@
 # SLAM integration with ROS
 
-Author: Toka Essam
+Author: Toka Essam , Wafaa
 
 Review :
 
@@ -108,7 +108,7 @@ nano gmapping.launch
 
 Add the necessary contents to `gmapping.launch` to launch the GMapping node with appropriate parameters and tunning this parameter.
 
-for Parameter explaination check it [here](docs/gmapping_Parametes.md).
+for Parameter explaination check it [here](Gmapping_Parametes.md).
 
 ```xml
 <launch>
@@ -218,9 +218,8 @@ This will launch the teleop_twist_keyboard node, allowing you to control the rob
 
 **Now we are ready to build Map:**
 
-<video width="640" height="480" controls>
-  <source src="image/mapping.mp4" type="video/mp4">
-</video>
+<img src="image/mapping.gif" width="100%">
+
 
 ![mapping2](image/mapping2.gif)
 
@@ -293,6 +292,6 @@ Required fields:
 
 > For more information of map server Please click [here](http://wiki.ros.org/map_server).
 
-## [GMapping Launch File Explaination](docs/gmapping_Parametes.md)
+## [GMapping Launch File Explaination](Gmapping_Parametes.md)
 
 ## References:
