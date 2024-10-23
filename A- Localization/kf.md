@@ -160,52 +160,6 @@ In order to improve the radar's tracking accuracy, it is essential to employ a p
 
 ![kf_design](images/kf_design.png)
 
-## Kalman Gain
-
-* definintion :
-
-Current Estimate $:EST_{t}$
-Previous Estimate $:EST_{t-1}$
-Measurement $:MEA$
-
-    $E_{est_{t}} = \frac{E{mea}*E_{est_{t-1}}}{E_{mea}+E_{est_{t-1}}} \longrightarrow [1-KG]E_{est_{t-1}}$
-
-    $EST_{t}=EST_{t-1}+KG[MEA-EST_{t-1}]$
-
-### Temp Example :
-
-- True measurment = 72
-- initial estimate = 68
-- initial estimate error =2
-- initial measurment = 75 $\to$ 71 $\to$ 70 $\to$ 74
-- initial measurment error = 4
-
-first etiration :
-
-$$
-KG=\frac{2}{2+4}=0.33\\
-EST=68+0.33(75-68)=70.33\\
-E_{est}=(1-0.33)(2)=1.33\\
-$$
-
-second etiration :
-
-$$
-KG=\frac{1.33}{1.33+4}=0.25\\
-EST=70.33+(0.25)(71-70.33)=70.50\\
-E_{est}=(1-0.25)(1.33)=1\\
-$$
-
-third etiration :
-
-$$
-KG=\frac{1}{1+4}=0.20\\
-EST=70.50+(0.20)(70-70.50)=70.40\\
-E_{est}=(1-.20)(1)=0.80
-$$
-
-- form privious results
-
 ## State (Matrix)
 
 * definition :
@@ -489,3 +443,140 @@ B=\begin{bmatrix}
 
 \end{bmatrix}
 $$
+## covariance matrix
+
+general view of what we are trying to understand look at this two equations
+
+$$
+P_{k}=AP_{k-1}+Q
+$$
+
+$$
+K_{k}=\frac{P_{k}H^{T}}{HP_{k}H^{T}+R}
+$$
+
+where:
+$P:$ State Covariance Matrix (error in the estimate)
+$Q:$ Process Noise Covariance Matrix may be there is some noise in the input of the system there is some wind or some things that interfere with the ability of the thing we are tracking to follow it's normal path
+$R:$ Measurement Covariance Matrix (error in measurement)
+$K:$ Kalman Gain (weight factor based on comparing the error in the estimate to the error in the measurement)
+if $R \longrightarrow 0$
+then $K \longrightarrow 1$ (adjust primary with the measurement update)
+if $R \longrightarrow large $
+then $K \longrightarrow 0$ (adjust primary with the prediction update)
+if $P \longrightarrow 0$ then measurement updates are mostly ignored
+which is abad thing because that is a valuable information
+
+## what it the variance - covariacne matrix ?
+
+ assume we measured the length of an object and come up with this values
+ $x= 2,5,4,5,3$
+ $y= 3,4,5,6,7$
+$X_{i}:$ Individual Measurements
+$\overline{X}:$ Average of the Measurements
+$\overline{X}-X_{i}:$ Deviation from the Average
+$(\overline{X}-X_{i})^{2}:$ Squared of the Deviation
+$\sigma_{X}^2=\dfrac{\sum_{i=1}^{N}(\overline{X}-X_{i})^{2}}{N}:$ Variance
+$\sigma_{X}\sigma_{Y}=\dfrac{\sum_{i=1}^{N}{(\overline{X}-X_{i})(\overline{Y}-Y_{i})}}{N}:$ Covariance 
+$\sigma_{X}=\sqrt{\sigma_{X}^2}=\sqrt{\dfrac{\sum_{i=1}^{N}(\overline{X}-X_{i})^{2}}{N}}:$ Standard Deviation
+
+$$
+1-D \Rightarrow  \left[\dfrac{\sum(\overline X -X_{i})^{2}}{N} \right]
+$$
+
+$$
+2-D \Rightarrow \begin{bmatrix}
+ \dfrac{\sum(\overline{X}-X_{i})^{2}}{N} &\dfrac{\sum{(\overline{X}-X_{i})(\overline{Y}-Y_{i})}}{N}\\
+ \dfrac{\sum{(\overline{Y}-Y_{i})(\overline{X}-X_{i})}}{N}& \dfrac{\sum(\overline{Y}-Y_{i})^{2}}{N}
+\end{bmatrix}\Rightarrow \begin{bmatrix}
+\sigma_{X}^{2}& \sigma_{x} \sigma_{Y} \\
+ \sigma_{Y} \sigma_{X}&\sigma_{Y}^{2}
+\end{bmatrix}
+$$
+$$
+3-D \Rightarrow \begin{bmatrix}
+\sigma_{X}^{2}& \sigma_{X} \sigma_{Y}& \sigma_{X} \sigma_{Z}\\
+ \sigma_{Y} \sigma_{X}&\sigma_{Y}^{2}&\sigma_{Y} \sigma_{Z}\\
+ \sigma_{Z} \sigma_{X}&\sigma_{Z} \sigma_{Y}&\sigma_{Z}^{2}
+\end{bmatrix}
+$$
+
+## full scale 2-D example traking an airplane
+
+* Given :
+
+```math
+v_{0_{x}}=280 \ m/\sec \ \ \ \ x_{0}=4000 \ m\\
+v_{0_{y}}=120 \ m/\sec \ \ \ \ y_{0}=3000 \ m
+```
+
+* Observations:
+
+```math
+x_{0}=4000 \ m \ \ \ \ v_{0_{x}}=280 \ m/\sec \\
+x_{1}=4260 \ m \ \ \ \ v_{1_{x}}=282 \ m/\sec \\
+x_{2}=4550 \ m \ \ \ \ v_{2_{x}}=285 \ m/\sec \\
+x_{3}=4860 \ m \ \ \ \ v_{3_{x}}=286 \ m/\sec \\
+x_{4}=5110 \ m \ \ \ \ v_{4_{x}}=290 \ m/\sec
+```
+
+* Initial Conditions :
+
+```math
+a_{x}=2\ m/\sec^{2} \ \ \ \ \Delta t = 1 \sec \\
+v_{x}=280 m/\sec \ \ \ \ \Delta x = 25 \ m
+```
+
+* Process Errors In Process Covariance Matrix
+
+```math
+\Delta P_{x} = 20 \ m \ \ \ \ \Delta P_{v_{x}} = 5 \ m/\sec
+```
+
+* Observation Errors :
+
+```math
+\Delta x = 25 \ m \ \ \ \ \Delta v_{x}=6 \ m/\sec
+```
+
+1. The Predicted State
+
+```math
+X_{k_{P}}=AX_{k-1}+Bu_{k}+w_{k}\\ ~\\
+X_{k_{P}}=\begin{bmatrix}1 & \Delta t \\ 0 & 1\end{bmatrix}\begin{bmatrix}x_{0}\\v_{0_{x}}\end{bmatrix}+\begin{bmatrix}\frac{1}{2}\Delta t^{2}\\\Delta t\end{bmatrix}\begin{bmatrix}a_{x_{0}}\end{bmatrix}+0   \\ ~\\ 
+X_{k_{P}}=\begin{bmatrix}1 & 1 \\ 0 &1 \end{bmatrix}\begin{bmatrix}4000\\280 \end{bmatrix} + \begin{bmatrix}\frac{1}{2} \\ 1 \end{bmatrix}\begin{bmatrix} 2 \end{bmatrix}\\ ~\\
+X_{k_{P}}=\begin{bmatrix} 4280 \\ 280 \end{bmatrix}+\begin{bmatrix}1 \\ 2 \end{bmatrix}\\ ~\\
+X_{k_{P}}=\begin{bmatrix} 4281 \\ 282 \end{bmatrix}
+```
+2. The Initial Process Covariance Matrix
+given :
+```math
+\Delta x=20\ m \ \ \ \ \Delta v_{x}=5\ m/\sec
+```
+then
+```math
+P_{k-1}=\begin{bmatrix}\Delta x^{2} & \Delta x \Delta v \\ \Delta x \Delta v & \Delta v_{x}^{2} \end{bmatrix}=\begin{bmatrix}400 & 100 \\ 100 & 25 \end{bmatrix} \\~\\
+P_{k-1}=\begin{bmatrix}400 & 0 \\ 0 &25 \end{bmatrix}
+
+```
+3. The Predicted Process Covariance Matrix
+```math
+P_{k_{P}}=AP_{k-1}A^{T}+Q_{R} \\ ~\\
+P_{k_{P}}=\begin{bmatrix}1 & \Delta t \\ 0 &1 \end{bmatrix} \begin{bmatrix}400 & 0 \\ 0 &25 \end{bmatrix} \begin{bmatrix}1 & 0 \\ \Delta t &1 \end{bmatrix}+0 \\ ~\\
+P_{k_{P}}=\begin{bmatrix}1 & 1\\0&1 \end{bmatrix}\begin{bmatrix}400 & 0\\0&25 \end{bmatrix}\begin{bmatrix}1 & 0\\1&1 \end{bmatrix} \\ ~\\
+P_{k_{P}}=\begin{bmatrix}400 & 25\\0&25 \end{bmatrix}\begin{bmatrix}1 & 0\\1&1 \end{bmatrix}\\ ~\\
+P_{k_{P}}=\begin{bmatrix}425 & 25\\25&25 \end{bmatrix}
+```
+4. Calculating the Kalman Gain
+```math
+K_{k} = \dfrac{P_{k_{P}}H^{T}}{HP_{k_{P}}H^{T}+R} \\ ~\\
+K_{k} = \dfrac{\begin{bmatrix}425 & 0\\0&25 \end{bmatrix}\begin{bmatrix}1 & 0\\0&1 \end{bmatrix}}{\begin{bmatrix}1 & 0\\0&1 \end{bmatrix}\begin{bmatrix}425 & 0\\0&25 \end{bmatrix}\begin{bmatrix}1 & 0\\0&1 \end{bmatrix}+ \begin{bmatrix}625 & 0\\0&36 \end{bmatrix}} \\ ~\\
+K_{k} = \dfrac{\begin{bmatrix}425 & 0\\0&25 \end{bmatrix}}{\begin{bmatrix}425 & 0\\0&25 \end{bmatrix}+\begin{bmatrix}625 & 0\\0&36 \end{bmatrix}} ~ = \dfrac{\begin{bmatrix}425 & 0\\0&25\end{bmatrix}}{\begin{bmatrix}1050 & 0\\0&61 \end{bmatrix}} ~= \begin{bmatrix}0.405 & 0\\0&0.410\end{bmatrix}
+```
+5.The New Observation
+```math
+Y_{k} = CY_{k_{m}}+Z_{k} \\ ~\\
+Y_{k} = \begin{bmatrix}1 & 0\\0&1 \end{bmatrix}\begin{bmatrix}4260 \\282 \end{bmatrix}+0 \\ ~\\
+Y_{k} = \begin{bmatrix}4260 \\282 \end{bmatrix}
+```
+6. Calculating The Current State
