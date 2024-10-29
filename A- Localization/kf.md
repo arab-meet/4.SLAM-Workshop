@@ -1,3 +1,149 @@
+intro
+
+Before we start, I would like to explain several fundamental terms such as variance, standard deviation, normal distribution, estimate, accuracy, precision, mean, expected value, and random variable.
+
+**Mean ($\mu$)** and **Expected Value ($E$)**
+
+* for example ,we have a For example, given five coins – two 5-cent coins and three 10-cent coins, we can easily calculate the mean value by averaging the values of the coins.
+
+$$
+\mu = \frac{1}{N} \sum _{n=1}^{N}V_{n}= \frac{1}{5} \left( 5+5+10+10+10 \right) = 8 cent
+$$
+
+The above outcome
+1.the system states (the coin values) are given
+2.we used the entire population (all 5 coins)
+so it is mean value calculation.
+
+* assume five different weight measurements of the same person: $79.8kg, 80kg, 80.1kg, 79.8kg, and 80.2kg$.
+  The person is a system, and the person's weight is a system state.
+  1. The measurements are different due to the random measurement error of the scales.
+  2. We do not know the true value of the weight since it is a Hidden State.
+  3. we can estimate the weight by averaging the scales' measurements.
+
+$$
+E(w) = \frac{1}{N} \sum _{n=1}^{N}W_{n}= \frac{1}{5} \left( 79.8+80+80.1+79.8+80.2 \right) = 79.98kg
+$$
+
+so The outcome of the estimate is the expected value of the weight.
+
+The expected value is the value you would expect your hidden variable to have over a long time or many trials.
+**Variance** and **Standard deviation**
+
+* The **Variance $\sigma^{2}$** is a measure of the spreading of the data set from its mean.
+* The **Standard Deviation $\sigma$** is the square root of the variance.
+* Suppose we want to compare the heights of two high school basketball teams.
+  The following table provides the players' heights and the mean height of each team.
+
+|        | player1 | player2 | player3 | player4 | player5 | Mean   |
+| ------ | ------- | ------- | ------- | ------- | ------- | ------ |
+| Team A | 1.89 m  | 2.10m   | 1.75m   | 1.98m   | 1.85m   | 1.914m |
+| Team B | 1.94m   | 1.90m   | 1.97m   | 1.89m   | 1.87m   | 1.914m |
+
+1. the mean height of both teams is the same
+2. Let us examine the height variance.
+
+   1. We can calculate the distance from the mean for each variable by subtracting the mean from each variable.
+
+   $$
+   x_{n} -  \mu = x_{n}-1.914m
+   $$
+
+   $x : height $
+   The following table presents the distance from the mean for each variable.|
+
+   |        | player1 | player2 | player3 | player4 | player5 |
+   | ------ | ------- | ------- | ------- | ------- | ------- |
+   | Team A | -0.024m | 0.186m  | -0.164m | 0.066m  | -0.064m |
+   | Team B | 0.026m  | -0.014m | 0.056m  | -0.024m | -0.044m |
+
+
+   2. To get rid of the negative values, let us square the distance from the mean.
+
+   $$
+   \left( x_{n}-  \mu  \right) ^{2} =  \left( x_{n}- 1.914m \right) ^{2}
+   $$
+
+   |        | Player 1          | Player 2         | Player 3         | Player 4        | Player 5        |
+   | ------ | ----------------- | ---------------- | ---------------- | --------------- | --------------- |
+   | Team A | $0.000576m^{2}$ | $0.034596m^2$  | $0.026896m^2	$ | $0.004356m^2$ | $0.004096m^2$ |
+   | Team B | $0.000676m^2	$  | $0.000196m^2	$ | $0.003136m^2$  | $0.000576m^2$ | $0.001936m^2$ |
+
+   3. To get the variance, we need to average the squared distances from the mean.
+
+   $$
+   sigma^{2}= \frac{1}{N} \sum _{n=1}^{N} \left( x_{n}-  \mu  \right) ^{2}
+   $$
+
+For team A, the variance would be:
+$\sigma_{\scriptscriptstyle \!A}^{2} = \frac{1}{N} \sum _{n=1}^{N} \left( x_{\scriptscriptstyle \!A_{n}} -  \mu  \right) ^{2}= \frac{1}{5} \left( 0.000576+ 0.034596+ 0.026896+ 0.004356+ 0.004096 \right) = 0.014m^{2}$
+For team B, the variance would be:
+$\sigma_{\scriptscriptstyle \!B}^{2} = \frac{1}{N} \sum _{n=1}^{N} \left( x_{\scriptscriptstyle \!B_{n}} -  \mu  \right) ^{2}= \frac{1}{5} \left( 0.000676+ 0.000196+ 0.003136+ 0.000576+ 0.001936 \right) = 0.0013m^{2}$
+*We can see that although the mean of both teams is the same
+
+* the measure of the height spreading of Team A is higher than the measure of the height spreading of Team B.
+  *Therefore, the Team A players are more diverse than the Team B players.
+  *There are players for different positions like ball handler, center, and guards, while the Team B players are not versatile.
+  the standard deviation.
+
+$$
+\sigma =\sqrt[]{\frac{1}{N} \sum _{n=1}^{N} \left( x_{n}-  \mu  \right) ^{2}}
+$$
+
+The standard deviation of Team A players' heights would be 0.12m.
+
+The standard deviation of Team B players' heights would be 0.036m.
+
+**Normal Distribution (Gaussian)**
+described by
+
+$$
+f \left( x; \mu , \sigma ^{2} \right) = \frac{1}{\sqrt[]{2 \pi  \sigma ^{2}}}e^{\frac{- \left( x- \mu  \right) ^{2}}{2 \sigma ^{2}}}
+$$
+
+The Gaussian curve is also called the Probability Density Function (PDF) for the normal distribution.
+
+The following chart describes PDFs of the pizza delivery time in three cities: city 'A,' city 'B,' and city 'C.'
+![normal_curves](images/normal_curves.png)
+
+We can see that
+
+1. the Gaussian shapes of the city 'A' and city 'B' pizza delivery times are identical;
+   however, their centers are different. That means that in city 'A,' you wait for pizza for 10 minutes less on average, while the measure of spread in pizza delivery time is the same.
+2. the centers of Gaussians in the city 'A' and city 'C' are the same.
+   however, their shapes are different. Therefore the average pizza delivery time in both cities is the same, but the measure of spread is different.
+
+The following chart describes the proportions of the normal distribution.
+![GaussianProportions](images/GaussianProportions.png)
+Usually, measurement errors are distributed normally. The Kalman Filter design assumes a normal distribution of the measurement errors.
+**Random Variables**
+A random variable describes the hidden state of the system. Almost any physical quantity is a random variable. Quantities like your weight, height, and body temperature are random variables, and you can measure them up to a certain precision.
+
+In this tutorial, the random variables are characterized by the following:
+
+*The mean of the sequence of measurements.
+*The variance of the sequence of measurements.
+**Estimate, Accuracy and Precision**
+An **Estimate** is about evaluating the hidden state of the system
+For example, the true position of the aircraft is hidden from the observer. We can estimate the aircraft position using sensors, such as radar. The estimate can be significantly improved by using multiple sensors and applying advanced estimation and tracking algorithms (such as the Kalman Filter). Every measured or computed parameter is an estimate.
+
+**Accuracy** indicates how close the measurement is to the true value.
+
+**Precision** describes the variability in a series of measurements of the same parameter.
+The following figure illustrates accuracy and precision.
+![AccuracyAndPrecision](images/AccuracyAndPrecision.png)
+**summary**
+![statistical_view](images/statistical_view.png)
+A measurement is a **random variable**, described by the **Probability Density Function (PDF)**.
+
+The mean of the measurements is the **Expected Value** of the random variable.
+
+The offset between the mean of the measurements and the true value is the **accuracy of the measurements**, also known as bias or **systematic measurement error**.
+
+The dispersion of the distribution is the measurement **precision, also known as the **measurement noise, random measurement error**, or **measurement uncertainty**.
+
+okey let's  now go deep with the kalman filter
+
 # kalman filter
 
 * It is an iterative mathematical process that uses a set of equations and consecutive data inputs to equickly estimate the true value , position , velocity , etc of the object being measured , when the measured values contain  acertain amount of uncertainty or variation .
@@ -105,7 +251,7 @@ over time the size of kalman gain will get smaller and smaller which means the e
 
 ###########################################################
 
-### How it work ?
+### How it work ? -kalman filter
 
 * Kalman filter is a real-time optimal estimation algorithm that uses a model of the system being measured and updates the model as new measurements that contain noise become available. The filter works by making a prediction of the current state of the system based on the previous state estimate and the system model, and then combining this prediction with a new measurement to obtain an updated state estimate
 
@@ -156,17 +302,108 @@ Due to the Measurement Noise and the Process Noise, the estimated target positio
 
 In order to improve the radar's tracking accuracy, it is essential to employ a prediction algorithm that accounts for both process and measurement uncertainty.
 
-# KF Design
+# Matrix format of the kalman filter
 
-![kf_design](images/kf_design.png)
+![kf_over_view.png](images/kf_over_view.png)
+
+## initial State
+
+1. state matrix $X_k$
+   simply contains position and velocity of the thing you're trying to track
+
+* in one dimention :
+
+```math
+X=\begin{bmatrix}
+x\\
+\dot x 
+\end{bmatrix}
+  \ \ \ \ \ \ \ \ \ \ \ \ 
+ X=\begin{bmatrix}
+y\\
+\dot y
+\end{bmatrix}
+```
+
+* in two dimentions :
+
+```math
+X=\begin{bmatrix}
+x\\
+y\\
+\dot x \\
+\dot y 
+\end{bmatrix}
+  \ \ \ \ \ \ \ \ \ \ \ \ 
+ X=\begin{bmatrix}
+x\\
+\dot x\\
+y\\
+\dot y
+\end{bmatrix}
+```
+
+* in three dimentions :
+
+```math
+X=\begin{bmatrix}
+x\\
+y\\
+z\\
+\dot x\\
+\dot y\\
+\dot z
+\end{bmatrix}
+  \ \ \ \ \ \ \ \ \ \ \ \ 
+ X=\begin{bmatrix}
+x\\
+\dot x\\
+y\\
+\dot y\\
+z\\
+\dot z
+\end{bmatrix}
+```
+
+* when we need to track something we need to keep track of it in terms of the equations of kinamatics
+
+$$
+x=x_{0}+\dot x t +\frac{1}{2} \ddot x t^{2}
+$$
+
+2. process covariacne matrix $P_{k}$
+   simply represents the error in the estimate or the process  as we keep track of that error as we go through the process
+
+## the initial become the previous
+
+$$
+X_{k} \Rightarrow X_{k-1} \\ ~\\
+P_{k} \Rightarrow P_{k-1}
+$$
+
+## New State(Prediction)
+
+$$
+X_k=AX_{k-1}+Bu_{k}+w_{k} \\ ~\\
+P_{k}=AP_{k-1}A^{T}+Q
+$$
+
+$u:$ Control Variable Matrix
+$w:$ Noise In The Process
+$\Delta t:$ Time For 1 Cycle
+
+* It is a theoretical prediction based upon
+
+1. the previous estimation $X_{k-1}$ which we cal
+2. $u$ Vector : the control variable Matrix for example an object that is flying free through space  gravity controls.it's  defines how gravity
+   affects the position and the velocity of our state of our particular object.
+3. $w$  some noise in that prediction we wil take it zero for now
+4. $A ,B $ adaptation matrices
+   we will discuss the State Covariance Matrix $P$ later now let's calculate the new state
 
 ## State (Matrix)
 
-* definition :
-
-$$
-x_k=Ax_{k-1}+B_{u_{k}}+w_{k}
-$$
+* definition : it is a matri
 
 ### Eamples:
 
@@ -250,8 +487,6 @@ v_{x}
 $$
 
 ## Control Matrix
-
-* definintion :
 
 ### Examples
 
@@ -443,6 +678,7 @@ B=\begin{bmatrix}
 
 \end{bmatrix}
 $$
+
 ## covariance matrix
 
 general view of what we are trying to understand look at this two equations
@@ -477,7 +713,7 @@ $\overline{X}:$ Average of the Measurements
 $\overline{X}-X_{i}:$ Deviation from the Average
 $(\overline{X}-X_{i})^{2}:$ Squared of the Deviation
 $\sigma_{X}^2=\dfrac{\sum_{i=1}^{N}(\overline{X}-X_{i})^{2}}{N}:$ Variance
-$\sigma_{X}\sigma_{Y}=\dfrac{\sum_{i=1}^{N}{(\overline{X}-X_{i})(\overline{Y}-Y_{i})}}{N}:$ Covariance 
+$\sigma_{X}\sigma_{Y}=\dfrac{\sum_{i=1}^{N}{(\overline{X}-X_{i})(\overline{Y}-Y_{i})}}{N}:$ Covariance
 $\sigma_{X}=\sqrt{\sigma_{X}^2}=\sqrt{\dfrac{\sum_{i=1}^{N}(\overline{X}-X_{i})^{2}}{N}}:$ Standard Deviation
 
 $$
@@ -493,6 +729,7 @@ $$
  \sigma_{Y} \sigma_{X}&\sigma_{Y}^{2}
 \end{bmatrix}
 $$
+
 $$
 3-D \Rightarrow \begin{bmatrix}
 \sigma_{X}^{2}& \sigma_{X} \sigma_{Y}& \sigma_{X} \sigma_{Z}\\
@@ -501,7 +738,7 @@ $$
 \end{bmatrix}
 $$
 
-## full scale 2-D example traking an airplane
+## full scale 2-D example tracking an airplane
 
 * Given :
 
@@ -548,18 +785,24 @@ X_{k_{P}}=\begin{bmatrix}1 & 1 \\ 0 &1 \end{bmatrix}\begin{bmatrix}4000\\280 \en
 X_{k_{P}}=\begin{bmatrix} 4280 \\ 280 \end{bmatrix}+\begin{bmatrix}1 \\ 2 \end{bmatrix}\\ ~\\
 X_{k_{P}}=\begin{bmatrix} 4281 \\ 282 \end{bmatrix}
 ```
+
 2. The Initial Process Covariance Matrix
-given :
+   given :
+
 ```math
 \Delta x=20\ m \ \ \ \ \Delta v_{x}=5\ m/\sec
 ```
+
 then
+
 ```math
 P_{k-1}=\begin{bmatrix}\Delta x^{2} & \Delta x \Delta v \\ \Delta x \Delta v & \Delta v_{x}^{2} \end{bmatrix}=\begin{bmatrix}400 & 100 \\ 100 & 25 \end{bmatrix} \\~\\
 P_{k-1}=\begin{bmatrix}400 & 0 \\ 0 &25 \end{bmatrix}
 
 ```
+
 3. The Predicted Process Covariance Matrix
+
 ```math
 P_{k_{P}}=AP_{k-1}A^{T}+Q_{R} \\ ~\\
 P_{k_{P}}=\begin{bmatrix}1 & \Delta t \\ 0 &1 \end{bmatrix} \begin{bmatrix}400 & 0 \\ 0 &25 \end{bmatrix} \begin{bmatrix}1 & 0 \\ \Delta t &1 \end{bmatrix}+0 \\ ~\\
@@ -567,16 +810,130 @@ P_{k_{P}}=\begin{bmatrix}1 & 1\\0&1 \end{bmatrix}\begin{bmatrix}400 & 0\\0&25 \e
 P_{k_{P}}=\begin{bmatrix}400 & 25\\0&25 \end{bmatrix}\begin{bmatrix}1 & 0\\1&1 \end{bmatrix}\\ ~\\
 P_{k_{P}}=\begin{bmatrix}425 & 25\\25&25 \end{bmatrix}
 ```
+
 4. Calculating the Kalman Gain
+
 ```math
 K_{k} = \dfrac{P_{k_{P}}H^{T}}{HP_{k_{P}}H^{T}+R} \\ ~\\
 K_{k} = \dfrac{\begin{bmatrix}425 & 0\\0&25 \end{bmatrix}\begin{bmatrix}1 & 0\\0&1 \end{bmatrix}}{\begin{bmatrix}1 & 0\\0&1 \end{bmatrix}\begin{bmatrix}425 & 0\\0&25 \end{bmatrix}\begin{bmatrix}1 & 0\\0&1 \end{bmatrix}+ \begin{bmatrix}625 & 0\\0&36 \end{bmatrix}} \\ ~\\
 K_{k} = \dfrac{\begin{bmatrix}425 & 0\\0&25 \end{bmatrix}}{\begin{bmatrix}425 & 0\\0&25 \end{bmatrix}+\begin{bmatrix}625 & 0\\0&36 \end{bmatrix}} ~ = \dfrac{\begin{bmatrix}425 & 0\\0&25\end{bmatrix}}{\begin{bmatrix}1050 & 0\\0&61 \end{bmatrix}} ~= \begin{bmatrix}0.405 & 0\\0&0.410\end{bmatrix}
 ```
+
 5.The New Observation
+
 ```math
 Y_{k} = CY_{k_{m}}+Z_{k} \\ ~\\
 Y_{k} = \begin{bmatrix}1 & 0\\0&1 \end{bmatrix}\begin{bmatrix}4260 \\282 \end{bmatrix}+0 \\ ~\\
 Y_{k} = \begin{bmatrix}4260 \\282 \end{bmatrix}
 ```
+
 6. Calculating The Current State
+
+```math
+X_{k} = X_{k_{P}}+K_{k}[Y_{k}-HX_{k_{P}}] \\ ~\\
+X_{k} = \begin{bmatrix}4281 \\282 \end{bmatrix}+\begin{bmatrix}0.405 & 0\\ 0 & 0.410 \end{bmatrix}\begin{pmatrix} \begin{bmatrix}4260\\ 282 \end{bmatrix} -\begin{bmatrix}1 & 0\\ 0 & 1 \end{bmatrix}\begin{bmatrix}4281\\  282 \end{bmatrix}\end{pmatrix}\\ ~\\
+X_{K}=\begin{bmatrix}4281 \\282 \end{bmatrix}+\begin{bmatrix}0.405 & 0 \\0 & 0.410 \end{bmatrix}\begin{bmatrix}-21 \\0 \end{bmatrix} \\ ~\\
+X_{k}=\begin{bmatrix}4281 \\282 \end{bmatrix}+\begin{bmatrix}-85\\0 \end{bmatrix} \\ ~\\
+X_{K}=\begin{bmatrix}4272.5 \\282 \end{bmatrix}
+```
+
+7. Updating The Process Covariance Matrix
+
+```math
+P_{k}=(I-KH)P_{k_{P}} \\ ~\\
+P_{k}=\begin{bmatrix}\begin{bmatrix}1 & 0\\0&1 \end{bmatrix}-\begin{bmatrix}0.405 & 0\\0&0.410 \end{bmatrix}\begin{bmatrix}1 & 0\\0&1 \end{bmatrix} \end{bmatrix}\begin{bmatrix}425 & 0\\0&25 \end{bmatrix} \\ ~\\
+P_{k}=\begin{bmatrix}\begin{bmatrix}1 & 0\\0&1 \end{bmatrix}-\begin{bmatrix}0.405 & 0\\0&0.410 \end{bmatrix}\end{bmatrix}\begin{bmatrix}425 & 0\\0&25 \end{bmatrix} \\ ~\\
+P_{k}=\begin{bmatrix}0.595 & 0\\0&0.590 \end{bmatrix}\begin{bmatrix}425 & 0\\0&25 \end{bmatrix}\\ ~\\
+P_{k}=\begin{bmatrix}253 & 0\\0&14.8\end{bmatrix}
+
+```
+
+$$
+X_{k}=\begin{bmatrix}4272.5 \\282 \end{bmatrix}  \Longrightarrow X_{k-1} \Longrightarrow X_{k_{P}}=AX_{k-1}+Bu_{k}+w_{k}
+\\ ~\\
+P_{k}=\begin{bmatrix}253 & 0\\0&14.8\end{bmatrix} \Longrightarrow P_{k-1} \Longrightarrow P_{k_{P}}=AP_{k-1}A^{T}+Q_{k}
+$$
+
+second Round
+
+```math
+X_{k_{P}}=AX_{k-1}+Bu_{k}+w_{k}\\ ~\\
+X_{k_{P}}=\begin{bmatrix}1 & \Delta t\\0&1\end{bmatrix}\begin{bmatrix}4272.5\\282\end{bmatrix}+\begin{bmatrix}\frac{1}{2}\Delta t^t \\ \Delta t\end{bmatrix}\begin{bmatrix}2\end{bmatrix}+0 \\ ~\\
+X_{K_{P}}=\begin{bmatrix}1 & 1 \\ 0 & 1\end{bmatrix}\begin{bmatrix}4272.5\\282\end{bmatrix}+\begin{bmatrix}\frac{1}{2}\\1\end{bmatrix}\begin{bmatrix}2\end{bmatrix}+0 \\ ~\\
+X_{K_{P}}=\begin{bmatrix}4554.5\\282\end{bmatrix}+\begin{bmatrix}1\\2\end{bmatrix} = \begin{bmatrix}4555.5\\284\end{bmatrix}
+```
+
+```math
+P_{k_{P}}=AP_{k-1}A^{T}+Q_{K} \\ ~\\
+P_{k_{P}}=\begin{bmatrix}1&1\\0&1\end{bmatrix}\begin{bmatrix}253&0\\0&14.8\end{bmatrix}\begin{bmatrix}1&0\\1&1\end{bmatrix}+0 \\~\\
+P_{k_{P}}=\begin{bmatrix}253&14.8\\0&14.8\end{bmatrix}\begin{bmatrix}1 & 0 \\ 1 & 1\end{bmatrix}\\ ~\\
+P_{k_{P}}=\begin{bmatrix}267.6 & 14.8\\14.8&14.8\end{bmatrix}=\begin{bmatrix}257.8 & 0 \\ 0 & 14.8\end{bmatrix}
+```
+
+4. Kalman Gain
+
+```math
+K = \dfrac {P_{k_{P}}H^{T}}{HP_{k_{P}}H^{T}+R} \\ ~\\
+K = \dfrac {\begin{bmatrix}257.8 & 0 \\ 0 &14.8\end{bmatrix}\begin{bmatrix}1 & 0 \\ 0 & 1\end{bmatrix}}{\begin{bmatrix}1 & 0 \\ 0 & 1\end{bmatrix}\begin{bmatrix}267.8 & 0 \\ 0 & 14.8\end{bmatrix}\begin{bmatrix}1 & 0 \\ 0 & 1\end{bmatrix}+\begin{bmatrix}625 & 0 \\ 0 & 36\end{bmatrix}}\\ ~\\
+K=\dfrac{\begin{bmatrix}267.8 & 0 \\ 0 & 14.8\end{bmatrix}}{\begin{bmatrix}892.8 & 0 \\ 0 & 50.8\end{bmatrix}}=\begin{bmatrix}0.300 & 0 \\ 0 & 0.291\end{bmatrix}
+```
+
+5. Current Observation
+
+```math
+Y_{k} = CY_{K}+Z_{K}=\begin{bmatrix}1 & 0 \\ 0 &1\end{bmatrix}\begin{bmatrix}4550\\ 285\end{bmatrix}+0=\begin{bmatrix}4550\\285\end{bmatrix}
+```
+
+6. Current State Matrix
+
+```math
+X_{k} = X_{k_{P}}+K_{k}[Y_{k}-HX_{P_{K}}] \\ ~\\
+X_{k} = \begin{bmatrix}4555.5\\284\end{bmatrix}+\begin{bmatrix}0.300 & 0 \\ 0 &0.291\end{bmatrix}\begin{bmatrix}\begin{bmatrix}4550 \\ 285\end{bmatrix}-\begin{bmatrix}1 & 0 \\ 0 &1\end{bmatrix}\begin{bmatrix}4555.5 \\ 284\end{bmatrix}\end{bmatrix}\\ ~\\
+X_{k}=\begin{bmatrix}4555.5\\284\end{bmatrix}+\begin{bmatrix}0.300 & 0 \\ 0 &0.291\end{bmatrix}\begin{bmatrix}-5.5 \\ 1\end{bmatrix}\\ ~\\
+X_{k}=\begin{bmatrix}4555.5\\284\end{bmatrix}+\begin{bmatrix}-1.7 \\ 0.3\end{bmatrix}\\ ~\\
+X_{k}=\begin{bmatrix}4553.8\\284.3\end{bmatrix} \Longrightarrow X_{k-1}
+```
+
+7. Current Process Covariance Matrix
+
+```math
+P_{k}=(I-KH)P_{k_{P}} \\ ~\\
+P_{k}=\begin{bmatrix}\begin{bmatrix}1 & 0 \\ 0 &1\end{bmatrix}-\begin{bmatrix}0.300 & 0 \\ 0 &0.291\end{bmatrix}\end{bmatrix}\begin{bmatrix}267.8 & 0 \\ 0 &14.8\end{bmatrix}\\ ~\\
+P_{k}=\begin{bmatrix}0.7 & 0 \\ 0 &0.709\end{bmatrix}\begin{bmatrix}267.8 & 0 \\ 0 &14.8\end{bmatrix}\\ ~\\
+P_{k}=\begin{bmatrix}187.06 & 0 \\ 0 &10.5\end{bmatrix} \Longrightarrow P_{k-1}
+```
+
+third Round
+
+```math
+X_{k_{p}}=AX_{k-1}+Bu_{k}+w_{k}\\ ~\\
+X_{k_{p}}=\begin{bmatrix}1 &1\\0&1\end{bmatrix}\begin{bmatrix}4553.8 \\284.3\end{bmatrix}+\begin{bmatrix}\frac{1}{2}\\2\end{bmatrix}\begin{bmatrix}2\end{bmatrix}+0 \\ ~\\
+X_{k_{p}}=\begin{bmatrix}4838.1 \\ 284.3\end{bmatrix}+\begin{bmatrix}1\\2\end{bmatrix}=\begin{bmatrix}4839.1\\286.3\end{bmatrix}
+```
+
+```math
+P_{k_{p}}=AP_{k-1}A^{T}+Q_{k}\\ ~\\
+P_{k_{p}}=\begin{bmatrix}1 & 1 \\ 0 &1\end{bmatrix}\begin{bmatrix}187.5 &0\\0&10.5\end{bmatrix}\begin{bmatrix}1 &0\\1&1\end{bmatrix}+0 \\ ~\\
+P_{k_{p}}=\begin{bmatrix}187.5 & 10.5\\0&10.5\end{bmatrix}\begin{bmatrix}1 &0\\1&1\end{bmatrix}=\begin{bmatrix}187.5 &10.5\\10.5&10.5\end{bmatrix}=\begin{bmatrix}187.5 &0\\0&10.5\end{bmatrix}
+```
+
+```math
+K = \dfrac {P_{k_{p}}H^{T}}{HP_{k_{p}}H^{T}+R}=\dfrac{\begin{bmatrix}187.5 &0\\0&10.5\end{bmatrix}}{\begin{bmatrix}187.5 &0\\0&10.5\end{bmatrix}+\begin{bmatrix}625 &0\\0&36\end{bmatrix}}=\dfrac{\begin{bmatrix}187.5 &0\\0&10.5\end{bmatrix}}{\begin{bmatrix}812.5 &0\\0&46.5\end{bmatrix}}\\ ~\\
+K=\begin{bmatrix}0.231 & 0 \\ 0 & 0.226\end{bmatrix}
+```
+
+```math
+Y_{k}=\begin{bmatrix}4860\\286\end{bmatrix}
+```
+
+```math
+X_{k}=X_{k_{p}}+K[Y_{k}-HX_{k_{p}}]\\ ~\\
+X_{k}=\begin{bmatrix}4839.1\\286.3\end{bmatrix}+\begin{bmatrix}0.231 &0\\0&0.226\end{bmatrix}\begin{bmatrix}\begin{bmatrix}4860\\286\end{bmatrix}-\begin{bmatrix}1 &0\\0&1\end{bmatrix}\begin{bmatrix}4839.1\\286.3\end{bmatrix}\end{bmatrix} \\ ~\\
+X_{k}=\begin{bmatrix}4839.1\\286.3\end{bmatrix}+\begin{bmatrix}0.231 &0\\0&0.226\end{bmatrix}\begin{bmatrix}20.9\\-0.3\end{bmatrix}\\ ~\\
+X_{k}=\begin{bmatrix}4839.1\\286.3\end{bmatrix}+\begin{bmatrix}4.8\\-0.1\end{bmatrix}=\begin{bmatrix}4843.9\\286.2\end{bmatrix}
+```
+
+```math
+P_{k}=(I-KH)P_{k_{p}}=\begin{bmatrix}\begin{bmatrix}1 &0\\0&1\end{bmatrix}-\begin{bmatrix}0.231 &0\\0&0.226\end{bmatrix}\begin{bmatrix}1 &0\\0&1\end{bmatrix}\end{bmatrix}\begin{bmatrix}187.5 &0\\0&10.5\end{bmatrix}\\ ~\\
+P_{k}=\begin{bmatrix}0.769 &0\\0&0.774\end{bmatrix}\begin{bmatrix}187.5 &0\\0&10.5\end{bmatrix}=\begin{bmatrix}144.2 &0\\0&8.1\end{bmatrix}
+```
