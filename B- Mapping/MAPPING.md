@@ -1,147 +1,92 @@
-# Mapping 
+# Mapping: 
 
-Author:MO3TAZ
+Author: mo3taz , Eng Wafaa
 
-Review :
+## Understanding the Mapping Problem
 
-## Understand Mapping problem?
+Imagine you are a **pirate** in search of **treasure**. What would you need to guide you to your ultimate prize?
 
-### imaging with me you are a **pirate**
+![Pirate](images/pirate.jpg)
+![Treasure](images/treasure.jpg)
 
-<img src="./images/pirate.jpg" alt="pirate" width="200"/>
+The answer is simple: a **map**.
 
-### and your goal is **treasure**
+This is precisely the same problem faced by mobile robots. They need a map to know where they are (localization) and where they need to go.
 
-<img src="./images/treasure.jpg" alt="treasure" width="200"/>
+![Map](images/map.jpg)
 
-### What would you need to get to the treasure?
+## Mapping in Mobile Robotics
 
-**answer is map**
+Mapping in mobile robotics refers to the process of creating a digital representation of the environment in which a robot operates. It's a crucial component of robot navigation and interaction with the world.
 
-<img src="./images/map.jpg" alt="map" width="200"/>
+### Robots Without a Map
 
+![Where am I?](images/where_am_i.gif)
 
-**this is same problem that robot face**
-**He need a map to able to know where he is `(localization)` and where he will go**
+Without a map, a robot is lost, just like a pirate without a treasure map. We need to provide the robot with a map to help it understand its surroundings and navigate effectively.
 
-
-Mapping in mobile robotics refers to the process of creating  representation of the environment in which a robot operates. It's a crucial component of robot navigation and interaction with the world.
-
-### Robots without Map:
-
-![where am i](./images/where_am_i.gif)
-
-becouse of that we need Map for our enviroment our world to allow robots knows his location on this map.
-
-brain of the robot is computer and the computer can't understand the environment as it is, we need to convert this environment to something that computer can understand like `0 or 1`, this is a map it is `digital representation` for environment.
-
-**image for map**
-
+The robot's "brain" is a computer, and computers can't inherently comprehend the environment as it is. We need to convert the environment into a form that the computer can understand, like a grid of 0s and 1s. This digital representation is called a map.
 
 ## Types of Mapping
 
 There are several types of mapping techniques used in mobile robotics:
-1. **Topological Mapping**: Represents the environment as a graph of connected locations(stations).
-![topo map](./images/topological_representation.png)
 
-scale here doesn't need to be accurate becouse of that this representation is lightweight
-but as you can see there is no much details to allow you to go to from green station to red station 
-becouse of that there is useful representation is **metric representation**
+1. **Topological Mapping**:
+   Represents the environment as a graph of connected locations (stations).
+   ![Topological Map](images/topological_representation.png)
 
-2. **Metric Mapping**: this representation use precise coordinates like longitude and latitude coordinates but becouse this representation is precise it's pretty sensitive to noise 
-![topo map](./images/world.png)
+   The scale in a topological map doesn't need to be accurate, making it a lightweight representation. However, this representation doesn't provide enough detail to navigate from one location to another, which is where a **metric representation** becomes useful.
 
-
+2. **Metric Mapping**:
+   This representation uses precise coordinates, like longitude and latitude, to map the environment. While it's more accurate, it's also more sensitive to noise.
+   ![Metric Map](images/world.png)
 
 ## Occupancy Grid Maps
 
 Occupancy grid maps are a popular type of metric map used in mobile robotics. They divide the environment into a grid of cells, where each cell represents the probability of that space being occupied by an obstacle.
 
+![Occupancy Grid Map](images/OGM.png)
 
-- occupancy grid mapping is an approach to create map it implements the binary bayes filter to estimate the occupancy value of each cell.
+Occupancy grid mapping implements the binary Bayes filter to estimate the occupancy value of each cell.
 
-<img src="images/OGM.png" alt="drawing" width="200" height="200"/>
+Each cell in the grid has an occupancy variable:
+- `mₓ,y = 1`: The cell is believed to be occupied (there is an obstacle).
+- `mₓ,y = 0`: The cell is believed to be free (there is no obstacle).
 
-**So it's working as following each cell will have occupancy variable :**
+![Occupancy Grid Map](images/map.png)
 
-<img src="images/map.png" alt="drawing"/>
+## Measurement Model (`p(z|mₓ,y)`)
 
-**m(x,y) = {free , occupied} -> {0,1}**
+The measurement model describes the probability of getting a sensor measurement `z` given the occupancy state `mₓ,y` of a grid cell.
 
-- **mₓ,y**: This is the state of the grid cell at position (x, y). It can also take two values:
-  -**Black Color** `mₓ,y = 1`: The grid cell is believed to be occupied (there is an obstacle).
-  -**White Color** `mₓ,y = 0`: The grid cell is believed to be free (there is no obstacle).
+![Bayes' Rule](images/Bayes_Rule.png)
 
-<img src="images/ogm_map.png" alt="drawing"/>
+The key probabilities in the measurement model are:
 
-#### Probability
+1. **True Occupied Measurement**: `p(z = 1 | mₓ,y = 1)`
+   - This is the probability that the sensor measurement `z` detects an obstacle (`z = 1`) given that the grid cell at `(x, y)` is actually occupied (`mₓ,y = 1`).
+   - This probability is typically high, meaning the sensor is likely to correctly detect an obstacle when the grid cell is truly occupied.
 
-![drawing](images/Bayes_Rule.png)
+2. **False Free Measurement**: `p(z = 0 | mₓ,y = 1)`
+   - This is the probability that the sensor measurement `z` indicates the space is free (`z = 0`) even though the grid cell at `(x, y)` is actually occupied (`mₓ,y = 1`).
+   - This probability is typically low, as it's an error case where the sensor fails to detect an obstacle in an occupied cell.
 
-## Posterior: p(m_x,y|z)
-- Probability that a cell (x,y) is occupied given the sensor measurement z
-- This is what we want to calculate for each cell in the grid map
+3. **False Occupied Measurement**: `p(z = 1 | mₓ,y = 0)`
+   - This is the probability that the sensor measurement `z` indicates the space is occupied (`z = 1`) even though the grid cell at `(x, y)` is actually free (`mₓ,y = 0`).
+   - This probability is typically low, as it's an error case where the sensor falsely detects an obstacle in a free space.
 
-## Likelihood: p(z|m_x,y)
-- Probability of getting the sensor measurement z if the cell (x,y) is occupied
-- Models the sensor's behavior and accuracy
+4. **True Free Measurement**: `p(z = 0 | mₓ,y = 0)`
+   - This is the probability that the sensor measurement `z` indicates the space is free (`z = 0`) given that the grid cell at `(x, y)` is actually free (`mₓ,y = 0`).
+   - This probability is typically high, as the sensor correctly identifies that the space is unoccupied.
 
-## Prior: p(m_x,y)
-- Initial belief about the occupancy of cell (x,y) before considering the sensor data
-- for example  0.5 for occupied and 0.5 Free
-## Evidence: p(z)
-- Probability of getting the sensor measurement z regardless of the cell's state
+By understanding these measurement probabilities, we can use the Bayes filter to update the occupancy estimates in the grid map as the robot moves and collects new sensor data.
 
+### Mapping in real world
 
-#### Measurement Model p(z|m_xy)
-
-In an occupancy grid map, we are trying to estimate whether a grid cell is **occupied** or **free** based on sensor measurements. Here's what each term means:
-
-- **z**: This is the sensor measurement (the reading from a sensor like a LiDAR, sonar, or depth camera). It can take two values:
-  - `z = 1`: The sensor detects that the space is occupied (e.g., the sensor has "hit" an obstacle).
-  - `z = 0`: The sensor detects that the space is free (e.g., the sensor has not detected an obstacle).
-
-
-## True Occupied Measurement: p(z = 1 | mₓ,y = 1)
-
-This is the probability that the sensor measurement **z** detects an obstacle (`z = 1`) given that the grid cell at `(x, y)` is actually occupied (`mₓ,y = 1`).
-
-- **True occupied measurement**: This happens when both the sensor reading and the actual state of the grid cell indicate occupancy (i.e., `z = 1` and `mₓ,y = 1`).
-  - This probability is typically high, meaning if the grid cell is truly occupied, the sensor is very likely to detect it as occupied.
-
-
-
-1. **p(z = 1 | mₓ,y = 1)**
-
-   * This is a **True occupied** measurement: It represents the probability that the sensor measurement **z** indicates the space is occupied (z = 1) given that the grid cell at position (x, y) is actually occupied (mₓ,y = 1).
-
-   * This probability is typically high, meaning the sensor is likely to correctly detect an obstacle when the grid cell is truly occupied.
-
-2. **p(z = 0 | mₓ,y = 1)**
-
-   * This is a **False free** measurement: It represents the probability that the sensor measurement **z** indicates the space is free (z = 0) even though the grid cell at position (x, y) is actually occupied (mₓ,y = 1).
-
-   * This probability is typically low, as it's an error case where the sensor fails to detect an obstacle in an occupied cell.
-
-3. **p(z = 1 | mₓ,y = 0)**
-
-   * This is a **False occupied** measurement: It represents the probability that the sensor measurement **z** indicates the space is occupied (z = 1) even though the grid cell at position (x, y) is actually free (mₓ,y = 0).
-
-   * This probability is typically low, as it's an error case where the sensor falsely detects an obstacle in a free space.
-
-4. **p(z = 0 | mₓ,y = 0)**
-
-   * This is a **True free** measurement: It represents the probability that the sensor measurement **z** indicates the space is free (z = 0) given that the grid cell at position (x, y) is actually free (mₓ,y = 0).
-   * This probability is typically high, as the sensor correctly identifies that the space is unoccupied.
-
-
-**gif for creating map for rahal robot**
-
-
-
+![Mapping GIF](images/mapping2.gif)
 
 # [Next Topic Link]
 
-# References:
+## References:
 
-### [&lt;-Back to main](../README.md)
+- [Back to main](../README.md)
