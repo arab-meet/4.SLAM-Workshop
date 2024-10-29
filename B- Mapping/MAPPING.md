@@ -37,22 +37,27 @@ brain of the robot is computer and the computer can't understand the environment
 
 **image for map**
 
-
 ## Types of Mapping
 
 There are several types of mapping techniques used in mobile robotics:
-1. **Topological Mapping**: Represents the environment as a graph of connected locations(stations).
-![topo map](./images/topological_representation.png)
 
-scale here doesn't need to be accurate becouse of that this representation is lightweight
-but as you can see there is no much details to allow you to go to from green station to red station 
-becouse of that there is useful representation is **metric representation**
+1. **Topological Mapping:** Represents the environment as a graph of connected locations(stations).
+   ![topo map](./images/topological_representation.png)
 
-2. **Metric Mapping**: this representation use precise coordinates like longitude and latitude coordinates but becouse this representation is precise it's pretty sensitive to noise 
-![topo map](./images/world.png)
+scale here doesn't need to be accurate becouse of that this representation is lightweight but as you can see there is no much details to allow you to go to from green station to red station becouse of that there is useful representation is **metric representation**
 
+2. **Metric Mapping:** this representation use precise coordinates like longitude and latitude coordinates but becouse this representation is precise it's pretty sensitive to noise
+   ![topo map](./images/world.png)
 
+3. **Feature-Based mapping:** This mapping technique focuses on specific features or landmarks in the environment. These features are stored as points, lines, or keypoints that we use to define our environment.
 
+<img src="./images/feature_based_mapping.png" />
+
+4. **Occupancy Grid Mapping:** This divides the environment into a grid of cells, with each cell representing whether it's occupied, free, or unknown.
+
+<img src="./images/occupancy_grid_mapping.png" />
+
+> **There's many types of mapping each with it's pros, cons and use cases. we will focus on the most common mapping approach which is occupancy grid mapping.**
 ## Occupancy Grid Maps
 
 Occupancy grid maps are a popular type of metric map used in mobile robotics. They divide the environment into a grid of cells, where each cell represents the probability of that space being occupied by an obstacle.
@@ -138,10 +143,33 @@ This is the probability that the sensor measurement **z** detects an obstacle (`
 **gif for creating map for rahal robot**
 
 
+## Limitation
 
+One noticable limitation for occupancy grid maps which is computational power specially in large environment and if we want to get a high resolution map.
 
-# [Next Topic Link]
+### Computational power v.s. accuracy
+
+let's assume that we have a robot that has a start point and goal point which the robot can reach and we will devide our map into relativly small grids to get a good enough accuracy.
+
+![topo map](./images/small_grid.png)
+
+In the previous image we notice that the robot can reach the goal point after the mapping process but we devided our map to 72 cells which consumes a lot of computational resources.
+
+---
+
+Let's double the size of our grids now we are using just 20 grids for the whole map. we greatly reduced the computational power but we got low accuracy causing our obstacle to block the robot path.
+
+![topo map](./images/big_grid.png)
+
+---
+
+One approach to solve this problem is using grids with different sizes notice here we started with 20 grids to reduce the computational power as much as possible but we know that it won't give us the accuracy that we desire so we devide the occupied grids only into smaller cells since it doesn't have a meaning to devide the empty cells. and we recalculate the values of the divided cells and so on until we reach the accuracy that we need.
+
+we notice here that we reached the same accuracy as the first image with only 44 cells instead of 72. So we reached a good accuracy with low computational power.
+
+![topo map](./images/dynamic_size_grid.png)
 
 # References:
 
 ### [&lt;-Back to main](../README.md)
+
