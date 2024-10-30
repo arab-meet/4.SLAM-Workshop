@@ -122,7 +122,9 @@ The **kidnapped robot problem** resembles global localization but with the added
   - Signal can be blocked or reflected, causing errors.
 
 ### 6. Ultrasonic Sensors
+
 ![alt text](<images/Ultrasonic sensor.png>)
+
 - **Description**: Use sound waves to detect objects.
 
 - **Function**: Measure the time it takes for a sound pulse to return after hitting an object to calculate distance.
@@ -135,7 +137,9 @@ The **kidnapped robot problem** resembles global localization but with the added
   - Limited range and resolution compared to LIDAR.
 
 ### 7. Magnetic Sensors
+
 ![alt text](images/magnetic.png)
+
 - **Description**: Detect magnetic fields to determine orientation or position.
 
 - **Function**: Can be used in environments with established magnetic patterns.
@@ -149,6 +153,7 @@ The **kidnapped robot problem** resembles global localization but with the added
   - Sensitive to electromagnetic interference.
 
 ### 8. Wi-Fi or RFID Positioning
+
 ![alt text](images/rfid.png)
 
 - **Description**: Utilize signal strengths from Wi-Fi access points or RFID tags for indoor localization.
