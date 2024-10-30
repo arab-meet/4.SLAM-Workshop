@@ -1,0 +1,28 @@
+<launch>
+  <!-- Launch the Odometry Publisher Node -->
+  <node pkg="your_package" type="Encoder_Data.py" name="odom_publisher" output="screen">
+    <param name="use_sim_time" value="false" />
+  </node>
+
+  <!-- Launch the Noisy Odometry Publisher Node -->
+  <node pkg="your_package" type="Noisy_Encoder.py" name="noisy_odom_publisher" output="screen">
+    <param name="use_sim_time" value="false" />
+  </node>
+
+  <!-- Launch the Kalman Filter Node -->
+  <node pkg="your_package" type="KF_Noisy_Encoder_Data.py" name="kalman_filter" output="screen">
+    <param name="use_sim_time" value="false" />
+  </node>
+
+  <!-- Launch the IMU Publisher Node -->
+  <node pkg="your_package" type="IMU_Data.py" name="imu_publisher" output="screen">
+    <param name="use_sim_time" value="false" />
+  </node>
+
+  <!-- Launch the Extended Kalman Filter (EKF) Node -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_filter" output="screen">
+    <param name="use_sim_time" value="false" />
+    <param name="config" value="$(find your_package)/config/ekf.yaml" />
+  </node>
+
+</launch>
