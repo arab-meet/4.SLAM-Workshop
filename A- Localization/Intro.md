@@ -150,6 +150,7 @@ The **kidnapped robot problem** resembles global localization but with the added
 
 ### 8. Wi-Fi or RFID Positioning
 ![alt text](images/rfid.png)
+
 - **Description**: Utilize signal strengths from Wi-Fi access points or RFID tags for indoor localization.
 
 - **Function**: Estimate position based on the known locations of signal sources.
