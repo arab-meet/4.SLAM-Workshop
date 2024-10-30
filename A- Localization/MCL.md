@@ -31,6 +31,12 @@ Monte Carlo Localization (MCL) can address both **local localization** and **glo
 
 * **MCL Solution** : Initialize MCL with particles uniformly distributed across the entire map. As the robot moves and collects sensor data, MCL eliminates unlikely positions and converges on the correct location by comparing sensor readings with the map.
 
+### **2.3. Kidnapped Robot Problem:**
+
+* **Problem** : The robot is abruptly relocated to an unknown position in the environment without any awareness of this change.
+
+* **MCL Solution** : MCL can recover from such scenarios by reintroducing random particles into the filter, allowing the algorithm to eventually converge to the new true pose.
+  
 ### **3. Particle Filter**
 
 The key idea of MCL is to represent the robot's belief using a set of samples (particles), drawn according to the posterior distribution over robot poses.
@@ -106,26 +112,61 @@ Each particle includes:
 - **MCL**: Capable of handling both local and global localization problems.
 - **EKF**: Typically limited to local localization due to its unimodal representation.
 
-## 5. Bayes Filter
+#### 4.9. Alternative Filters
+- **Unscented Kalman Filter (UKF)**:
+  - Handles non-linearities better than EKF by using a deterministic sampling technique.
+
+  - Still assumes unimodal Gaussian distributions.
+
+- **FastSLAM**:
+
+  - Combines particle filters with Kalman filters to perform simultaneous localization and mapping (SLAM).
+
+  - Efficient for environments with many landmarks.
+
+## 5. **Bayes Filter**
 
 MCL estimates the posterior distribution of the robot's pose based on sensory information using a recursive **Bayes filter**.
 
 - **Goal**: Estimate the probability density over the state space conditioned on the measurements.
+
 - The posterior probability, or **belief**, is denoted as:
 
-\[
-\text{Bel}(x_t) = P(x_t | z_{1:t}, u_{1:t-1})
-\]
+  \[
+  \text{Bel}(x_t) = P(x_t | z_{1:t}, u_{1:t-1})
+  \]
 
-Where:
+  Where:
 
-- \( x_t \): State of the robot at time \( t \).
-- \( z_{1:t} \): Sequence of observations up to time \( t \).
-- \( u_{1:t-1} \): Sequence of control inputs up to time \( t-1 \).
+  - \( x_t \): State of the robot at time \( t \).
+
+  - \( z_{1:t} \): Sequence of observations up to time \( t \).
+
+  - \( u_{1:t-1} \): Sequence of control inputs up to time \( t-1 \).
 
 <p style="text-align: center;"><img src="images/Posterior.png" width="40%" /></p>
 
-The Bayes filter updates the belief recursively using the motion model and the observation model.
+
+### **Bayes Filter Equations**
+
+**Prediction Step (Motion Update)**:
+
+\[
+\overbrace{P(x_t | z_{1:t-1}, u_{1:t})}^{\text{Predicted Belief}} = \int P(x_t | u_t, x_{t-1}) \cdot \underbrace{P(x_{t-1} | z_{1:t-1}, u_{1:t-1})}_{\text{Previous Belief}} \, dx_{t-1}
+\]
+
+- **Explanation**: The predicted belief at time \( t \) is obtained by integrating over all possible states at time \( t-1 \), considering the motion model \( P(x_t | u_t, x_{t-1}) \) and the previous belief.
+
+**Update Step (Measurement Update)**:
+
+\[
+\overbrace{P(x_t | z_{1:t}, u_{1:t})}^{\text{Updated Belief}} = \eta \cdot P(z_t | x_t) \cdot P(x_t | z_{1:t-1}, u_{1:t})
+\]
+
+- **Explanation**: The updated belief incorporates the likelihood of the new observation \( P(z_t | x_t) \) and normalizes it with \( \eta \) to ensure the probabilities sum to one.
+
+- \( \eta \): Normalization constant.
+
 
 ## 6. MCL Algorithm Explanation and Pseudocode
 
@@ -181,14 +222,97 @@ The Monte Carlo Localization algorithm consists of two main steps in each iterat
 
   - Estimate the robot's pose using the weighted mean or by selecting the particle with the highest weight.
 
-## 7. The AMCL Package in ROS
+
+### **Motion and Measurement Models**
+
+**Motion Model Example (Odometry-Based)**:
+
+\[
+x_t = x_{t-1} + \Delta d \cdot \cos(\theta_{t-1} + \frac{\Delta \theta}{2}) + \epsilon_x
+\]
+
+\[
+y_t = y_{t-1} + \Delta d \cdot \sin(\theta_{t-1} + \frac{\Delta \theta}{2}) + \epsilon_y
+\]
+
+\[
+\theta_t = \theta_{t-1} + \Delta \theta + \epsilon_\theta
+\]
+
+Where:
+
+- \( \Delta d \): Distance traveled.
+
+- \( \Delta \theta \): Change in orientation.
+
+- \( \epsilon_x, \epsilon_y, \epsilon_\theta \): Random noise terms representing motion uncertainty.
+
+**Measurement Model Example (Likelihood Field Model)**:
+
+\[
+P(z_t | x_t) = \prod_{i=1}^{n} P(z_t^i | x_t)
+\]
+
+Where:
+
+- \( z_t^i \): The \( i \)-th sensor measurement at time \( t \).
+
+- \( P(z_t^i | x_t) \): Probability of observing \( z_t^i \) given the particle's state \( x_t \), computed based on the map and sensor characteristics.
+
+### **Algorithm Steps**
+
+```plaintext
+Algorithm MCL:
+
+Initialize particles {x_0^{[k]}, w_0^{[k]}} for k = 1 to M
+
+For each time step t:
+    For each particle k:
+        1. Motion Update:
+            Sample x_t^{[k]} ~ p(x_t | x_{t-1}^{[k]}, u_t)
+        2. Measurement Update:
+            Compute w_t^{[k]} = p(z_t | x_t^{[k]})
+    Normalize weights {w_t^{[k]}}
+    Resample particles based on weights to obtain new set {x_t^{[k]}, w_t^{[k]}}
+    Estimate robot pose from particles
+```
+
+*Algorithm 1: Monte Carlo Localization pseudocode.*
+
+### **Resampling Strategies**
+
+- **Systematic Resampling**: Ensures that each particle is selected proportionally to its weight in a systematic way.
+
+- **Stratified Resampling**: Divides the cumulative weight distribution into equal parts and selects one particle from each.
+
+- **Residual Resampling**: Allocates particles deterministically based on the integer part of their weights and randomly assigns the remaining particles.
+
+## 7. **The Role of Map Representation**
+
+In MCL, the map of the environment is crucial for computing the likelihood of sensor measurements.
+
+- **Occupancy Grid Maps**:
+
+  - Represent the environment as a grid where each cell indicates the probability of being occupied.
+
+  - Used in the sensor model to compare expected measurements with actual sensor readings.
+
+- **Map Usage in MCL**:
+
+  - During the measurement update, each particle's pose is used to predict expected sensor readings based on the map.
+
+  - The difference between expected and actual sensor readings determines the particle's weight.
+
+## 8. **The AMCL Package in ROS**
 
 The **AMCL (Adaptive Monte Carlo Localization)** package provides the `amcl` node in ROS, which implements the MCL algorithm to track a robot's pose in a 2D space.
 
 - **Subscriptions**:
 
   - **Laser Scan Data**: Provides sensor measurements.
+
   - **Map Data**: A pre-existing map of the environment.
+
   - **Transformations (tf)**: Robot's odometry and pose estimates.
 
 - **Publications**:
@@ -200,34 +324,76 @@ On startup, the `amcl` node initializes its particle filter based on provided pa
 **Adaptive Aspect**:
 
 - The "Adaptive" component refers to the algorithm's ability to adjust the number of particles dynamically based on the robot's uncertainty.
+
 - This adaptation improves efficiency by using more particles when the robot's pose is uncertain and fewer particles when the pose is well-defined.
 
 **Reference**: [AMCL ROS Wiki](https://wiki.ros.org/amcl)
 
-## 8. AMCL Tuning
+## 9. **AMCL Tuning**
 
 To optimize the performance of the AMCL algorithm, several parameters can be tuned:
 
 - **Particle Parameters**:
 
   - `min_particles`: Minimum number of particles.
+
   - `max_particles`: Maximum number of particles.
 
 - **Update Parameters**:
 
   - `update_min_d`: Minimum distance traveled before updating.
+
   - `update_min_a`: Minimum angular change before updating.
 
 - **Sensor Model Parameters**:
 
   - `laser_max_range`: Maximum range of the laser scanner.
+
   - `laser_z_hit`: Weight for the match between observed and expected measurements.
+
   - `laser_z_rand`: Weight for random measurements.
 
 - **Motion Model Parameters**:
 
   - `odom_alpha1` to `odom_alpha4`: Parameters defining the noise in the odometry.
 
-Proper tuning involves adjusting these parameters based on the robot's sensors, motion characteristics, and the environment to achieve accurate and efficient localization.
+### **Tuning Strategies**
+
+1. **Start with Default Parameters**: Use default settings as a baseline.
+
+2. **Adjust Particle Numbers**:
+
+   - Increase `min_particles` and `max_particles` if localization is unstable.
+
+   - Decrease to improve computational efficiency when stable.
+
+3. **Modify Update Thresholds**:
+
+   - Set `update_min_d` and `update_min_a` to values that reflect the robot's motion characteristics.
+
+4. **Sensor Model Calibration**:
+
+   - Fine-tune `laser_z_hit`, `laser_z_short`, `laser_z_max`, and `laser_z_rand` to match the actual sensor noise and environment.
+
+5. **Motion Model Calibration**:
+
+   - Adjust `odom_alpha1` to `odom_alpha4` based on the robot's odometry accuracy.
+
+### **Common Pitfalls**
+
+- **Overconfidence in Odometry**: Underestimating odometry noise can lead to filter divergence.
+
+- **Inadequate Particle Spread**: Too few particles can cause the filter to miss the true pose.
+
+## 10. **Potential Limitations of MCL**
+
+- **Computational Load**: High number of particles can be computationally intensive.
+
+- **Parameter Sensitivity**: Performance heavily depends on the choice of parameters.
+
+- **Sensor Dependency**: Relies on accurate sensor models and can be affected by sensor noise and failures.
+
+- **Particle Depletion**: Resampling can lead to loss of particle diversity.
+
 
 [-Back to main](../README.md)
