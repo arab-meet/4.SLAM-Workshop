@@ -171,6 +171,37 @@ The **kidnapped robot problem** resembles global localization but with the added
 
 ---
 
+#### Localization Only
+
+Assuming:
+
+* **Odometry data** has errors (noise).
+* **Laser scans** are 100% accurate.
+* The **map is known**.
+
+In this case:
+
+* The robot's estimated pose from odometry drifts over time.
+* Using laser scans and the known map, the robot can correct its pose by matching observed obstacles with the map.
+
+![localization](image/Localization.png)
+
+#### Correction step
+
+At each time step:
+
+1. **Prediction**: The robot predicts its new pose based on odometry data.
+2. **Observation**: It takes measurements using sensors (e.g., LIDAR).
+3. **Correction**: It compares observations with the known map to correct its pose estimation.
+
+Here the robot starts the movement at the reference frame (0,0) and as we see after the first time step the robot location is (5,-1) but our robot doesn't know this instead he thinks he is at (4.5,1) the laser data is accurate as we said and we have a map of the environment so we know that the obstacle is at (7,3). so when the robot gets the laser measurements it finds that it
+
+![Correction step](image/Correction_step.png)
+
+This process reduces the error in the robot's estimated pose despite noisy odometry.
+
+---
+
 ## Examples and Applications
 
 - **Autonomous Cars**: Use LIDAR and cameras to localize and navigate roads.
