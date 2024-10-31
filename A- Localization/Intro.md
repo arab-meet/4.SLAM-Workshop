@@ -171,7 +171,7 @@ The **kidnapped robot problem** resembles global localization but with the added
 
 ---
 
-#### Localization Only
+## Localization 
 
 Assuming:
 
@@ -184,7 +184,7 @@ In this case:
 * The robot's estimated pose from odometry drifts over time.
 * Using laser scans and the known map, the robot can correct its pose by matching observed obstacles with the map.
 
-![localization](image/Localization.png)
+![localization](images/Localization.png)
 
 #### Correction step
 
@@ -196,7 +196,7 @@ At each time step:
 
 Here the robot starts the movement at the reference frame (0,0) and as we see after the first time step the robot location is (5,-1) but our robot doesn't know this instead he thinks he is at (4.5,1) the laser data is accurate as we said and we have a map of the environment so we know that the obstacle is at (7,3). so when the robot gets the laser measurements it finds that it
 
-![Correction step](image/Correction_step.png)
+![Correction step](images/Correction_step.png)
 
 This process reduces the error in the robot's estimated pose despite noisy odometry.
 
