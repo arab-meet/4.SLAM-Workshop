@@ -179,7 +179,7 @@ The **kidnapped robot problem** resembles global localization but with the added
 
 ---
 
-## Localization 
+## How localization is done
 
 Assuming:
 
