@@ -70,8 +70,6 @@ The **kidnapped robot problem** resembles global localization but with the added
 
 - **Function**: Analyzes changes in the visual input to infer the robot's movement relative to its starting point.
 
-![alt text](images/luxonis.gif)
-
 - **Advantages**:
   - Can provide rich environmental details and work in diverse lighting conditions.
   - Works in diverse lighting conditions with appropriate algorithms.
@@ -178,8 +176,6 @@ The **kidnapped robot problem** resembles global localization but with the added
 
   - Requires infrastructure setup.
   - Less accurate due to signal variability.
-
-- You can know more about **[ Wi-Fi Positioning here](https://www.youtube.com/watch?v=UHp8HMrzTPE&ab_channel=BrickHouseSecurity 'Wi-Fi Positioning')**
 
 ---
 
