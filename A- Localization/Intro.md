@@ -160,6 +160,8 @@ The **kidnapped robot problem** resembles global localization but with the added
 
   - Sensitive to electromagnetic interference.
 
+- You can know more about **[Magnetic Localization here](https://www.youtube.com/watch?v=eKGFctvdA9Y&ab_channel=ZhengxuXia 'Magnetic Localization')**
+
 ### 8. Wi-Fi or RFID Positioning
 
 ![alt text](images/rfid.png)
@@ -176,6 +178,8 @@ The **kidnapped robot problem** resembles global localization but with the added
 
   - Requires infrastructure setup.
   - Less accurate due to signal variability.
+
+- You can know more about **[ Wi-Fi Positioning here](https://www.youtube.com/watch?v=UHp8HMrzTPE&ab_channel=BrickHouseSecurity 'Wi-Fi Positioning')**
 
 ---
 
@@ -228,9 +232,3 @@ This process reduces the error in the robot's estimated pose despite noisy odome
 
 - *Introduction to Autonomous Mobile Robots* by Roland Siegwart, Illah Nourbakhsh, and Davide Scaramuzza.
 - *Probabilistic Robotics* by Sebastian Thrun, Wolfram Burgard, and Dieter Fox.
-
-**for more about**:
-
-- [Magnetic Localization](https://www.youtube.com/watch?v=eKGFctvdA9Y&ab_channel=ZhengxuXia 'Magnetic Localization')
-
-- [ Wi-Fi Positioning](https://www.youtube.com/watch?v=UHp8HMrzTPE&ab_channel=BrickHouseSecurity 'Wi-Fi Positioning') 
