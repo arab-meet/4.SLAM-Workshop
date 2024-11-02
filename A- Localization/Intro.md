@@ -10,6 +10,8 @@ Reviwer: Khalid Gabr
 
 - **Probabilistic Methods:** Algorithms like **Monte Carlo Localization**, represent the robot's belief about its position using probability distributions, accounting for uncertainty and noise in sensor measurements.
   
+  ![alt text](images/intellectsoft.gif)
+
 - **Filtering Techniques:** Filters such as the **Kalman Filter** and **Extended Kalman Filter (EKF)** estimate the robot's current state by combining prior knowledge with new measurements, effectively reducing uncertainty.
 
 This theory helps robots navigate complex environments by continuously updating and correcting their position in real-time.
@@ -51,6 +53,8 @@ The **kidnapped robot problem** resembles global localization but with the added
 
 - **Function**: Provides precise distance measurements to obstacles, which can be used to compare with a known map to estimate the robot’s position.
 
+![](images/learnopencv.gif)
+
 - **Advantages**: High accuracy and can detect obstacles even in cluttered environments.
 
 - **Limitations** :
@@ -65,6 +69,8 @@ The **kidnapped robot problem** resembles global localization but with the added
 - **Description**: Uses visual data from cameras to estimate movement and orientation.
 
 - **Function**: Analyzes changes in the visual input to infer the robot's movement relative to its starting point.
+
+![alt text](images/luxonis.gif)
 
 - **Advantages**:
   - Can provide rich environmental details and work in diverse lighting conditions.
@@ -83,6 +89,8 @@ The **kidnapped robot problem** resembles global localization but with the added
 - **Description**: Measures acceleration and angular velocity.
 
 - **Function**: Helps in tracking changes in orientation and movement, complementing odometry data to improve localization accuracy.
+
+![alt text](images/spikenzielabs.gif)
 
 - **Advantages**:
   - Provides additional information about the robot’s movement that can be useful in dynamic environments.
@@ -220,3 +228,9 @@ This process reduces the error in the robot's estimated pose despite noisy odome
 
 - *Introduction to Autonomous Mobile Robots* by Roland Siegwart, Illah Nourbakhsh, and Davide Scaramuzza.
 - *Probabilistic Robotics* by Sebastian Thrun, Wolfram Burgard, and Dieter Fox.
+
+**for more about**:
+
+- [Magnetic Localization](https://www.youtube.com/watch?v=eKGFctvdA9Y&ab_channel=ZhengxuXia 'Magnetic Localization')
+
+- [ Wi-Fi Positioning](https://www.youtube.com/watch?v=UHp8HMrzTPE&ab_channel=BrickHouseSecurity 'Wi-Fi Positioning') 
