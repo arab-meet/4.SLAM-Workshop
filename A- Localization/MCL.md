@@ -199,9 +199,11 @@ The Monte Carlo Localization algorithm consists of two main steps in each iterat
 
 ### **6.2. Motion and Measurement Models**
 
-### 6.3. Motion Model Example (Odometry-Based)
+In Monte Carlo Localization (MCL), motion and measurement models are vital for estimating a robot's position. The motion model predicts how particles change states based on control inputs, while the measurement model evaluates the likelihood of sensor readings given those states. Together, they enable the algorithm to update particle weights and refine the robot's localization effectively.
 
-#### 1. Position Update:
+#### 6.2.1. Motion Model Example (Odometry-Based)
+
+**1. Position Update:**
 
 - **X-coordinate:**
 
@@ -210,7 +212,7 @@ The Monte Carlo Localization algorithm consists of two main steps in each iterat
 
   y_t = y_{t-1} + Δd * sin(θ_{t-1} + (Δθ / 2)) + ε_y
 
-#### 2. Orientation Update:
+**2. Orientation Update:**
 
   θ_t = θ_{t-1} + Δθ + ε_θ
 
@@ -220,7 +222,7 @@ The Monte Carlo Localization algorithm consists of two main steps in each iterat
 - Δθ: Change in orientation.
 - ε_x, ε_y, ε_θ: Random noise terms representing motion uncertainty.
 
-### 6.4. Measurement Model Example (Likelihood Field Model)
+#### 6.2.2. Measurement Model Example (Likelihood Field Model)
 
 The measurement model is expressed as:
 
@@ -230,7 +232,7 @@ The measurement model is expressed as:
 
 <p style="text-align: center;"><img src="images/sympols.png" /></p>
 
-### **6.5. Algorithm Steps**
+### **6.3. Pseudocode for the algorithm**
 
 ```plaintext
 Algorithm MCL:
@@ -250,7 +252,7 @@ For each time step t:
 
 *Algorithm 1: Monte Carlo Localization pseudocode.*
 
-### **6.6. Resampling Strategies**
+### **6.4. Resampling Strategies**
 
 - **Systematic Resampling**: Ensures that each particle is selected proportionally to its weight in a systematic way.
 - **Stratified Resampling**: Divides the cumulative weight distribution into equal parts and selects one particle from each.
