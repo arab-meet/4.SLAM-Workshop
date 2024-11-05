@@ -77,7 +77,7 @@ rosdep install --from-paths src --ignore-src -r -y
 
 First thing, we will use launch Rahal Robot in the last world we have created .`br`
 
-1. clone rahal_discription_pkg into your catkin_ws by following the instructions in this** *[Link](https://github.com/arab-meet/Rahal_Robot/tree/master)***
+1. clone rahal_discription_pkg into your catkin_ws by following the instructions in this ***[Lin](https://github.com/arab-meet/Rahal_Robot/tree/master)[k](https://github.com/arab-meet/Rahal_Robot/tree/master)***
 2. launch the gazebo world that includes Rahal Robot
 
  `	roslaunch rahal_description_pkg rahal_gazebo_world.launch  `
@@ -219,7 +219,6 @@ This will launch the teleop_twist_keyboard node, allowing you to control the rob
 **Now we are ready to build Map:**
 
 <img src="image/mapping.gif" width="100%">
-
 
 ![mapping2](image/mapping2.gif)
 
