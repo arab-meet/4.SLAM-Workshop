@@ -22,11 +22,7 @@ A  **node** , also known as a  **vertex** , is a fundamental unit in a graph tha
 * **In social networks** : Nodes stand for individuals or organizations.
 * **In robotics and SLAM** : Nodes correspond to the robot's poses at different points in time.
 
-Each node in a graph can contain additional information or attributes. In pose graph optimization, a node typically includes:
-
-* **Position (x, y, z coordinates)** : The estimated location of the robot in space.
-* **Orientation (roll, pitch, yaw angles)** : The robot's facing direction.
-* **Sensor Data** : Associated measurements taken at that pose, such as LiDAR scans or camera images.
+Each node in a graph can contain additional information or attributes.
 
 ### Edges (Links)
 
