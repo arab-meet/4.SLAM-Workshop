@@ -1,33 +1,45 @@
-
 # Mapping
 
 Author: mo3taz , Eng Wafaa
 
-## Understanding the Mapping Problem
+## What is Mapping
 
-### Imagine you are a pirate
+- In localization, our goal was to estimate the robot's pose in a known environment. We achieved this by assuming a map is known. However, if a map is unavailable and the robot needs to navigate in an unexplored area, like another planet, our goal shifts from estimating the robot's pose to creating the map itself. This task of generating a map in an unknown environment is called *mapping*.
+- 
 
-![Pirate](./images/pirate.jpg)
+## Mapping vs Localization
 
-### And your goal is to find treasure
+### **Localization**
 
-![Treasure](./images/treasure.jpg)
+* **Assumption** : The robot operates in a **known map** of the environment.
+* **Estimation** : The goal is to estimate the **robot's trajectory** or pose (position and orientation) within this known map.
 
-### What would you need to get to the treasure?
+Localization answers the question: *“Where is the robot within this map?”*
 
-The answer is a **map**.
+As discussed in the localization sessions that this process requires a pre-existing, accurate map of the environment. Localization algorithms typically use probabilistic methods like the  **Kalman Filter**  or **Monte Carlo Localization** to estimate the robot's position .
 
-![Map](./images/map.jpg)
+### **Mapping**
 
-This is the same problem that a robot faces. It needs a map to know where it is (localization) and where it will go.
+* **Assumption** : The **robot's trajectory** or path is known
+* **Estimation** : The goal is to create or update a **map** of the environment.
 
-### Robots Without a Map
+Mapping answers the question: *“What does the environment look like?”*
 
-![Where am I?](./images/where_am_i.gif)
+In mapping, the robot explores the environment to build a representation With a known trajectory, the mapping process focuses on compiling sensor data over time to accurately depict obstacles, free spaces, or key landmarks. Mapping typically uses data from LiDAR or cameras and fuses it with motion data to ensure the generated map is coherent and up-to-date.
 
-Because of this, we need a map of our environment to allow robots to know their location on this map.
+<img src="images/map_vs_loc.png" width="50%">
 
-The robot's "brain" is a computer, and the computer can't understand the environment as it is. We need to convert this environment into something that the computer can understand, like `0` or `1`. This is a map - a digital representation of the environment.
+## Importance of Mapping
+
+Mapping is essential for mobile robots, as it provides a foundational understanding of the environment, enabling safe navigation, obstacle avoidance, and path planning. With a map, robot can localize itself, efficiently plan routes, and make informed decisions based on the surroundings. In dynamic environments, mapping allows the robot to update his knowledge, adapting to changes and avoiding obstacles.
+
+For Exmaple if the robot is asked to move something from Room A to Room B if the map has no changes every thing will work well
+
+<img src="images/map1.png" width="50%">
+
+In case there is a change in the map the robot will not be updated so will get stucked
+
+<img src="images/map2.png" width = "50%" />
 
 ## Types of Mapping
 
@@ -35,14 +47,12 @@ There are several types of mapping techniques used in mobile robotics:
 
 1. **Topological Mapping**: Represents the environment as a graph of connected locations (stations).
 
-   ![Topological Representation](./images/topological_representation.png)
+   <img src="images/topological_representation.png" height="20%" width = "40%" />
 
    The scale here doesn't need to be accurate, so this representation is lightweight. However, as you can see, there is not much detail to allow the robot to go from the green station to the red station. Because of this, a more useful representation is **Metric Mapping**.
-
 2. **Metric Mapping**: This representation uses precise coordinates, like longitude and latitude coordinates. But because this representation is precise, it's pretty sensitive to noise.
 
    ![Metric Mapping](./images/world.png)
-
 3. **Feature-Based mapping:** This mapping technique focuses on specific features or landmarks in the environment. These features are stored as points, lines, or keypoints that we use to define our environment.
 
 <img src="./images/feature_based_mapping.png" />
@@ -72,24 +82,9 @@ So, it's working as follows: each cell will have an occupancy variable:
 
 ![Occupancy Grid Map](./images/ogm_map.png)
 
-### Probability
+The robot will move across this map and collect measurements
 
-![Bayes' Rule](./images/Bayes_Rule.png)
-
-**Posterior: p(m(x,y)|z)**
-- Probability that a cell (x,y) is occupied given the sensor measurement z
-- This is what we want to calculate for each cell in the grid map
-
-**Likelihood: p(z|m(x,y))**
-- Probability of getting the sensor measurement z if the cell (x,y) is occupied
-- Models the sensor's behavior and accuracy
-
-**Prior: p(m(x,y))**
-- Initial belief about the occupancy of cell (x,y) before considering the sensor data
-- For example, 0.5 for occupied and 0.5 for free
-
-**Evidence: p(z)**
-- Probability of getting the sensor measurement z regardless of the cell's state
+<img src="images/map3.png"  />
 
 ### Measurement Model p(z|m(x,y))
 
@@ -107,22 +102,111 @@ This is the probability that the sensor measurement **z** detects an obstacle (`
   - This probability is typically high, meaning if the grid cell is truly occupied, the sensor is very likely to detect it as occupied.
 
 1. **p(z = 1 | m(x,y) = 1)**
+
    - This is a **True occupied** measurement: It represents the probability that the sensor measurement **z** indicates the space is occupied (`z = 1`) given that the grid cell at position `(x, y)` is actually occupied (`m(x,y) = 1`).
    - This probability is typically high, meaning the sensor is likely to correctly detect an obstacle when the grid cell is truly occupied.
-
 2. **p(z = 0 | m(x,y) = 1)**
+
    - This is a **False free** measurement: It represents the probability that the sensor measurement **z** indicates the space is free (`z = 0`) even though the grid cell at position `(x, y)` is actually occupied (`m(x,y) = 1`).
    - This probability is typically low, as it's an error case where the sensor fails to detect an obstacle in an occupied cell.
-
 3. **p(z = 1 | m(x,y) = 0)**
+
    - This is a **False occupied** measurement: It represents the probability that the sensor measurement **z** indicates the space is occupied (`z = 1`) even though the grid cell at position `(x, y)` is actually free (`m(x,y) = 0`).
    - This probability is typically low, as it's an error case where the sensor falsely detects an obstacle in a free space.
-
 4. **p(z = 0 | m(x,y) = 0)**
+
    - This is a **True free** measurement: It represents the probability that the sensor measurement **z** indicates the space is free (`z = 0`) given that the grid cell at position `(x, y)` is actually free (`m(x,y) = 0`).
    - This probability is typically high, as the sensor correctly identifies that the space is unoccupied.
 
-### Mapping look like: 
+### Probability
+
+![Bayes' Rule](./images/Bayes_Rule.png)
+
+**Posterior: p(m(x,y)|z)**
+
+- Probability that a cell (x,y) is occupied given the sensor measurement z
+- This is what we want to calculate for each cell in the grid map
+
+**Likelihood: p(z|m(x,y))**
+
+- Probability of getting the sensor measurement z if the cell (x,y) is occupied
+- Models the sensor's behavior and accuracy
+
+**Prior: p(m(x,y))**
+
+- Initial belief about the occupancy of cell (x,y) before considering the sensor data
+- For example, 0.5 for occupied and 0.5 for free
+
+**Evidence: p(z)**
+
+- Probability of getting the sensor measurement z regardless of the cell's state
+
+There is an easier method to calculate the probability except the bayes rule so there is a method called log-odd method so applying the odd of the bayes rule will result the following :
+
+<img src="images/map4.png"  width = "75%"/>
+
+**what is odd ?**
+
+<img src="images/map6.png"  width = "75%"/>
+
+So the new log odd will equal the measurements + the old log odd
+
+<img src="images/map5.png" width = "75%" />
+
+### The  Measurements Model in log-odd form :
+
+<img src="images/map7.png" width = "75%" />
+
+## OCuupancy Grid Map Algorithm
+
+<img src="images/OGM.png" width = "75%" height = "75%"/>
+
+What happens that the algorithm implements as mentioned the binary bayes filter to estimate the ocuupancy value of each cell
+
+<img src="images/Algorithm.png" width = "75%" height = "75%"/>
+
+## Occupancy Grid Mapping Algorithm
+
+The Occupancy Grid Mapping algorithm updates a grid-based map based on sensor data to estimate which areas are occupied or free.
+
+#### Inputs:
+
+- **Previous occupancy probabilities** \(l_{t-1,i}\): The probabilities of occupancy from the previous timestep.
+- **Robot's position** \(x_t\): The current position of the robot.
+- **Sensor reading** \(z_t\): The latest sensor data.
+
+#### Loop Over Cells:
+
+For each cell \(m_i\) in the map:
+
+1. **If** \(m_i\) is within the sensor's range:
+
+   - Update the occupancy probability using the **Inverse Sensor Model**.
+   - To update the log-odds probability ( l_{t,i} ) for a cell using the Inverse Sensor Model, the following formula is used:
+
+   <img src="images/formula.png" width = "75%" />
+2. **If** \(m_i\) is **not** in the sensor's range:
+
+   - Keep its previous probability.
+
+#### Result:
+
+An updated map that shows occupied and free cells based on the latest sensor data, allowing the robot to better understand its environment.
+
+## Example
+
+**Note** : this example supposed that black is for free cells and white is for occupied cells
+
+<img src="images/ex1.png" width = "75%" />
+
+<img src="images/ex2.png" width = "75%" />
+
+<img src="images/ex3.png" width = "75%" />
+
+<img src="images/ex4.png" width = "75%" height = "75%" />
+
+### Mapping look like:
+
 ![mapping 2](images/mapping2.gif)
 
 ## Limitation
@@ -153,5 +237,13 @@ we notice here that we reached the same accuracy as the first image with only 44
 
 # References:
 
-### [&lt;-Back to main](../README.md)
+https://ras.papercept.net/images/temp/IROS/files/3776.pdf 
 
+https://www.cs.uml.edu/~holly/teaching/4510and5490/fall2017/Lecture-Occupancy-Grid-Mapping.pdf
+
+https://www.youtube.com/watch?v=x_Ah685BFEQ
+
+https://www.udacity.com/course/robotics-software-engineer--nd209
+
+
+### [&lt;-Back to main](../README.md)
