@@ -56,6 +56,7 @@ Each particle includes:
 
 <p style="text-align: center;"><p style="text-align: center;"><img src="images/MCL5.png"  width="75%" >
 
+
 ## **4. MCL vs. Kalman Filter(KF)**
 
 <p style="text-align: center;"><p style="text-align: center;"><img src="images/MCL3.png" />
@@ -122,16 +123,6 @@ MCL estimates the posterior distribution of the robot's pose based on sensory in
 - **Goal**: Estimate the probability density over the state space conditioned on the measurements.
 - The posterior probability, or **belief**, is denoted as:
 
-  \[
-  \text{Bel}(x_t) = P(x_t | z_{1:t}, u_{1:t-1})
-  \]
-
-  Where:
-
-  - \( x_t \): State of the robot at time \( t \).
-  - \( z_{1:t} \): Sequence of observations up to time \( t \).
-  - \( u_{1:t-1} \): Sequence of control inputs up to time \( t-1 \).
-
 <p style="text-align: center;"><img src="images/Posterior.png" width="40%" /></p>
 
 ### **Bayes Filter Equations**
@@ -148,6 +139,10 @@ MCL estimates the posterior distribution of the robot's pose based on sensory in
 
 - **Explanation**: The updated belief incorporates the likelihood of the new observation \( P(z_t | x_t) \) and normalizes it with \( \eta \) to ensure the probabilities sum to one.
 - \( \eta \): Normalization constant.
+
+## Dive Deep in Algorithm 
+
+[Visualized Algorithm](images/Visualized_Algorithm.pdf)
 
 ## 6. MCL Algorithm Explanation and Pseudocode
 
@@ -197,68 +192,7 @@ The Monte Carlo Localization algorithm consists of two main steps in each iterat
 
   - Estimate the robot's pose using the weighted mean or by selecting the particle with the highest weight.
 
-### **6.2. Motion and Measurement Models**
-
-In Monte Carlo Localization (MCL), motion and measurement models are vital for estimating a robot's position. The motion model predicts how particles change states based on control inputs, while the measurement model evaluates the likelihood of sensor readings given those states. Together, they enable the algorithm to update particle weights and refine the robot's localization effectively.
-
-#### 6.2.1. Motion Model Example (Odometry-Based)
-
-**1. Position Update:**
-
-- **X-coordinate:**
-
-  x_t = x_{t-1} + Δd * cos(θ_{t-1} + (Δθ / 2)) + ε_x
-- **Y-coordinate:**
-
-  y_t = y_{t-1} + Δd * sin(θ_{t-1} + (Δθ / 2)) + ε_y
-
-**2. Orientation Update:**
-
-  θ_t = θ_{t-1} + Δθ + ε_θ
-
-**Where**:
-
-- Δd: Distance traveled.
-- Δθ: Change in orientation.
-- ε_x, ε_y, ε_θ: Random noise terms representing motion uncertainty.
-
-#### 6.2.2. Measurement Model Example (Likelihood Field Model)
-
-The measurement model is expressed as:
-
-<p style="text-align: center;"><img src="images/measurement_model.png" /></p>
-
-**Where**:
-
-<p style="text-align: center;"><img src="images/sympols.png" /></p>
-
-### **6.3. Pseudocode for the algorithm**
-
-```plaintext
-Algorithm MCL:
-
-Initialize particles {x_0^{[k]}, w_0^{[k]}} for k = 1 to M
-
-For each time step t:
-    For each particle k:
-        1. Motion Update:
-            Sample x_t^{[k]} ~ p(x_t | x_{t-1}^{[k]}, u_t)
-        2. Measurement Update:
-            Compute w_t^{[k]} = p(z_t | x_t^{[k]})
-    Normalize weights {w_t^{[k]}}
-    Resample particles based on weights to obtain new set {x_t^{[k]}, w_t^{[k]}}
-    Estimate robot pose from particles
-```
-
-*Algorithm 1: Monte Carlo Localization pseudocode.*
-
-### **6.4. Resampling Strategies**
-
-- **Systematic Resampling**: Ensures that each particle is selected proportionally to its weight in a systematic way.
-- **Stratified Resampling**: Divides the cumulative weight distribution into equal parts and selects one particle from each.
-- **Residual Resampling**: Allocates particles deterministically based on the integer part of their weights and randomly assigns the remaining particles.
-
-## 7. **The Role of Map Representation**
+### 7. **The Role of Map Representation**
 
 In MCL, the map of the environment is crucial for computing the likelihood of sensor measurements.
 
