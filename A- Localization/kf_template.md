@@ -165,16 +165,31 @@ These steps are repeated recursively with each new measurement.
 
 ## 4. **Mathematical Foundations**
 
+#############################
+
 ### **4.1. State Representation**
 
 The system's state at any time $ k $ is represented by a vector $ \mathbf{x}_k $.
+The state vector:
 
-**Example (1D motion)**:
+$\mathbf{x}_k = \begin{bmatrix} p \\ v \end{bmatrix}$
+
+**Example**:
+
+1. 1D motion:
 
 $\mathbf{x}_k = \begin{bmatrix} x_k \\ \dot{x}_k \end{bmatrix}$
 
 - $ x_k $: Position at time $ k $.
 - $\dot{x}_k $: Velocity at time $ k $.
+
+2. 2D motion:
+
+$\mathbf{x}_k=\begin{bmatrix}x_k\\ y_k\\ \dot x_k \\ \dot y_k \end{bmatrix}\ \ \ \ \ \ or \ \ \ \ \ \ \mathbf{x}_k=\begin{bmatrix}x_k\\\dot x_k\\ y_k\\\dot y_k\end{bmatrix}$
+
+3. 3D motion
+
+$\mathbf{x}_k=\begin{bmatrix}x_k\\ y_k\\ z_k\\\dot x_k\\\dot y_k\\\dot z_k\end{bmatrix}\ \ \ \ \ \ or\ \ \ \ \ \ \mathbf{x}_k=\begin{bmatrix}x_k\\\dot x_k\\ y_k\\\dot y_k\\ z_k\\\dot z_k\end{bmatrix}$
 
 ### **4.2. Process Model**
 
@@ -231,6 +246,196 @@ Determines how much the new measurement influences the state estimate.
 
 ---
 
+#########################################
+
+### **4.1. State Representation**
+
+The system's state at any time $ k $ is represented by a vector $\mathbf{X^{'}}_k$
+The state vector:
+
+$\mathbf{X^{'}}_k = \begin{bmatrix}  p^{'}_k \\ v^{'}_k \end{bmatrix}$
+
+- $ p^{'}_k  $: Position at time $ k $.
+- $v^{'}_k$: Velocity at time $ k $.
+
+**Example**:
+
+1. 1D motion:
+   $\mathbf{X^{'}} = \begin{bmatrix} p^{'}_{x} \\ v^{'}_{x} \end{bmatrix}$
+2. 2D motion:
+   $\mathbf{X^{'}}=\begin{bmatrix}p^{'}_{x}\\ p^{'}_{y}\\ v^{'}_x \\ v^{'}_y \end{bmatrix}$
+
+### **4.2. Process Model**
+
+Describes how the state evolves over time.
+
+**State Transition Equation**:
+
+$$
+\mathbf{X^{'}}_k = \mathbf{A}\mathbf{X}_{k-1} + \mathbf{B}\mathbf{U}_k + \mathbf{W}_k
+$$
+
+###- $ \mathbf{A} $: State transition matrix.
+
+- $ \mathbf{B} $: Control input matrix.####
+- $ \mathbf{U}_k $: Control input at time $ k $.
+- $ \mathbf{W}_k $: Process noise (zero-mean Gaussian with covariance $ \mathbf{Q}$).
+
+$$
+\mathbf{W}\sim \mathbf{N}(0,\mathbf{Q})
+$$
+
+**Example 1 (constant velocity model 1-d motion)**:
+*The state Vector :*
+
+$$
+\mathbf{X} = \begin{bmatrix} p \\ v \end{bmatrix}
+$$
+
+*Linear motion :*
+
+$$
+p^{'}=p+v\Delta t\\ v^{'}=0+v
+$$
+
+*State Transition matrix :*
+
+$$
+\mathbf{X^{'}}=\begin{bmatrix}p^{'}\\ v^{'}\end{bmatrix}=\begin{bmatrix}1&\Delta t\\0&1\end{bmatrix}\begin{bmatrix}p\\ v\end{bmatrix}
+$$
+
+**Example 2 (constant velocity model 2-d Linear motion):**
+
+$$
+\mathbf{X^{'}}=\mathbf{A}\mathbf{x} + \mathbf{B}\mathbf{U}_k + \mathbf{W}_k
+$$
+
+$$
+p^{'}_{x}=p_{x}+v_{x}\Delta t\\ p^{'}_{y}=p_{y}+v_{y}\Delta t\\ v^{'}_{x}=v_{x}\\ v^{'}_{y}=v_{y}
+$$
+
+*State Transition matrix :*
+
+$$
+\mathbf{X^{'}}=\begin{bmatrix}p^{'}_x\\p^{'}_y\\ v^{'}_x\\ v^{'}_y\end{bmatrix}=\begin{bmatrix}1&0&\Delta t &0 \\0&1&0&\Delta t\\0&0&1&0\\0&0&0&1\end{bmatrix}\begin{bmatrix}p_x\\ p_y\\ v_x\\ v_y\end{bmatrix}
+$$
+
+**Example 3 (constant acceleration model 2-d motion)**:
+
+$$
+\mathbf{X^{'}}=\mathbf{A}\mathbf{x} + \mathbf{B}\mathbf{U}_k + \mathbf{W}_k
+$$
+
+*Linear motion :*
+
+$$
+p^{'}_{x}=p_x+v_x\Delta t+\frac{1}{2}a_x\Delta t^{2}\\ ~\\ p^{'}_y=p_y+v_y\Delta t+\frac{1}{2}a_y\Delta t^{2}\\~\\ v^{'}_{x}=v_x+a_x\Delta t\\~\\ v^{'}_{y}=v_y+a_y\Delta t
+$$
+
+*State Transition matrix :*
+
+$$
+\mathbf{X^{'}}=\begin{bmatrix}p^{'}_x\\ p^{'}_y\\ v^{'}_x\\ v^{'}_y\end{bmatrix}=\begin{bmatrix}1&0&\Delta t &0 \\0&1&0&\Delta t\\0&0&1&0\\0&0&0&1\end{bmatrix}\begin{bmatrix}p_x\\ p_y\\ v_x\\ v_y\end{bmatrix}+
+\begin{bmatrix}\frac{1}{2}\Delta t^2 &0\\0&\frac{1}{2}\Delta t^2\\\Delta t & 0\\0&\Delta t\end{bmatrix} \begin{bmatrix}a_x\\ a_y\end{bmatrix}
+$$
+
+**Example 4 (constant acceleration model 3-d motion)**:
+
+$$
+\mathbf{X^{'}}=\mathbf{A}\mathbf{x} + \mathbf{B}\mathbf{U}_k + \mathbf{W}_k
+$$
+
+*Linear motion :*
+
+$$
+p^{'}_{x}=p_x+v_x\Delta t+\frac{1}{2}a_x\Delta t^{2}\\ ~\\ p^{'}_y=p_y+v_y\Delta t+\frac{1}{2}a_y\Delta t^{2}\\ ~\\ p^{'}_{z}=p_z+v_z\Delta t+\frac{1}{2}a_z\Delta t^{2}\\ ~\\ v^{'}_{x}=v_x+a_x\Delta t\\~\\ v^{'}_{y}=v_y+a_y\Delta t \\ ~\\ v^{'}_{z}=v_z+a_z\Delta t
+$$
+
+*State Transition matrix :*
+
+$$
+\mathbf{X^{'}}=\begin{bmatrix}p^{'}_x\\ p^{'}_y\\ p^{'}_z\\ v^{'}_x\\ v^{'}_y\\ v^{'}_z\end{bmatrix}
+=\begin{bmatrix}1&0&0&\Delta t &0&0\\0&1&0&0&\Delta t &0\\0&0&1&0&0&\Delta t \\0&0&0&1&0&0\\0&0&0&0&1&0\\0&0&0&0&0&1\end{bmatrix}\begin{bmatrix}p_x\\ p_y\\ p_z\\ v_x\\ v_y\\ v_y\end{bmatrix}+\begin{bmatrix}\frac{1}{2}\Delta t^2 &0&0\\0&\frac{1}{2}\Delta t^2&0\\0&0&\frac{1}{2} \Delta t^2 \\\Delta t &0&0\\0&\Delta t & 0\\0&0&\Delta t \end{bmatrix}\begin{bmatrix}a_{x}\\ a_{y}\\ a_{z}\end{bmatrix}
+$$
+
+### **4.3. Measurement Model**
+
+Relates the state to the measurements.
+
+**Measurement Equation**:
+
+$$
+\mathbf{Y}_k = \mathbf{C}\mathbf{X^{*}}_k + \mathbf{Z}_k
+$$
+
+- $ \mathbf{Y}_k $: Measurement at time $ k $.
+- $ \mathbf{C} $: Measurement matrix.
+- $ \mathbf{Z}_k $: Measurement noise (zero-mean Gaussian with covariance $ \mathbf{R} $).
+
+$$
+\mathbf{Z}\sim \mathbf{N}(0,\mathbf{R})
+$$
+
+**Example 1 (1d-motion)**:
+
+$$
+\mathbf{Y}_k = \mathbf{C}\mathbf{X^{*}}_k + \mathbf{Z}_k
+$$
+
+If we only measure position:
+
+$$
+\mathbf{C} = \begin{bmatrix} 1 & 0 \end{bmatrix}
+$$
+
+*The measurement function:*
+
+$$
+\mathbf{Y}=\begin{bmatrix} 1 & 0 \end{bmatrix}\begin{bmatrix}p^{'}\\ v^{'}\end{bmatrix}
+$$
+
+**Example 2 (2d-motion)**:
+If we only measure position:
+
+$$
+\mathbf{C}=\begin{bmatrix}1 &0&0&0\\0&1&0&0\end{bmatrix}
+$$
+
+*The measurement function:*
+
+$$
+\mathbf{Y}=\begin{bmatrix}p_x\\ p_y \\ v_x \\ v_y\end{bmatrix}=\begin{bmatrix}1 &0&0&0\\0&1&0&0\end{bmatrix}\begin{bmatrix}p^{'}_x\\ p^{'}_y\\ v^{'}_x\\v^{'}_y\end{bmatrix}
+$$
+
+####################
+
+### **4.4. Covariance Matrices**
+
+- **Process Noise Covariance $( \mathbf{Q} )$**: Uncertainty in the process model.
+- **Measurement Noise Covariance $( \mathbf{R} )$**: Uncertainty in the measurements.
+- **Error Covariance $( \mathbf{P}_k )$**: Uncertainty in the state estimate.
+  ##########
+
+### **4.5. Kalman Gain $(\mathbf{k} )$**
+
+Determines how much the new measurement influences the state estimate.
+
+$$
+\mathbf{K} = \frac{\mathbf{E_{EST}}}{\mathbf{E_{EST}}+\mathbf{E_{MEA}}}
+$$
+
+Error In Estimate = $\mathbf{E_{EST}}$
+Error In Measurement = $\mathbf{E_{MEA}}$
+
+$$
+K= \frac{Variance ~ in ~ Estimate}{Variance~in~Estimate \quad + \quad Variance ~ in ~ Measurement}
+$$
+
+* note : $0< K<1$
+  ![0<kg<1](images/0<kg<1.png)
+
+---
+
 ## 5. **The Kalman Filter Algorithm**
 
 At each time step $ k $, perform the following steps:
@@ -240,12 +445,12 @@ At each time step $ k $, perform the following steps:
 - **State Prediction**:
 
   $$
-  \mathbf{\hat{x}}_{k|k-1} = \mathbf{A}\mathbf{\hat{x}}_{k-1|k-1} + \mathbf{B}\mathbf{u}_k
+  \mathbf{X^{'}}_k=\mathbf{A}\mathbf{X}_{k-1}+\mathbf{B}\mathbf{U}_k+\mathbf{W}_k
   $$
 - **Error Covariance Prediction**:
 
   $$
-  \mathbf{P}_{k|k-1} = \mathbf{A}\mathbf{P}_{k-1|k-1}\mathbf{A}^T + \mathbf{Q}
+  \mathbf{P^{'}}_{k} = \mathbf{A}\mathbf{P}_{k-1}\mathbf{A}^T + \mathbf{Q}_k
   $$
 
 ### **5.2. Update Step**
@@ -253,18 +458,20 @@ At each time step $ k $, perform the following steps:
 - **Kalman Gain Calculation**:
 
   $$
-  \mathbf{K}_k = \mathbf{P}_{k|k-1} \mathbf{H}^T (\mathbf{H}\mathbf{P}_{k|k-1}\mathbf{H}^T + \mathbf{R})^{-1}
+  \mathbf{K}_k =\frac{\mathbf{P}_k \mathbf{H}}{\mathbf{H}\mathbf{P^{'}}_k\mathbf{H^T} + \mathbf{R}}
   $$
 - **State Update**:
 
   $$
-  \mathbf{\hat{x}}_{k|k} = \mathbf{\hat{x}}_{k|k-1} + \mathbf{K}_k (\mathbf{z}_k - \mathbf{H}\mathbf{\hat{x}}_{k|k-1})
+  \mathbf{X}_k = \mathbf{X^{'}}_k + \mathbf{K}_k (\mathbf{Y}_k - \mathbf{H}\mathbf{X^{'}}_k)
   $$
 - **Error Covariance Update**:
 
   $$
-  \mathbf{P}_{k|k} = (\mathbf{I} - \mathbf{K}_k \mathbf{H}) \mathbf{P}_{k|k-1}
+  \mathbf{P}_k = (\mathbf{I} - \mathbf{K}_k \mathbf{H}) \mathbf{P}_{k|k-1}
   $$
+
+  ![kf_over_view.png](images/kf_over_view.png)
 
 ---
 
@@ -276,10 +483,10 @@ At each time step $ k $, perform the following steps:
 
 Estimate the temperature of a room using noisy thermometer readings.
 
-- **Initial Estimate**: $\hat{T}_0 = 20^\circ \text{C}$
-- **Initial Estimate Variance**:$P_0 = 4^\circ \text{C}^2 $
-- **Measurement Variance**: $R = 9^\circ \text{C}^2 $
-- **Measurements**: $ z_1 = 23^\circ \text{C}, z_2 = 21^\circ \text{C}, z_3 = 22^\circ \text{C} $
+- **Initial Estimate**: $\hat{T}_0 = 68^\circ \text{C}$
+- **Initial Estimate Variance**:$P_0 = 2^\circ \text{C}^2 $
+- **Measurement Variance**: $R = 4^\circ \text{C}^2 $
+- **Measurements**: $ Y_1 = 75^\circ \text{C}, Y_2 = 71^\circ \text{C}, Y_3 = 70^\circ \text{C} $
 
 **Solution**:
 
@@ -290,23 +497,33 @@ Assume no process noise $( Q = 0 )$ and no control input $( u = 0 )$.
 - **Prediction**:
 
   $$
-  \hat{T}_{1|0} = \hat{T}_0 = 20^\circ \text{C}\\ ~\\
-  P_{1|0} = P_0 = 4^\circ \text{C}^2
+  \hat{T}_{1|0} = \hat{T}_0 = 68^\circ \text{C}\\ ~\\
+  P_{1|0} = P_0 = 2^\circ \text{C}
   $$
 - **Kalman Gain**:
 
 $$
-K_1 = \frac{P_{1|0}}{P_{1|0} + R} = \frac{4}{4 + 9} = 0.3077
+K_1 = \frac{P_{1|0}}{P_{1|0} + R} = \frac{2}{2 + 4} = 0.33
 $$
 
 - **Update**:
 
   $$
-  \hat{T}_{1|1} = \hat{T}_{1|0} + K_1(z_1 - \hat{T}_{1|0}) = 20 + 0.3077 \times 3 = 20.9231^\circ \text{C} \\ ~\\
-  P_{1|1} = (1 - K_1) P_{1|0} = 0.6923 \times 4 = 2.7692^\circ \text{C}^2
+  \hat{T}_{1|1} = \hat{T}_{1|0} + K_1(Y_1 - \hat{T}_{1|0}) = 68 + 0.33 (75-68) = 70.33^\circ \text{C} \\ ~\\
+  P_{1|1} = (1 - K_1) P_{1|0} =(1-0.33)(2) = 1.33^\circ \text{C}
   $$
 
-Repeat these steps for $ z_2 $ and $ z_3 $.
+Repeat these steps for $ Y_2 $ and $ Y_3 $.
+
+|                    $k$                    | $Y_k$ | $R$ | $\hat{T}_k$ | $P_{k-1}$ | $K$    | $P_k$  |
+| :------------------------------------------: | ------- | ----- | ------------- | ----------- | -------- | -------- |
+|                   $t-1$                   |         |       | $68$        | $2$       |          |          |
+|                    $t$                    | $75$  | $4$ | $70.33$     |             | $0.33$ | $1.33$ |
+|                   $t+1$                   | $71$  | $4$ | $70.50$     |             | $0.25$ | $1.00$ |
+|                   $t+2$                   | $70$  | $4$ | $70.40$     |             | $0.20$ | $0.80$ |
+|                   $t+3$                   | $74$  | $4$ | $71$        |             | $0.17$ | $0.66$ |
+
+![single_kf_graph](images/single_kf_graph.png)
 
 ### **6.2. 2D Tracking Example**
 
