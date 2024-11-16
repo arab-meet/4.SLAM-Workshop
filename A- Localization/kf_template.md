@@ -164,90 +164,6 @@ These steps are repeated recursively with each new measurement.
 ![Kalman filter process](images/Kalman_filter_process_1.png)
 
 ## 4. **Mathematical Foundations**
-
-#############################
-
-### **4.1. State Representation**
-
-The system's state at any time $ k $ is represented by a vector $ \mathbf{x}_k $.
-The state vector:
-
-$\mathbf{x}_k = \begin{bmatrix} p \\ v \end{bmatrix}$
-
-**Example**:
-
-1. 1D motion:
-
-$\mathbf{x}_k = \begin{bmatrix} x_k \\ \dot{x}_k \end{bmatrix}$
-
-- $ x_k $: Position at time $ k $.
-- $\dot{x}_k $: Velocity at time $ k $.
-
-2. 2D motion:
-
-$\mathbf{x}_k=\begin{bmatrix}x_k\\ y_k\\ \dot x_k \\ \dot y_k \end{bmatrix}\ \ \ \ \ \ or \ \ \ \ \ \ \mathbf{x}_k=\begin{bmatrix}x_k\\\dot x_k\\ y_k\\\dot y_k\end{bmatrix}$
-
-3. 3D motion
-
-$\mathbf{x}_k=\begin{bmatrix}x_k\\ y_k\\ z_k\\\dot x_k\\\dot y_k\\\dot z_k\end{bmatrix}\ \ \ \ \ \ or\ \ \ \ \ \ \mathbf{x}_k=\begin{bmatrix}x_k\\\dot x_k\\ y_k\\\dot y_k\\ z_k\\\dot z_k\end{bmatrix}$
-
-### **4.2. Process Model**
-
-Describes how the state evolves over time.
-
-**State Transition Equation**:
-
-$$
-\mathbf{x}_k = \mathbf{A}\mathbf{x}_{k-1} + \mathbf{B}\mathbf{u}_k + \mathbf{w}_k
-$$
-
-- $ \mathbf{A} $: State transition matrix.
-- $ \mathbf{B} $: Control input matrix.
-- $ \mathbf{u}_k $: Control input at time $ k $.
-- $ \mathbf{w}_k $: Process noise (zero-mean Gaussian with covariance $ \mathbf{Q} $).
-
-**Example (constant velocity model)**:
-
-$$
-\mathbf{A} = \begin{bmatrix} 1 & \Delta t \\ 0 & 1 \end{bmatrix}
-$$
-
-### **4.3. Measurement Model**
-
-Relates the state to the measurements.
-
-**Measurement Equation**:
-
-$$
-\mathbf{z}_k = \mathbf{H}\mathbf{x}_k + \mathbf{v}_k
-$$
-
-- $ \mathbf{z}_k $: Measurement at time $ k $.
-- $ \mathbf{H} $: Measurement matrix.
-- $ \mathbf{v}_k $: Measurement noise (zero-mean Gaussian with covariance $ \mathbf{R} $).
-
-**Example**:
-
-If we only measure position:
-
-$$
-\mathbf{H} = \begin{bmatrix} 1 & 0 \end{bmatrix}
-$$
-
-### **4.4. Covariance Matrices**
-
-- **Process Noise Covariance $( \mathbf{Q} )$**: Uncertainty in the process model.
-- **Measurement Noise Covariance $( \mathbf{R} )$**: Uncertainty in the measurements.
-- **Error Covariance $( \mathbf{P}_k )$**: Uncertainty in the state estimate.
-
-### **4.5. Kalman Gain $(\mathbf{k} )$**
-
-Determines how much the new measurement influences the state estimate.
-
----
-
-#########################################
-
 ### **4.1. State Representation**
 
 The system's state at any time $ k $ is represented by a vector $\mathbf{X^{'}}_k$
@@ -407,25 +323,15 @@ $$
 \mathbf{Y}=\begin{bmatrix}p_x\\ p_y \\ v_x \\ v_y\end{bmatrix}=\begin{bmatrix}1 &0&0&0\\0&1&0&0\end{bmatrix}\begin{bmatrix}p^{'}_x\\ p^{'}_y\\ v^{'}_x\\v^{'}_y\end{bmatrix}
 $$
 
-####################
-
 ### **4.4. Covariance Matrices**
 
 - **Process Noise Covariance $( \mathbf{Q} )$**: Uncertainty in the process model.
 - **Measurement Noise Covariance $( \mathbf{R} )$**: Uncertainty in the measurements.
 - **Error Covariance $( \mathbf{P}_k )$**: Uncertainty in the state estimate.
-  ##########
 
 ### **4.5. Kalman Gain $(\mathbf{k} )$**
 
 Determines how much the new measurement influences the state estimate.
-
-$$
-\mathbf{K} = \frac{\mathbf{E_{EST}}}{\mathbf{E_{EST}}+\mathbf{E_{MEA}}}
-$$
-
-Error In Estimate = $\mathbf{E_{EST}}$
-Error In Measurement = $\mathbf{E_{MEA}}$
 
 $$
 K= \frac{Variance ~ in ~ Estimate}{Variance~in~Estimate \quad + \quad Variance ~ in ~ Measurement}
@@ -515,13 +421,13 @@ $$
 
 Repeat these steps for $ Y_2 $ and $ Y_3 $.
 
-|                    $k$                    | $Y_k$ | $R$ | $\hat{T}_k$ | $P_{k-1}$ | $K$    | $P_k$  |
-| :------------------------------------------: | ------- | ----- | ------------- | ----------- | -------- | -------- |
-|                   $t-1$                   |         |       | $68$        | $2$       |          |          |
-|                    $t$                    | $75$  | $4$ | $70.33$     |             | $0.33$ | $1.33$ |
-|                   $t+1$                   | $71$  | $4$ | $70.50$     |             | $0.25$ | $1.00$ |
-|                   $t+2$                   | $70$  | $4$ | $70.40$     |             | $0.20$ | $0.80$ |
-|                   $t+3$                   | $74$  | $4$ | $71$        |             | $0.17$ | $0.66$ |
+|  $k$  | $Y_k$ | $R$ | $\hat{T}_k$ | $P_{k-1}$ | $K$    | $P_k$  |
+| :-----: | ------- | ----- | ------------- | ----------- | -------- | -------- |
+| $t-1$ |         |       | $68$        | $2$       |          |          |
+|  $t$  | $75$  | $4$ | $70.33$     |             | $0.33$ | $1.33$ |
+| $t+1$ | $71$  | $4$ | $70.50$     |             | $0.25$ | $1.00$ |
+| $t+2$ | $70$  | $4$ | $70.40$     |             | $0.20$ | $0.80$ |
+| $t+3$ | $74$  | $4$ | $71$        |             | $0.17$ | $0.66$ |
 
 ![single_kf_graph](images/single_kf_graph.png)
 
