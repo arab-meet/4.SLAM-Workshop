@@ -8,6 +8,9 @@ How can you combine these noisy GPS measurements with your understanding of the 
 
 The **Kalman Filter** is a mathematical tool that helps solve this problem. It provides a way to optimally estimate the true state (like position and velocity) of a dynamic system by combining measurements and a model, even when both are imperfect.
 
+<p align="center">
+  <img src="images/Kf_intro.jpg">
+</p>
 ---
 
 ## 2. **Fundamental Concepts**
@@ -164,6 +167,7 @@ These steps are repeated recursively with each new measurement.
 ![Kalman filter process](images/Kalman_filter_process_1.png)
 
 ## 4. **Mathematical Foundations**
+
 ### **4.1. State Representation**
 
 The system's state at any time $ k $ is represented by a vector $\mathbf{X^{'}}_k$
