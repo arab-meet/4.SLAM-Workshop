@@ -27,7 +27,7 @@ Before diving into the Kalman Filter, let's revisit some key statistical concept
 Suppose you have five coins: two worth 5 cents and three worth 10 cents.
 
 $$
-\mu = \frac{1}{N} \sum _{n=1}^{N}V_{n}=\frac{5 + 5 + 10 + 10 + 10}{5} = \frac{40}{5} = 8 \text{ cents}
+\mu = \frac{1}{N} \sum _ {n=1}^{N}V _{n}=\frac{5 + 5 + 10 + 10 + 10}{5} = \frac{40}{5} = 8 \text{ cents}
 $$
 
 Now, imagine you measure a person's weight five times due to slight variations in the scale:
@@ -41,7 +41,7 @@ Now, imagine you measure a person's weight five times due to slight variations i
 The estimated true weight is:
 
 $$
-E[w] =\frac{1}{N} \sum _{n=1}^{N}W_{n}= \frac{79.8 + 80.0 + 80.1 + 79.8 + 80.2}{5} = 79.98 \text{ kg}
+E[w] =\frac{1}{N} \sum _ {n=1}^{N}W _{n}= \frac{79.8 + 80.0 + 80.1 + 79.8 + 80.2}{5} = 79.98 \text{ kg}
 $$
 
 ### **2.2. Variance $( \sigma^2)$ and Standard Deviation $(\sigma )$**
@@ -72,13 +72,13 @@ Both teams have the same mean height, but Team A has a higher variance, indicati
 3. Divide by the number of players.
 
 $$
-\sigma_{A}^2 = \frac{1}{N} \sum _{n=1}^{N} \left( x_{A_n}-  \mu  \right) ^{2}= \frac{(1.89 - 1.914)^2 + \dots + (1.85 - 1.914)^2}{5}=0.014m^{2}
+\sigma_{A}^2 = \frac{1}{N} \sum _ {n=1}^{N} \left( x _{A_n}-  \mu  \right) ^{2}= \frac{(1.89 - 1.914)^2 + \dots + (1.85 - 1.914)^2}{5}=0.014m^{2}
 $$
 
 **Variance for Team B**:
 
 $$
-\sigma_{B}^2 = \frac{1}{N} \sum _{n=1}^{N} \left( x_{B_n}-  \mu  \right) ^{2}= \frac{(1.94 - 1.914)^2 + \dots + (1.87 - 1.914)^2}{5}=0.0013m^{2}
+\sigma_{B}^2 = \frac{1}{N} \sum _ {n=1}^{N} \left( x _{B_n}-  \mu  \right) ^{2}= \frac{(1.94 - 1.914)^2 + \dots + (1.87 - 1.914)^2}{5}=0.0013m^{2}
 $$
 
 **Calculating the standard deviation for Team A**:
@@ -86,13 +86,13 @@ $$
 1. take the square root of the variance
 
 $$
-\sigma_{A} =\sqrt{\frac{1}{N} \sum _{n=1}^{N} \left( x_{A_n}-  \mu  \right) ^{2}}=\sqrt{0.014}=0.12m
+\sigma_{A} =\sqrt{\frac{1}{N} \sum _ {n=1}^{N} \left( x _{A_n}-  \mu  \right) ^{2}}=\sqrt{0.014}=0.12m
 $$
 
 **Standard deviation for Team B**:
 
 $$
-\sigma_{B} =\sqrt{\frac{1}{N} \sum _{n=1}^{N} \left( x_{B_n}-  \mu  \right) ^{2}}=\sqrt{0.0013}=0.036m
+\sigma_{B} =\sqrt{\frac{1}{N} \sum _ {n=1}^{N} \left( x_ {B_n}-  \mu  \right) ^{2}}=\sqrt{0.0013}=0.036m
 $$
 
 ### **2.3. Normal Distribution (Gaussian Distribution)**
@@ -192,7 +192,7 @@ Describes how the state evolves over time.
 **State Transition Equation**:
 
 $$
-\mathbf{X^{'}}_k = \mathbf{A}\mathbf{X}_{k-1} + \mathbf{B}\mathbf{U}_k + \mathbf{W}_k
+\mathbf{X^{'}}_ k = \mathbf{A}\mathbf{X} _{k-1} + \mathbf{B}\mathbf{U}_k + \mathbf{W}_k
 $$
 
 ###- $ \mathbf{A} $: State transition matrix.
@@ -231,7 +231,7 @@ $$
 $$
 
 $$
-p^{'}_{x}=p_{x}+v_{x}\Delta t\\ p^{'}_{y}=p_{y}+v_{y}\Delta t\\ v^{'}_{x}=v_{x}\\ v^{'}_{y}=v_{y}
+p^{'}_{x}=p_{x}+v_{x}\Delta t\\ p^{'}_ {y}=p _ {y}+v _ {y}\Delta t\\ v^{'}_{x}=v_{x}\\ v^{'}_ {y}=v _{y}
 $$
 
 *State Transition matrix :*
