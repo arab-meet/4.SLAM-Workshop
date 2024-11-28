@@ -129,7 +129,7 @@ A random variable represents a numerical outcome of a random process. In our con
 - **Low Precision, Low Accuracy**: Darts are spread out and away from the bullseye.
   ![AccuracyAndPrecision](images/AccuracyAndPrecision.png)
 
-in summery
+In summery
 ----------
 
 A measurement is a **random variable**, described by the **Probability Density Function (PDF)**.
@@ -143,7 +143,7 @@ The dispersion of the distribution is the measurement **precision, also known as
 
 ---
 
-## 3. **Understanding the Kalman Filter**
+## 3. **Understanding The Kalman Filter**
 
 ### **3.1. What is the Kalman Filter?**
 
