@@ -11,7 +11,6 @@ The **Kalman Filter** is a mathematical tool that helps solve this problem. It p
 <p align="center">
   <img src="images/Kf_intro.jpg">
 </p>
----
 
 ## 2. **Fundamental Concepts**
 
