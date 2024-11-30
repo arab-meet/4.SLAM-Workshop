@@ -109,6 +109,8 @@ $$
 - Approximately 68% of values fall within one standard deviation of the mean.
 - Approximately 95% fall within two standard deviations.
 - Approximately 99.7% fall within three standard deviations.
+
+  
   ![gaussian distribution](images/Gaussian_Distribution_3.png)
 
 ### **2.4. Random Variables**
