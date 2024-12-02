@@ -3,7 +3,7 @@
 ## [A- Localization](A-%20Localization/Localization_Topics.md)
   * localization problem (local localization , global localization)
   * localization theory
-  * solve localiztion problem algorizmes (amcl from start to end)
+  * solve localiztion problem algorithmes (amcl from start to end)
   * localization noise explain with hardware encoder and imu or noise script
   * sensors used in localization
   * solve localization noise with ekf or pose ekf (from kf to ekf)
