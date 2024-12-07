@@ -1,6 +1,6 @@
 # Mapping
 
-Author: mo3taz , Eng Wafaa
+Author: Eng mo3taz ,Eng Wafaa , Eng Youssef
 Review: KG
 
 ## What is Mapping
@@ -175,7 +175,6 @@ The algorithm implements a binary Bayes filter to estimate the occupancy value o
 
 ![Occupancy Grid Map](./images/OGM.png)
 
-
 The steps are as follows:
 
 <img src="images/Algorithm.png" width = "75%" height = "75%"/>
@@ -223,7 +222,6 @@ An updated map that shows occupied and free cells based on the latest sensor dat
 ### How Mapping Looks in Action
 
 ![mapping 2](images/mapping2.gif)
-
 
 **Resolution**
 
