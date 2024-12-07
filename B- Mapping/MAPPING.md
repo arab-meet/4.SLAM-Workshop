@@ -8,7 +8,7 @@ Review: KG
 - In localization, our goal was to estimate the robot's pose in a known environment. We achieved this by assuming a map is known. However, if a map is unavailable and the robot needs to navigate in an unexplored area, like another planet, our goal shifts from estimating the robot's pose to creating the map itself. This task of generating a map in an unknown environment is called *mapping*.
 
 > In practice, mapping often assumes that we know the robot's trajectory. However, this trajectory is not always directly given. It can be estimated through odometry, external tracking systems, or as part of a **Simultaneous Localization and Mapping (SLAM)** process, where both the robot’s pose and the map are estimated together.
-> 
+
 ## Mapping vs Localization
 
 ### **Localization**
@@ -90,7 +90,7 @@ The robot will move across this map and collect measurements
 
 ### Measurement Model p(z|m(x,y))
 
-In an occupancy grid map, we are trying to estimate whether a grid cell is **occupied** or **free** based on sensor measurements. 
+In an occupancy grid map, we are trying to estimate whether a grid cell is **occupied** or **free** based on sensor measurements.
 
 - **z**: This is the sensor measurement (the reading from a sensor like LiDAR, sonar, or depth camera). It can take two values:
   - `z = 1`: The sensor detects that the space is occupied (e.g., the sensor has "hit" an obstacle).
@@ -144,7 +144,6 @@ Because direct application of Bayes’ rule for each cell can be computationally
 
 - **Log-odds:** A way to represent probabilities to make Bayesian updates simpler. Instead of dealing with probabilities directly, we deal with their log-odds, and updating them becomes additive rather than multiplicative.
 
-
 <img src="images/map4.png"  width = "75%"/>
 
 **what is odd ?**
@@ -152,25 +151,36 @@ Because direct application of Bayes’ rule for each cell can be computationally
 <img src="images/map6.png"  width = "75%"/>
 
 So, the new log odds after incorporating a measurement equals the old log odds plus the contribution from the measurement.
+**Odd posterior with Bayes Rule**
+
+<img src="images/odd.png"  width = "75%"/>
+
+<img src="images/odd2.png"  width = "75%"/>
+
+**Result**
+
+So the new log odd will equal the measurements + the old log odd
+
+<img src="images/map4.png"  width = "75%"/>
 
 <img src="images/map5.png" width = "75%" />
 
-### The  Measurements Model in log-odd form 
+### The  Measurements Model in log-odd form
 
 <img src="images/map7.png" width = "75%" />
 
 ## Occupancy Grid Map Algorithm
 
 The algorithm implements a binary Bayes filter to estimate the occupancy value of each cell:
-<img src="images/OGM.png" width = "75%" height = "75%"/>
+
+![Occupancy Grid Map](./images/OGM.png)
+
 
 The steps are as follows:
 
 <img src="images/Algorithm.png" width = "75%" height = "75%"/>
 
 ## Occupancy Grid Mapping Algorithm
-
-
 
 #### Inputs
 
@@ -214,6 +224,11 @@ An updated map that shows occupied and free cells based on the latest sensor dat
 
 ![mapping 2](images/mapping2.gif)
 
+
+**Resolution**
+
+<img src="images/map_res.png" width = "75%" />
+
 ## Limitation
 
 One noticable limitation for occupancy grid maps which is computational power specially in large environment and if we want to get a high resolution map.
@@ -242,13 +257,12 @@ we notice here that we reached the same accuracy as the first image with only 44
 
 # References:
 
-https://ras.papercept.net/images/temp/IROS/files/3776.pdf 
+https://ras.papercept.net/images/temp/IROS/files/3776.pdf
 
 https://www.cs.uml.edu/~holly/teaching/4510and5490/fall2017/Lecture-Occupancy-Grid-Mapping.pdf
 
 https://www.youtube.com/watch?v=x_Ah685BFEQ
 
 https://www.udacity.com/course/robotics-software-engineer--nd209
-
 
 ### [&lt;-Back to main](../README.md)
