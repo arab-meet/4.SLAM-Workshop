@@ -8,7 +8,7 @@
   * sensors used in localization
   * solve localization noise with ekf or pose ekf (from kf to ekf)
 
-## [B- Mapping](B-%20Mapping/Occupancy%20Grid%20Mapping.md)
+## [B- Mapping](B-%20Mapping/MAPPING.md)
   * Mapping problem
   * Mapping ocupency theory and types (ocupency grid map)
   * sensors used in mapping 
