@@ -1,4 +1,3 @@
-
 # Grid-Based FastSLAM(Gmapping)
 
 Author: Wafaa Mohamed
@@ -25,7 +24,7 @@ Review : KG
 
 * *Assumption* : Sensor Data
 * *Estimation* : Map and Robot's Poses (Trajectory)
-  
+
 ### SLAM Algorithms
 
 SLAM algorithms can be categorized into several types, each with its own approach to solving the SLAM problem. Examples include:
@@ -46,7 +45,6 @@ Common algorithms used for localization include:
 * **Monte Carlo Localization (MCL):**
 
   * MCL uses a particle filter to maintain a set of particles, each representing a possible pose of the robot.
-
   * The robot updates these particles based on motion commands and sensor measurements.
   * Particles that are inconsistent with sensor data are given low weights and are less likely to be propagated.
   * Over time, the particles converge to represent the most probable pose of the robot.
@@ -141,6 +139,8 @@ In landmark-based FastSLAM, each landmark is estimated independently using EKFs.
 
 ![Particle Filter](images/Particle_Filter.png)
 
+<img src="images/slam1.png"  />
+
 ## 3.3. Occupancy Grid Mapping Algorithm
 
 - In **Grid-Based FastSLAM**, instead of landmarks, we use an occupancy grid map.
@@ -198,6 +198,8 @@ The joint posterior over robot poses and maps is factorized as:
 p(x_{0:t}, m | z_{1:t}, u_{1:t}) = p(m | x_{0:t}, z_{1:t}) \cdot p(x_{0:t} | z_{1:t}, u_{1:t})
 \]
 
+<img src="images/slam6.png" alt="Occupancy Grid Mapping" />
+
 ### Robot Trajectory
 
 - Estimated using a particle filter.
@@ -210,6 +212,9 @@ p(x_{0:t}, m | z_{1:t}, u_{1:t}) = p(m | x_{0:t}, z_{1:t}) \cdot p(x_{0:t} | z_{
 ## The Algorithm
 
 The Grid-Based FastSLAM algorithm involves three main steps for each particle \( k \):
+
+<img src="images/slam2.png"  />
+
 
 1. **Sampling Motion Model**: Sample the new pose \( x_t^{[k]} \) based on the previous pose \( x_{t-1}^{[k]} \) and control input \( u_t \).
    \[
@@ -227,8 +232,8 @@ The Grid-Based FastSLAM algorithm involves three main steps for each particle \(
 ### Algorithm Steps
 
 1. **Initialization**: Generate \( M \) particles with initial poses and maps.
-
 2. **For each time step \( t \)**:
+
    - **For each particle \( k \)**:
      - **Motion Update**: Sample new pose \( x_t^{[k]} \) from the motion model.
      - **Measurement Update**:
@@ -238,8 +243,9 @@ The Grid-Based FastSLAM algorithm involves three main steps for each particle \(
    - **Resampling**:
      - Normalize the weights \( w_t^{[k]} \).
      - Resample particles based on their weights to form a new particle set.
-
 3. **Output**: The estimated map and the most probable robot trajectory.
+
+<img src="images/slam3.png"  />
 
 ### Resampling Step
 
@@ -259,6 +265,5 @@ The Grid-Based FastSLAM algorithm involves three main steps for each particle \(
   - When a loop closure is detected, Gmapping adjusts the robot's estimated trajectory and updates the map to improve accuracy.
 
 <img src="images/loop_closure.png" alt="Loop Closure in Gmapping" width="600" height="500"/>
-
 
 ### [&lt;-Back to main](../../README.md)
