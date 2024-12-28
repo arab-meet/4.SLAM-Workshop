@@ -199,7 +199,7 @@ The system's state at any time $ k $ is represented by a vector $\mathbf{X^{'}}_
 The state vector:
 
 <p align="center">
-  <img src="images/state_vector.jpg" width="20%">
+  <img src="images/state_vector.jpg" width="15%">
 </p>
 
 
@@ -211,13 +211,13 @@ The state vector:
 1. 1D motion:
 <p align="center">
   <img src="images/1d_state_vector.jpg
-" width="20%">
+" width="15%">
 </p>
 
 2. 2D motion:
 <p align="center">
   <img src="images/2d_state_vector.jpg
-" width="20%">
+" width="15%">
 </p>
 
 ### **4.2. Process Model**
@@ -226,7 +226,7 @@ Describes how the state evolves over time.
 
 **State Transition Equation**:
 <p align="center">
-  <img src="images/State_Transition_Equation.jpg" width="40%">
+  <img src="images/State_Transition_Equation.jpg" width="30%">
 </p>
 
 - $ \mathbf{A} $: State transition matrix.
@@ -235,7 +235,7 @@ Describes how the state evolves over time.
 - $ \mathbf{W}_k $: Process noise (zero-mean Gaussian with covariance $ \mathbf{Q}$).
 
 <p align="center">
-  <img src="images/Process_noise.jpg" width="15%">
+  <img src="images/Process_noise.jpg" width="10%">
 </p>
 
 
@@ -244,30 +244,30 @@ Describes how the state evolves over time.
 *The state Vector :*
 
 <p align="center">
-  <img src="images/The_state_Vector_ex1.jpg" width="15%">
+  <img src="images/The_state_Vector_ex1.jpg" width="10%">
 </p>
 
 *Linear motion :*
 <p align="center">
-  <img src="images/Linear_motion_ex1.jpg" width="20%">
+  <img src="images/Linear_motion_ex1.jpg" width="15%">
 </p>
 
 *State Transition matrix :*
 <p align="center">
-  <img src="images/State_Transition_matrix_ex1.jpg" width="35%">
+  <img src="images/State_Transition_matrix_ex1.jpg" width="30%">
 </p>
 
 **Example 2 (constant velocity model 2-d Linear motion):**
 <p align="center">
-  <img src="images/Process_Model.jpg" width="50%">
+  <img src="images/Process_Model.jpg" width="40%">
 </p>
 
 *State Transition Equation*
 <p align="center">
-  <img src="images/State_Transition_Equation_ex2.jpg" width="40%"> 
+  <img src="images/State_Transition_Equation_ex2.jpg" width="30%"> 
 </p>
 <p align="center">
-  <img src="images/State_Transition_Equation_ex2_.jpg" width="30%"> 
+  <img src="images/State_Transition_Equation_ex2_.jpg" width="20%"> 
 </p>
 
 *State Transition matrix :*
@@ -279,35 +279,35 @@ Describes how the state evolves over time.
 **Example 3 (constant acceleration model 2-d motion)**:
 
 <p align="center">
-  <img src="images/State_Transition_Equation_ex3.jpg" width="40%"> 
+  <img src="images/State_Transition_Equation_ex3.jpg" width="30%"> 
 </p>
 
 *Linear motion :*
 
 <p align="center">
-  <img src="images/Linear_motion_ex3.jpg" width="35%"> 
+  <img src="images/Linear_motion_ex3.jpg" width="30%"> 
 </p>
 
 *State Transition matrix :*
 
 <p align="center">
-  <img src="images/State_Transition_matrix_ex3.jpg" width="80%"> 
+  <img src="images/State_Transition_matrix_ex3.jpg" width="60%"> 
 </p>
 
 **Example 4 (constant acceleration model 3-d motion)**:
 <p align="center">
-  <img src="images/State_Transition_Equation.jpg" width="40%">
+  <img src="images/State_Transition_Equation.jpg" width="30%">
 </p>
 
 *Linear motion :*
 <p align="center">
-  <img src="images/Linear_motion_ex4.jpg" width="40%">
+  <img src="images/Linear_motion_ex4.jpg" width="30%">
 </p>
 
 *State Transition matrix :*
 
 <p align="center">
-  <img src="images/State_Transition_matrix_ex_4.jpg" width="90%">
+  <img src="images/State_Transition_matrix_ex_4.jpg" width="80%">
 </p>
 
 ### **4.3. Measurement Model**
@@ -316,7 +316,7 @@ Relates the state to the measurements.
 
 **Measurement Equation**:
 <p align="center">
-  <img src="images/Measurement_Equation.jpg" width="25%">
+  <img src="images/Measurement_Equation.jpg" width="20%">
 </p>
 
 - $ \mathbf{Y}_k $: Measurement at time $ k $.
@@ -324,36 +324,36 @@ Relates the state to the measurements.
 - $ \mathbf{Z}_k $: Measurement noise (zero-mean Gaussian with covariance $ \mathbf{R} $).
 
 <p align="center">
-  <img src="images/Measurement_noise.jpg" width="20%">
+  <img src="images/Measurement_noise.jpg" width="15%">
 </p>
 
 **Example 1 (1d-motion)**:
 <p align="center">
-  <img src="images/Measurement_Equation.jpg" width="25%">
+  <img src="images/Measurement_Equation.jpg" width="20%">
 </p>
 
 If we only measure position:
 
 <p align="center">
-  <img src="images/Measurement_matrix.jpg" width="20%">
+  <img src="images/Measurement_matrix.jpg" width="15%">
 </p>
 
 *The measurement function:*
 <p align="center">
-  <img src="images/The_measurement _function_ex1.jpg" width="20%">
+  <img src="images/The_measurement _function_ex1.jpg" width="15%">
 </p>
 
 **Example 2 (2d-motion)**:
 
 If we only measure position:
 <p align="center">
-  <img src="images/Measurement_matrix_ex2.jpg" width="25%">
+  <img src="images/Measurement_matrix_ex2.jpg" width="20%">
 </p>
 
 *The measurement function:*
 
 <p align="center">
-  <img src="images/The_measurement_function_ex2.jpg" width="40%">
+  <img src="images/The_measurement_function_ex2.jpg" width="30%">
 </p>
 
 ### **4.4. Covariance Matrices**
@@ -364,26 +364,26 @@ If we only measure position:
 There is a true state that we want to know the value of but unfortunately we have to measure it with a noisy sensor.
 
 <img src="images/measurement_noise_1.jpg
-" width="80%">
+" width="70%">
 
 - **Error Covariance $( \mathbf{P}_k )$**: Uncertainty in the state estimate.
 
-<img src="images/covariance_matrix.png" width="80%">
+<img src="images/covariance_matrix.png" width="70%">
 
 ### **4.5. Kalman Gain $(\mathbf{k} )$**
 
 Determines how much the new measurement influences the state estimate.
 
 <p align="center">
-  <img src="images/Kalman_Gain.jpg" width="90%">
+  <img src="images/Kalman_Gain.jpg" width="80%">
 </p>
 
 * note : $0< K<1$
 <p align="right">
-  <img src="images/0<kg<1.png" width="80%">
+  <img src="images/0<kg<1.png" width="70%">
 </p>
 
-<img src="images/KG.jpg" width="100%">
+<img src="images/KG.jpg" width="90%">
 
 ## 5. **The Kalman Filter Algorithm**
 
@@ -393,31 +393,31 @@ At each time step $ k $, perform the following steps:
 
 - **State Prediction**:
 <p align="center">
-  <img src="images/State_Transition_Equation.jpg" width="40%">
+  <img src="images/State_Transition_Equation.jpg" width="30%">
 </p>
 
 - **Error Covariance Prediction**:
 
 <p align="center">
-  <img src="images/Error_Covariance_Prediction.jpg" width="40%">
+  <img src="images/Error_Covariance_Prediction.jpg" width="30%">
 </p>
 
 ### **5.2. Update Step**
 
 - **Kalman Gain Calculation**:
 <p align="center">
-  <img src="images/kalman_gain.jpg" width="35%">
+  <img src="images/kalman_gain.jpg" width="25%">
 </p>
 
 - **State Update**:
 <p align="center">
-  <img src="images/State_Update.jpg" width="40%">
+  <img src="images/State_Update.jpg" width="30%">
 </p>
 
 - **Error Covariance Update**:
 
 <p align="center">
-  <img src="images/Error_Covariance_Update.jpg" width="40%">
+  <img src="images/Error_Covariance_Update.jpg" width="30%">
 </p>
 
 ---
@@ -444,17 +444,17 @@ Assume no process noise $( Q = 0 )$ and no control input $( u = 0 )$.
 - **Prediction**:
 Prediction_ex_tem.jpg
 <p align="center">
-  <img src="images/Prediction_ex_tem.jpg" width="25%">
+  <img src="images/Prediction_ex_tem.jpg" width="20%">
 </p>
 
 - **Kalman Gain**:
 <p align="center">
-  <img src="images/Kalman_Gain_ex_tem.jpg" width="40%">
+  <img src="images/Kalman_Gain_ex_tem.jpg" width="30%">
 </p>
 
 - **Update**:
 <p align="center">
-  <img src="images/Update_ex_tem.jpg" width="80%">
+  <img src="images/Update_ex_tem.jpg" width="70%">
 </p>
 
 Repeat these steps for $ Y_2 $ and $ Y_3 $.
@@ -477,43 +477,43 @@ Track an object's position and velocity in 1D space with noisy position measurem
 * Given :
 
 <p align="center">
-  <img src="images/Given_1d_track.jpg" width="40%"> 
+  <img src="images/Given_1d_track.jpg" width="30%"> 
 </p>
 
 * Observations:
 
 <p align="center">
-  <img src="images/Observations_1d_tra.jpg" width="40%"> 
+  <img src="images/Observations_1d_tra.jpg" width="30%"> 
 </p>
 
 * Initial Conditions :
 
 <p align="center">
-  <img src="images/Initial_Conditions_1d_tra.jpg" width="40%"> 
+  <img src="images/Initial_Conditions_1d_tra.jpg" width="30%"> 
 </p>
 
 * Process Errors In Process Covariance Matrix
 
 <p align="center">
-  <img src="images/Process_Errors_In_Process_Covariance_Matrix_1d_trac.jpg" width="40%"> 
+  <img src="images/Process_Errors_In_Process_Covariance_Matrix_1d_trac.jpg" width="30%"> 
 </p>
 
 * Observation Errors :
 <p align="center">
-  <img src="images/Observation_Errors_1d_trac.jpg" width="40%"> 
+  <img src="images/Observation_Errors_1d_trac.jpg" width="30%"> 
 </p>
 
 1. The Predicted State
 
 <p align="center">
-  <img src="images/The_Predicted_State_1d_trac.jpg" width="45%"> 
+  <img src="images/The_Predicted_State_1d_trac.jpg" width="40%"> 
 </p>
 
 2. The Initial Process Covariance Matrix
    given :
 
 <p align="center">
-  <img src="images/Process_Errors_In_Process_Covariance_Matrix_1d_trac.jpg" width="40%"> 
+  <img src="images/Process_Errors_In_Process_Covariance_Matrix_1d_trac.jpg" width="30%"> 
 </p>
 
 then
@@ -525,19 +525,19 @@ then
 3. The Predicted Process Covariance Matrix
 
 <p align="center">
-  <img src="images/Predicted_Process_Covariance_Matrix_1d_trac.jpg" width="45%"> 
+  <img src="images/Predicted_Process_Covariance_Matrix_1d_trac.jpg" width="40%"> 
 </p>
 
 4. Calculating the Kalman Gain
 
 <p align="center">
-  <img src="images/Kalman_Gain_1d_trac.jpg" width="85%"> 
+  <img src="images/Kalman_Gain_1d_trac.jpg" width="70%"> 
 </p>
 
 5. The New Observation
 
 <p align="center">
-  <img src="images/New_Observation_1d_trac.jpg" width="45%"> 
+  <img src="images/New_Observation_1d_trac.jpg" width="30%"> 
 </p>
 
 6. Calculating The Current State
@@ -547,62 +547,62 @@ then
 
 7. Updating The Process Covariance Matrix
 <p align="center">
-  <img src="images/update_Process_Covariance_Matrix_1d_trac.jpg" width="70%"> 
+  <img src="images/update_Process_Covariance_Matrix_1d_trac.jpg" width="60%"> 
 </p>
 <p align="center">
-  <img src="images/Updating_The_Process_Covariance_Matrix_1d_trac2.jpg" width="75%"> 
+  <img src="images/Updating_The_Process_Covariance_Matrix_1d_trac2.jpg" width="65%"> 
 </p>
 
 * second Round
 
 1. The Predicted State
 <p align="center">
-  <img src="images/Predicted_State_2nd.jpg" width="60%"> 
+  <img src="images/Predicted_State_2nd.jpg" width="50%"> 
 </p>
 
 2. The Predicted Process Covariance Matrix
 <p align="center">
-  <img src="images/Predicted_Process_Covariance_Matrix_2nd.jpg" width="60%"> 
+  <img src="images/Predicted_Process_Covariance_Matrix_2nd.jpg" width="40%"> 
 </p>
 
 3. Kalman Gain
  <p align="center">
-  <img src="images/Kalman_Gain_2nd.jpg" width="60%"> 
+  <img src="images/Kalman_Gain_2nd.jpg" width="40%"> 
 </p>
 
 4. Current Observation
  <p align="center">
-  <img src="images/Current_Observation_2nd.jpg" width="60%"> 
+  <img src="images/Current_Observation_2nd.jpg" width="40%"> 
 </p>
 
 7. Current State Matrix
  <p align="center">
-  <img src="images/Current_State_Matrix_2nd.jpg" width="65%"> 
+  <img src="images/Current_State_Matrix_2nd.jpg" width="55%"> 
 </p>
 
 8. Current Process Covariance Matrix
  <p align="center">
-  <img src="images/Current_Process_Covariance_Matrix_2nd.jpg" width="65%"> 
+  <img src="images/Current_Process_Covariance_Matrix_2nd.jpg" width="55%"> 
 </p>
 
 * third Round
 <p align="center">
-  <img src="images/predicted_state_3rd.jpg" width="60%"> 
+  <img src="images/predicted_state_3rd.jpg" width="50%"> 
 </p>
 <p align="center">
-  <img src="images/Predicted_Process_Covariance_Matrix_3rd.jpg" width="70%"> 
+  <img src="images/Predicted_Process_Covariance_Matrix_3rd.jpg" width="60%"> 
 </p>
 <p align="center">
-  <img src="images/kalman_gain_3rd.jpg" width="75%"> 
+  <img src="images/kalman_gain_3rd.jpg" width="65%"> 
 </p>
 <p align="center">
-  <img src="images/current_observation_3rd.jpg" width="20%"> 
+  <img src="images/current_observation_3rd.jpg" width="15%"> 
 </p>
 <p align="center">
-  <img src="images/current_state_3rd.jpg" width="75%"> 
+  <img src="images/current_state_3rd.jpg" width="55%"> 
 </p>
 <p align="center">
-  <img src="images/current_process_ covariance_3rd.jpg" width="85%"> 
+  <img src="images/current_process_ covariance_3rd.jpg" width="75%"> 
 </p>
 
 <!-- ### **6.3. 2D Tracking Example**
