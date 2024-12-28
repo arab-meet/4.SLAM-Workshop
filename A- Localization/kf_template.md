@@ -1,8 +1,13 @@
+Author: Rawda Abdelkhalek 
+
+Review : KG
+
+
 # Kalman Filter
 
 ## 1. **Introduction**
 
-Imagine you're trying to track a moving car using a GPS device. However, the GPS readings are not perfect—they have errors and noise. Additionally, you might know that the car generally moves at a steady speed but occasionally accelerates or slows down unpredictably.
+Imagine you're trying to track a moving car using a GPS device. However, the GPS readings are not perfect — they have errors and noise. Additionally, you might know that the car generally moves at a steady speed but occasionally accelerates or slows down unpredictably.
 
 How can you combine these noisy GPS measurements with your understanding of the car's motion to estimate its true position and speed accurately?
 
@@ -131,7 +136,7 @@ A random variable represents a numerical outcome of a random process. In our con
 - **Low Precision, Low Accuracy**: Darts are spread out and away from the bullseye.
   ![AccuracyAndPrecision](images/AccuracyAndPrecision.png)
 
-In summery
+In summary
 ----------
 
 A measurement is a **random variable**, described by the **Probability Density Function (PDF)**.
@@ -151,11 +156,7 @@ The dispersion of the distribution is the measurement **precision, also known as
 
 The Kalman Filter is an algorithm that optimally estimates the state of a dynamic system by minimizing the mean of the squared errors. It does this by combining predictions from a model with new measurements, updating estimates in a recursive manner.
 
-<!-- <img src="images/balance.png" width="30%"> -->
-
-<!-- <img src="images/kf_design1.png" width="100%"> -->
-
-### **3.2. Why Use the Kalman Filter?**
+**3.2. Why Use the Kalman Filter?**
 
 - To **filter out noise** from measurements.
 - To **predict future states** based on a model.
@@ -171,7 +172,7 @@ The Kalman Filter operates in two main steps:
 These steps are repeated recursively with each new measurement.
 ![Kalman filter process](images/Kalman_filter_process_2.png)
 
-## Kalman Filter Overview
+### **3.4. Kalman Filter Overview**
 
 <img src="images/kf_design1.png" width="100%">
 
@@ -185,12 +186,10 @@ The Kalman Filter algorithm will go through the following steps:
 * **predict** :
   the algorithm will predict where the robot will be after time Δt.
 * **update** :
-  the filter compares the "predicted" location with what the sensor measurement says. The predicted location and the measured location are combined to give an updated location. The Kalman filter will put more weight on either the predicted location or the measured location depending on the uncertainty of each value.
-
-## Mathematical Overview
+  the filter compares the "predicted" location with what the sensor measurement says. The predicted location and the measured location are combined to give an updated location. The Kalman filter will put more weight on either the predicted location or the measured location depending on the uncertainty of each value. 
+### 3.5. **Mathematical Overview**
 
 ![kf_over_view.png](images/kf_over_view.png)
-
 ## 4. **Mathematical Foundations**
 
 ### **4.1. State Representation**
@@ -199,9 +198,10 @@ The system's state at any time $ k $ is represented by a vector $\mathbf{X^{'}}_
 
 The state vector:
 
-$$
-\mathbf{X^{'}}_k = \begin{bmatrix}  p^{'}_k \\ v^{'}_k \end{bmatrix}
-$$
+<p align="center">
+  <img src="images/state_vector.jpg" width="20%">
+</p>
+
 
 - $ p^{'}_k  $: Position at time $ k $.
 - $v^{'}_k$: Velocity at time $ k $.
@@ -209,151 +209,152 @@ $$
 **Example**:
 
 1. 1D motion:
-   $\mathbf{X^{'}} = \begin{bmatrix} p^{'}_{x} \\ v^{'}_{x} \end{bmatrix}$
+<p align="center">
+  <img src="images/1d_state_vector.jpg
+" width="20%">
+</p>
+
 2. 2D motion:
-   $\mathbf{X^{'}}=\begin{bmatrix}p^{'}_{x}\\ p^{'}_{y}\\ v^{'}_x \\ v^{'}_y \end{bmatrix}$
+<p align="center">
+  <img src="images/2d_state_vector.jpg
+" width="20%">
+</p>
 
 ### **4.2. Process Model**
 
 Describes how the state evolves over time.
 
 **State Transition Equation**:
-
-$$
-\mathbf{X^{'}}_ k = \mathbf{A}\mathbf{X} _{k-1} + \mathbf{B}\mathbf{U}_k + \mathbf{W}_k
-$$
+<p align="center">
+  <img src="images/State_Transition_Equation.jpg" width="40%">
+</p>
 
 - $ \mathbf{A} $: State transition matrix.
 - $ \mathbf{B} $: Control input matrix.
 - $ \mathbf{U}_k $: Control input at time $ k $.
 - $ \mathbf{W}_k $: Process noise (zero-mean Gaussian with covariance $ \mathbf{Q}$).
 
-$$
-\mathbf{W}\sim \mathbf{N}(0,\mathbf{Q})
-$$
+<p align="center">
+  <img src="images/Process_noise.jpg" width="15%">
+</p>
+
 
 **Example 1 (constant velocity model 1-d motion)**:
+
 *The state Vector :*
 
-$$
-\mathbf{X} = \begin{bmatrix} p \\ v \end{bmatrix}
-$$
+<p align="center">
+  <img src="images/The_state_Vector_ex1.jpg" width="15%">
+</p>
 
 *Linear motion :*
-
-$$
-p^{'}=p+v\Delta t\\ v^{'}=0+v
-$$
+<p align="center">
+  <img src="images/Linear_motion_ex1.jpg" width="20%">
+</p>
 
 *State Transition matrix :*
-
-$$
-\mathbf{X^{'}}=\begin{bmatrix}p^{'}\\ v^{'}\end{bmatrix}=\begin{bmatrix}1&\Delta t\\0&1\end{bmatrix}\begin{bmatrix}p\\ v\end{bmatrix}
-$$
+<p align="center">
+  <img src="images/State_Transition_matrix_ex1.jpg" width="35%">
+</p>
 
 **Example 2 (constant velocity model 2-d Linear motion):**
-<img src="images/Process_Model.jpg" width="80%">
+<p align="center">
+  <img src="images/Process_Model.jpg" width="50%">
+</p>
 
-$$
-\mathbf{X^{'}}=\mathbf{A}\mathbf{x} + \mathbf{B}\mathbf{U}_k + \mathbf{W}_k
-$$
-
-$$
-p^{'}_{x}=p_{x}+v_{x}\Delta t\\ p^{'}_ {y}=p _ {y}+v _ {y}\Delta t\\ v^{'}_{x}=v_{x}\\ v^{'}_ {y}=v _{y}
-$$
+*State Transition Equation*
+<p align="center">
+  <img src="images/State_Transition_Equation_ex2.jpg" width="40%"> 
+</p>
+<p align="center">
+  <img src="images/State_Transition_Equation_ex2_.jpg" width="30%"> 
+</p>
 
 *State Transition matrix :*
 
-$$
-\mathbf{X^{'}}=\begin{bmatrix}p^{'}_x\\p^{'}_y\\ v^{'}_x\\ v^{'}_y\end{bmatrix}=\begin{bmatrix}1&0&\Delta t &0 \\0&1&0&\Delta t\\0&0&1&0\\0&0&0&1\end{bmatrix}\begin{bmatrix}p_x\\ p_y\\ v_x\\ v_y\end{bmatrix}
-$$
+<p align="center">
+  <img src="images/State_Transition_matrix_ex2 .jpg" width="40%"> 
+</p>
 
 **Example 3 (constant acceleration model 2-d motion)**:
 
-$$
-\mathbf{X^{'}}=\mathbf{A}\mathbf{x} + \mathbf{B}\mathbf{U}_k + \mathbf{W}_k
-$$
+<p align="center">
+  <img src="images/State_Transition_Equation_ex3.jpg" width="40%"> 
+</p>
 
 *Linear motion :*
 
-$$
-p^{'}_{x}=p_x+v_x\Delta t+\frac{1}{2}a_x\Delta t^{2}\\ ~\\ p^{'}_y=p_y+v_y\Delta t+\frac{1}{2}a_y\Delta t^{2}\\~\\ v^{'}_{x}=v_x+a_x\Delta t\\~\\ v^{'}_{y}=v_y+a_y\Delta t
-$$
+<p align="center">
+  <img src="images/Linear_motion_ex3.jpg" width="35%"> 
+</p>
 
 *State Transition matrix :*
 
-$$
-\mathbf{X^{'}}=\begin{bmatrix}p^{'}_x\\ p^{'}_y\\ v^{'}_x\\ v^{'}_y\end{bmatrix}=\begin{bmatrix}1&0&\Delta t &0 \\0&1&0&\Delta t\\0&0&1&0\\0&0&0&1\end{bmatrix}\begin{bmatrix}p_x\\ p_y\\ v_x\\ v_y\end{bmatrix}+
-\begin{bmatrix}\frac{1}{2}\Delta t^2 &0\\0&\frac{1}{2}\Delta t^2\\\Delta t & 0\\0&\Delta t\end{bmatrix} \begin{bmatrix}a_x\\ a_y\end{bmatrix}
-$$
+<p align="center">
+  <img src="images/State_Transition_matrix_ex3.jpg" width="80%"> 
+</p>
 
 **Example 4 (constant acceleration model 3-d motion)**:
-
-$$
-\mathbf{X^{'}}=\mathbf{A}\mathbf{x} + \mathbf{B}\mathbf{U}_k + \mathbf{W}_k
-$$
+<p align="center">
+  <img src="images/State_Transition_Equation.jpg" width="40%">
+</p>
 
 *Linear motion :*
-
-$$
-p^{'}_{x}=p_x+v_x\Delta t+\frac{1}{2}a_x\Delta t^{2}\\ ~\\ p^{'}_y=p_y+v_y\Delta t+\frac{1}{2}a_y\Delta t^{2}\\ ~\\ p^{'}_{z}=p_z+v_z\Delta t+\frac{1}{2}a_z\Delta t^{2}\\ ~\\ v^{'}_{x}=v_x+a_x\Delta t\\~\\ v^{'}_{y}=v_y+a_y\Delta t \\ ~\\ v^{'}_{z}=v_z+a_z\Delta t
-$$
+<p align="center">
+  <img src="images/Linear_motion_ex4.jpg" width="40%">
+</p>
 
 *State Transition matrix :*
 
-$$
-\mathbf{X^{'}}=\begin{bmatrix}p^{'}_x\\ p^{'}_y\\ p^{'}_z\\ v^{'}_x\\ v^{'}_y\\ v^{'}_z\end{bmatrix}
-=\begin{bmatrix}1&0&0&\Delta t &0&0\\0&1&0&0&\Delta t &0\\0&0&1&0&0&\Delta t \\0&0&0&1&0&0\\0&0&0&0&1&0\\0&0&0&0&0&1\end{bmatrix}\begin{bmatrix}p_x\\ p_y\\ p_z\\ v_x\\ v_y\\ v_y\end{bmatrix}+\begin{bmatrix}\frac{1}{2}\Delta t^2 &0&0\\0&\frac{1}{2}\Delta t^2&0\\0&0&\frac{1}{2} \Delta t^2 \\\Delta t &0&0\\0&\Delta t & 0\\0&0&\Delta t \end{bmatrix}\begin{bmatrix}a_{x}\\ a_{y}\\ a_{z}\end{bmatrix}
-$$
+<p align="center">
+  <img src="images/State_Transition_matrix_ex_4.jpg" width="90%">
+</p>
 
 ### **4.3. Measurement Model**
 
 Relates the state to the measurements.
 
 **Measurement Equation**:
-
-$$
-\mathbf{Y}_k = \mathbf{C}\mathbf{X^{*}}_k + \mathbf{Z}_k
-$$
+<p align="center">
+  <img src="images/Measurement_Equation.jpg" width="25%">
+</p>
 
 - $ \mathbf{Y}_k $: Measurement at time $ k $.
 - $ \mathbf{C} $: Measurement matrix.
 - $ \mathbf{Z}_k $: Measurement noise (zero-mean Gaussian with covariance $ \mathbf{R} $).
 
-$$
-\mathbf{Z}\sim \mathbf{N}(0,\mathbf{R})
-$$
+<p align="center">
+  <img src="images/Measurement_noise.jpg" width="20%">
+</p>
 
 **Example 1 (1d-motion)**:
-
-$$
-\mathbf{Y}_k = \mathbf{C}\mathbf{X^{*}}_k + \mathbf{Z}_k
-$$
+<p align="center">
+  <img src="images/Measurement_Equation.jpg" width="25%">
+</p>
 
 If we only measure position:
 
-$$
-\mathbf{C} = \begin{bmatrix} 1 & 0 \end{bmatrix}
-$$
+<p align="center">
+  <img src="images/Measurement_matrix.jpg" width="20%">
+</p>
 
 *The measurement function:*
-
-$$
-\mathbf{Y}=\begin{bmatrix} 1 & 0 \end{bmatrix}\begin{bmatrix}p^{'}\\ v^{'}\end{bmatrix}
-$$
+<p align="center">
+  <img src="images/The_measurement _function_ex1.jpg" width="20%">
+</p>
 
 **Example 2 (2d-motion)**:
-If we only measure position:
 
-$$
-\mathbf{C}=\begin{bmatrix}1 &0&0&0\\0&1&0&0\end{bmatrix}
-$$
+If we only measure position:
+<p align="center">
+  <img src="images/Measurement_matrix_ex2.jpg" width="25%">
+</p>
 
 *The measurement function:*
 
-$$
-\mathbf{Y}=\begin{bmatrix}p_x\\ p_y \\ v_x \\ v_y\end{bmatrix}=\begin{bmatrix}1 &0&0&0\\0&1&0&0\end{bmatrix}\begin{bmatrix}p^{'}_x\\ p^{'}_y\\ v^{'}_x\\v^{'}_y\end{bmatrix}
-$$
+<p align="center">
+  <img src="images/The_measurement_function_ex2.jpg" width="40%">
+</p>
 
 ### **4.4. Covariance Matrices**
 
@@ -365,33 +366,24 @@ There is a true state that we want to know the value of but unfortunately we hav
 <img src="images/measurement_noise_1.jpg
 " width="80%">
 
-<!-- If we measured the state several times we would see different results from the sensor due to the random noise -->
-
-<!-- <img src="images/measurement_noise_2.png
-" width="80%"> -->
-
 - **Error Covariance $( \mathbf{P}_k )$**: Uncertainty in the state estimate.
 
 <img src="images/covariance_matrix.png" width="80%">
-
-$$
-\mathbf{P^{'}}_{k} = \mathbf{A}\mathbf{P}_{k-1}\mathbf{A}^T + \mathbf{Q}_k
-$$
 
 ### **4.5. Kalman Gain $(\mathbf{k} )$**
 
 Determines how much the new measurement influences the state estimate.
 
-$$
-K= \frac{Variance ~ in ~ Estimate}{Variance~in~Estimate \quad + \quad Variance ~ in ~ Measurement} =\frac{\mathbf{P}_k \mathbf{H}}{\mathbf{H}\mathbf{P^{'}}_k\mathbf{H^T} + \mathbf{R}}
-$$
+<p align="center">
+  <img src="images/Kalman_Gain.jpg" width="90%">
+</p>
 
 * note : $0< K<1$
+<p align="right">
+  <img src="images/0<kg<1.png" width="80%">
+</p>
 
-<img src="images/0<kg<1.png
-" width="40%">
 <img src="images/KG.jpg" width="100%">
----
 
 ## 5. **The Kalman Filter Algorithm**
 
@@ -400,35 +392,33 @@ At each time step $ k $, perform the following steps:
 ### **5.1. Prediction Step**
 
 - **State Prediction**:
+<p align="center">
+  <img src="images/State_Transition_Equation.jpg" width="40%">
+</p>
 
-  $$
-  \mathbf{X^{'}}_k=\mathbf{A}\mathbf{X}_{k-1}+\mathbf{B}\mathbf{U}_k+\mathbf{W}_k
-  $$
 - **Error Covariance Prediction**:
 
-  $$
-  \mathbf{P^{'}}_{k} = \mathbf{A}\mathbf{P}_{k-1}\mathbf{A}^T + \mathbf{Q}_k
-  $$
+<p align="center">
+  <img src="images/Error_Covariance_Prediction.jpg" width="40%">
+</p>
 
 ### **5.2. Update Step**
 
 - **Kalman Gain Calculation**:
+<p align="center">
+  <img src="images/kalman_gain.jpg" width="35%">
+</p>
 
-  $$
-  \mathbf{K}_k =\frac{\mathbf{P}_k \mathbf{H}}{\mathbf{H}\mathbf{P^{'}}_k\mathbf{H^T} + \mathbf{R}}
-  $$
 - **State Update**:
+<p align="center">
+  <img src="images/State_Update.jpg" width="40%">
+</p>
 
-  $$
-  \mathbf{X}_k = \mathbf{X^{'}}_k + \mathbf{K}_k (\mathbf{Y}_k - \mathbf{H}\mathbf{X^{'}}_k)
-  $$
 - **Error Covariance Update**:
 
-  $$
-  \mathbf{P}_k = (\mathbf{I} - \mathbf{K}_k \mathbf{H}) \mathbf{P}_{k|k-1}
-  $$
-
-  <!-- ![kf_over_view.png](images/kf_over_view.png) -->
+<p align="center">
+  <img src="images/Error_Covariance_Update.jpg" width="40%">
+</p>
 
 ---
 
@@ -452,23 +442,20 @@ Assume no process noise $( Q = 0 )$ and no control input $( u = 0 )$.
 **Time Step 1**:
 
 - **Prediction**:
+Prediction_ex_tem.jpg
+<p align="center">
+  <img src="images/Prediction_ex_tem.jpg" width="25%">
+</p>
 
-  $$
-  \hat{T}_{1|0} = \hat{T}_0 = 68^\circ \text{C}\\ ~\\
-  P_{1|0} = P_0 = 2^\circ \text{C}
-  $$
 - **Kalman Gain**:
-
-$$
-K_1 = \frac{P_{1|0}}{P_{1|0} + R} = \frac{2}{2 + 4} = 0.33
-$$
+<p align="center">
+  <img src="images/Kalman_Gain_ex_tem.jpg" width="40%">
+</p>
 
 - **Update**:
-
-  $$
-  \hat{T}_{1|1} = \hat{T}_{1|0} + K_1(Y_1 - \hat{T}_{1|0}) = 68 + 0.33 (75-68) = 70.33^\circ \text{C} \\ ~\\
-  P_{1|1} = (1 - K_1) P_{1|0} =(1-0.33)(2) = 1.33^\circ \text{C}
-  $$
+<p align="center">
+  <img src="images/Update_ex_tem.jpg" width="80%">
+</p>
 
 Repeat these steps for $ Y_2 $ and $ Y_3 $.
 
@@ -482,13 +469,149 @@ Repeat these steps for $ Y_2 $ and $ Y_3 $.
 
 ![single_kf_graph](images/single_kf_graph.png)
 
-### **6.2. 2D Tracking Example**
+### **6.2. 1D Tracking Example**
+
+**Problem**:
+
+Track an object's position and velocity in 1D space with noisy position measurements.
+* Given :
+
+<p align="center">
+  <img src="images/Given_1d_track.jpg" width="40%"> 
+</p>
+
+* Observations:
+
+<p align="center">
+  <img src="images/Observations_1d_tra.jpg" width="40%"> 
+</p>
+
+* Initial Conditions :
+
+<p align="center">
+  <img src="images/Initial_Conditions_1d_tra.jpg" width="40%"> 
+</p>
+
+* Process Errors In Process Covariance Matrix
+
+<p align="center">
+  <img src="images/Process_Errors_In_Process_Covariance_Matrix_1d_trac.jpg" width="40%"> 
+</p>
+
+* Observation Errors :
+<p align="center">
+  <img src="images/Observation_Errors_1d_trac.jpg" width="40%"> 
+</p>
+
+1. The Predicted State
+
+<p align="center">
+  <img src="images/The_Predicted_State_1d_trac.jpg" width="45%"> 
+</p>
+
+2. The Initial Process Covariance Matrix
+   given :
+
+<p align="center">
+  <img src="images/Process_Errors_In_Process_Covariance_Matrix_1d_trac.jpg" width="40%"> 
+</p>
+
+then
+
+<p align="center">
+  <img src="images/Initial_Process_Covariance_Matrix_1d_trac.jpg" width="45%"> 
+</p>
+
+3. The Predicted Process Covariance Matrix
+
+<p align="center">
+  <img src="images/Predicted_Process_Covariance_Matrix_1d_trac.jpg" width="45%"> 
+</p>
+
+4. Calculating the Kalman Gain
+
+<p align="center">
+  <img src="images/Kalman_Gain_1d_trac.jpg" width="85%"> 
+</p>
+
+5. The New Observation
+
+<p align="center">
+  <img src="images/New_Observation_1d_trac.jpg" width="45%"> 
+</p>
+
+6. Calculating The Current State
+<p align="center">
+  <img src="images/The_Current_State_1d_trac.jpg" width="70%"> 
+</p>
+
+7. Updating The Process Covariance Matrix
+<p align="center">
+  <img src="images/update_Process_Covariance_Matrix_1d_trac.jpg" width="70%"> 
+</p>
+<p align="center">
+  <img src="images/Updating_The_Process_Covariance_Matrix_1d_trac2.jpg" width="75%"> 
+</p>
+
+* second Round
+
+1. The Predicted State
+<p align="center">
+  <img src="images/Predicted_State_2nd.jpg" width="60%"> 
+</p>
+
+2. The Predicted Process Covariance Matrix
+<p align="center">
+  <img src="images/Predicted_Process_Covariance_Matrix_2nd.jpg" width="60%"> 
+</p>
+
+3. Kalman Gain
+ <p align="center">
+  <img src="images/Kalman_Gain_2nd.jpg" width="60%"> 
+</p>
+
+4. Current Observation
+ <p align="center">
+  <img src="images/Current_Observation_2nd.jpg" width="60%"> 
+</p>
+
+7. Current State Matrix
+ <p align="center">
+  <img src="images/Current_State_Matrix_2nd.jpg" width="65%"> 
+</p>
+
+8. Current Process Covariance Matrix
+ <p align="center">
+  <img src="images/Current_Process_Covariance_Matrix_2nd.jpg" width="65%"> 
+</p>
+
+* third Round
+<p align="center">
+  <img src="images/predicted_state_3rd.jpg" width="60%"> 
+</p>
+<p align="center">
+  <img src="images/Predicted_Process_Covariance_Matrix_3rd.jpg" width="70%"> 
+</p>
+<p align="center">
+  <img src="images/kalman_gain_3rd.jpg" width="75%"> 
+</p>
+<p align="center">
+  <img src="images/current_observation_3rd.jpg" width="20%"> 
+</p>
+<p align="center">
+  <img src="images/current_state_3rd.jpg" width="75%"> 
+</p>
+<p align="center">
+  <img src="images/current_process_ covariance_3rd.jpg" width="85%"> 
+</p>
+
+<!-- ### **6.3. 2D Tracking Example**
 
 **Problem**:
 
 Track an object's position and velocity in 2D space with noisy position measurements.
 
-**Setup**:
+ **Setup**:
 
 - **State Vector**:
 
@@ -514,7 +637,7 @@ Track an object's position and velocity in 2D space with noisy position measurem
 
   $$
   \mathbf{R} = \sigma^2 \times \mathbf{I}_{2 \times 2}
-  $$
+  $$ 
 
 **Solution**:
 
@@ -532,210 +655,14 @@ At each time step:
    \mathbf{K}_k = \mathbf{P}_{k|k-1}\mathbf{H}^T (\mathbf{H}\mathbf{P}_{k|k-1}\mathbf{H}^T + \mathbf{R})^{-1}\\ ~\\
    \mathbf{\hat{x}}_{k|k} = \mathbf{\hat{x}}_{k|k-1} + \mathbf{K}_k (\mathbf{z}_k - \mathbf{H}\mathbf{\hat{x}}_{k|k-1})\\ ~\\
    \mathbf{P}_{k|k} = (\mathbf{I} - \mathbf{K}_k \mathbf{H}) \mathbf{P}_{k|k-1}
-   $$
+   $$ -->
+
 
 **Interpretation**:
 
 The filter estimates both position and velocity, even though only position is measured.
-* Given :
 
-```math
-v_{0_{x}}=280 \ m/\sec \ \ \ \ x_{0}=4000 \ m\\
-v_{0_{y}}=120 \ m/\sec \ \ \ \ y_{0}=3000 \ m
-```
-
-* Observations:
-
-```math
-x_{0}=4000 \ m \ \ \ \ v_{0_{x}}=280 \ m/\sec \\
-x_{1}=4260 \ m \ \ \ \ v_{1_{x}}=282 \ m/\sec \\
-x_{2}=4550 \ m \ \ \ \ v_{2_{x}}=285 \ m/\sec \\
-x_{3}=4860 \ m \ \ \ \ v_{3_{x}}=286 \ m/\sec \\
-x_{4}=5110 \ m \ \ \ \ v_{4_{x}}=290 \ m/\sec
-```
-
-* Initial Conditions :
-
-```math
-a_{x}=2\ m/\sec^{2} \ \ \ \ \Delta t = 1 \sec \\
-v_{x}=280 m/\sec \ \ \ \ \Delta x = 25 \ m
-```
-
-* Process Errors In Process Covariance Matrix
-
-```math
-\Delta P_{x} = 20 \ m \ \ \ \ \Delta P_{v_{x}} = 5 \ m/\sec
-```
-
-* Observation Errors :
-
-```math
-\Delta x = 25 \ m \ \ \ \ \Delta v_{x}=6 \ m/\sec
-```
-
-1. The Predicted State
-
-```math
-X_{k_{P}}=AX_{k-1}+Bu_{k}+w_{k}\\ ~\\
-X_{k_{P}}=\begin{bmatrix}1 & \Delta t \\ 0 & 1\end{bmatrix}\begin{bmatrix}x_{0}\\v_{0_{x}}\end{bmatrix}+\begin{bmatrix}\frac{1}{2}\Delta t^{2}\\\Delta t\end{bmatrix}\begin{bmatrix}a_{x_{0}}\end{bmatrix}+0   \\ ~\\ 
-X_{k_{P}}=\begin{bmatrix}1 & 1 \\ 0 &1 \end{bmatrix}\begin{bmatrix}4000\\280 \end{bmatrix} + \begin{bmatrix}\frac{1}{2} \\ 1 \end{bmatrix}\begin{bmatrix} 2 \end{bmatrix}\\ ~\\
-X_{k_{P}}=\begin{bmatrix} 4280 \\ 280 \end{bmatrix}+\begin{bmatrix}1 \\ 2 \end{bmatrix}\\ ~\\
-X_{k_{P}}=\begin{bmatrix} 4281 \\ 282 \end{bmatrix}
-```
-
-2. The Initial Process Covariance Matrix
-   given :
-
-```math
-\Delta x=20\ m \ \ \ \ \Delta v_{x}=5\ m/\sec
-```
-
-then
-
-```math
-P_{k-1}=\begin{bmatrix}\Delta x^{2} & \Delta x \Delta v \\ \Delta x \Delta v & \Delta v_{x}^{2} \end{bmatrix}=\begin{bmatrix}400 & 100 \\ 100 & 25 \end{bmatrix} \\~\\
-P_{k-1}=\begin{bmatrix}400 & 0 \\ 0 &25 \end{bmatrix}
-
-```
-
-3. The Predicted Process Covariance Matrix
-
-```math
-P_{k_{P}}=AP_{k-1}A^{T}+Q_{R} \\ ~\\
-P_{k_{P}}=\begin{bmatrix}1 & \Delta t \\ 0 &1 \end{bmatrix} \begin{bmatrix}400 & 0 \\ 0 &25 \end{bmatrix} \begin{bmatrix}1 & 0 \\ \Delta t &1 \end{bmatrix}+0 \\ ~\\
-P_{k_{P}}=\begin{bmatrix}1 & 1\\0&1 \end{bmatrix}\begin{bmatrix}400 & 0\\0&25 \end{bmatrix}\begin{bmatrix}1 & 0\\1&1 \end{bmatrix} \\ ~\\
-P_{k_{P}}=\begin{bmatrix}400 & 25\\0&25 \end{bmatrix}\begin{bmatrix}1 & 0\\1&1 \end{bmatrix}\\ ~\\
-P_{k_{P}}=\begin{bmatrix}425 & 25\\25&25 \end{bmatrix}
-```
-
-4. Calculating the Kalman Gain
-
-```math
-K_{k} = \dfrac{P_{k_{P}}H^{T}}{HP_{k_{P}}H^{T}+R} \\ ~\\
-K_{k} = \dfrac{\begin{bmatrix}425 & 0\\0&25 \end{bmatrix}\begin{bmatrix}1 & 0\\0&1 \end{bmatrix}}{\begin{bmatrix}1 & 0\\0&1 \end{bmatrix}\begin{bmatrix}425 & 0\\0&25 \end{bmatrix}\begin{bmatrix}1 & 0\\0&1 \end{bmatrix}+ \begin{bmatrix}625 & 0\\0&36 \end{bmatrix}} \\ ~\\
-K_{k} = \dfrac{\begin{bmatrix}425 & 0\\0&25 \end{bmatrix}}{\begin{bmatrix}425 & 0\\0&25 \end{bmatrix}+\begin{bmatrix}625 & 0\\0&36 \end{bmatrix}} ~ = \dfrac{\begin{bmatrix}425 & 0\\0&25\end{bmatrix}}{\begin{bmatrix}1050 & 0\\0&61 \end{bmatrix}} ~= \begin{bmatrix}0.405 & 0\\0&0.410\end{bmatrix}
-```
-
-5.The New Observation
-
-```math
-Y_{k} = CY_{k_{m}}+Z_{k} \\ ~\\
-Y_{k} = \begin{bmatrix}1 & 0\\0&1 \end{bmatrix}\begin{bmatrix}4260 \\282 \end{bmatrix}+0 \\ ~\\
-Y_{k} = \begin{bmatrix}4260 \\282 \end{bmatrix}
-```
-
-6. Calculating The Current State
-
-```math
-X_{k} = X_{k_{P}}+K_{k}[Y_{k}-HX_{k_{P}}] \\ ~\\
-X_{k} = \begin{bmatrix}4281 \\282 \end{bmatrix}+\begin{bmatrix}0.405 & 0\\ 0 & 0.410 \end{bmatrix}\begin{pmatrix} \begin{bmatrix}4260\\ 282 \end{bmatrix} -\begin{bmatrix}1 & 0\\ 0 & 1 \end{bmatrix}\begin{bmatrix}4281\\  282 \end{bmatrix}\end{pmatrix}\\ ~\\
-X_{K}=\begin{bmatrix}4281 \\282 \end{bmatrix}+\begin{bmatrix}0.405 & 0 \\0 & 0.410 \end{bmatrix}\begin{bmatrix}-21 \\0 \end{bmatrix} \\ ~\\
-X_{k}=\begin{bmatrix}4281 \\282 \end{bmatrix}+\begin{bmatrix}-85\\0 \end{bmatrix} \\ ~\\
-X_{K}=\begin{bmatrix}4272.5 \\282 \end{bmatrix}
-```
-
-7. Updating The Process Covariance Matrix
-
-```math
-P_{k}=(I-KH)P_{k_{P}} \\ ~\\
-P_{k}=\begin{bmatrix}\begin{bmatrix}1 & 0\\0&1 \end{bmatrix}-\begin{bmatrix}0.405 & 0\\0&0.410 \end{bmatrix}\begin{bmatrix}1 & 0\\0&1 \end{bmatrix} \end{bmatrix}\begin{bmatrix}425 & 0\\0&25 \end{bmatrix} \\ ~\\
-P_{k}=\begin{bmatrix}\begin{bmatrix}1 & 0\\0&1 \end{bmatrix}-\begin{bmatrix}0.405 & 0\\0&0.410 \end{bmatrix}\end{bmatrix}\begin{bmatrix}425 & 0\\0&25 \end{bmatrix} \\ ~\\
-P_{k}=\begin{bmatrix}0.595 & 0\\0&0.590 \end{bmatrix}\begin{bmatrix}425 & 0\\0&25 \end{bmatrix}\\ ~\\
-P_{k}=\begin{bmatrix}253 & 0\\0&14.8\end{bmatrix}
-
-```
-
-$$
-X_{k}=\begin{bmatrix}4272.5 \\282 \end{bmatrix}  \Longrightarrow X_{k-1} \Longrightarrow X_{k_{P}}=AX_{k-1}+Bu_{k}+w_{k}
-\\ ~\\
-P_{k}=\begin{bmatrix}253 & 0\\0&14.8\end{bmatrix} \Longrightarrow P_{k-1} \Longrightarrow P_{k_{P}}=AP_{k-1}A^{T}+Q_{k}
-$$
-
-second Round
-
-```math
-X_{k_{P}}=AX_{k-1}+Bu_{k}+w_{k}\\ ~\\
-X_{k_{P}}=\begin{bmatrix}1 & \Delta t\\0&1\end{bmatrix}\begin{bmatrix}4272.5\\282\end{bmatrix}+\begin{bmatrix}\frac{1}{2}\Delta t^t \\ \Delta t\end{bmatrix}\begin{bmatrix}2\end{bmatrix}+0 \\ ~\\
-X_{K_{P}}=\begin{bmatrix}1 & 1 \\ 0 & 1\end{bmatrix}\begin{bmatrix}4272.5\\282\end{bmatrix}+\begin{bmatrix}\frac{1}{2}\\1\end{bmatrix}\begin{bmatrix}2\end{bmatrix}+0 \\ ~\\
-X_{K_{P}}=\begin{bmatrix}4554.5\\282\end{bmatrix}+\begin{bmatrix}1\\2\end{bmatrix} = \begin{bmatrix}4555.5\\284\end{bmatrix}
-```
-
-```math
-P_{k_{P}}=AP_{k-1}A^{T}+Q_{K} \\ ~\\
-P_{k_{P}}=\begin{bmatrix}1&1\\0&1\end{bmatrix}\begin{bmatrix}253&0\\0&14.8\end{bmatrix}\begin{bmatrix}1&0\\1&1\end{bmatrix}+0 \\~\\
-P_{k_{P}}=\begin{bmatrix}253&14.8\\0&14.8\end{bmatrix}\begin{bmatrix}1 & 0 \\ 1 & 1\end{bmatrix}\\ ~\\
-P_{k_{P}}=\begin{bmatrix}267.6 & 14.8\\14.8&14.8\end{bmatrix}=\begin{bmatrix}257.8 & 0 \\ 0 & 14.8\end{bmatrix}
-```
-
-4. Kalman Gain
-
-```math
-K = \dfrac {P_{k_{P}}H^{T}}{HP_{k_{P}}H^{T}+R} \\ ~\\
-K = \dfrac {\begin{bmatrix}257.8 & 0 \\ 0 &14.8\end{bmatrix}\begin{bmatrix}1 & 0 \\ 0 & 1\end{bmatrix}}{\begin{bmatrix}1 & 0 \\ 0 & 1\end{bmatrix}\begin{bmatrix}267.8 & 0 \\ 0 & 14.8\end{bmatrix}\begin{bmatrix}1 & 0 \\ 0 & 1\end{bmatrix}+\begin{bmatrix}625 & 0 \\ 0 & 36\end{bmatrix}}\\ ~\\
-K=\dfrac{\begin{bmatrix}267.8 & 0 \\ 0 & 14.8\end{bmatrix}}{\begin{bmatrix}892.8 & 0 \\ 0 & 50.8\end{bmatrix}}=\begin{bmatrix}0.300 & 0 \\ 0 & 0.291\end{bmatrix}
-```
-
-5. Current Observation
-
-```math
-Y_{k} = CY_{K}+Z_{K}=\begin{bmatrix}1 & 0 \\ 0 &1\end{bmatrix}\begin{bmatrix}4550\\ 285\end{bmatrix}+0=\begin{bmatrix}4550\\285\end{bmatrix}
-```
-
-6. Current State Matrix
-
-```math
-X_{k} = X_{k_{P}}+K_{k}[Y_{k}-HX_{P_{K}}] \\ ~\\
-X_{k} = \begin{bmatrix}4555.5\\284\end{bmatrix}+\begin{bmatrix}0.300 & 0 \\ 0 &0.291\end{bmatrix}\begin{bmatrix}\begin{bmatrix}4550 \\ 285\end{bmatrix}-\begin{bmatrix}1 & 0 \\ 0 &1\end{bmatrix}\begin{bmatrix}4555.5 \\ 284\end{bmatrix}\end{bmatrix}\\ ~\\
-X_{k}=\begin{bmatrix}4555.5\\284\end{bmatrix}+\begin{bmatrix}0.300 & 0 \\ 0 &0.291\end{bmatrix}\begin{bmatrix}-5.5 \\ 1\end{bmatrix}\\ ~\\
-X_{k}=\begin{bmatrix}4555.5\\284\end{bmatrix}+\begin{bmatrix}-1.7 \\ 0.3\end{bmatrix}\\ ~\\
-X_{k}=\begin{bmatrix}4553.8\\284.3\end{bmatrix} \Longrightarrow X_{k-1}
-```
-
-7. Current Process Covariance Matrix
-
-```math
-P_{k}=(I-KH)P_{k_{P}} \\ ~\\
-P_{k}=\begin{bmatrix}\begin{bmatrix}1 & 0 \\ 0 &1\end{bmatrix}-\begin{bmatrix}0.300 & 0 \\ 0 &0.291\end{bmatrix}\end{bmatrix}\begin{bmatrix}267.8 & 0 \\ 0 &14.8\end{bmatrix}\\ ~\\
-P_{k}=\begin{bmatrix}0.7 & 0 \\ 0 &0.709\end{bmatrix}\begin{bmatrix}267.8 & 0 \\ 0 &14.8\end{bmatrix}\\ ~\\
-P_{k}=\begin{bmatrix}187.06 & 0 \\ 0 &10.5\end{bmatrix} \Longrightarrow P_{k-1}
-```
-
-third Round
-
-```math
-X_{k_{p}}=AX_{k-1}+Bu_{k}+w_{k}\\ ~\\
-X_{k_{p}}=\begin{bmatrix}1 &1\\0&1\end{bmatrix}\begin{bmatrix}4553.8 \\284.3\end{bmatrix}+\begin{bmatrix}\frac{1}{2}\\2\end{bmatrix}\begin{bmatrix}2\end{bmatrix}+0 \\ ~\\
-X_{k_{p}}=\begin{bmatrix}4838.1 \\ 284.3\end{bmatrix}+\begin{bmatrix}1\\2\end{bmatrix}=\begin{bmatrix}4839.1\\286.3\end{bmatrix}
-```
-
-```math
-P_{k_{p}}=AP_{k-1}A^{T}+Q_{k}\\ ~\\
-P_{k_{p}}=\begin{bmatrix}1 & 1 \\ 0 &1\end{bmatrix}\begin{bmatrix}187.5 &0\\0&10.5\end{bmatrix}\begin{bmatrix}1 &0\\1&1\end{bmatrix}+0 \\ ~\\
-P_{k_{p}}=\begin{bmatrix}187.5 & 10.5\\0&10.5\end{bmatrix}\begin{bmatrix}1 &0\\1&1\end{bmatrix}=\begin{bmatrix}187.5 &10.5\\10.5&10.5\end{bmatrix}=\begin{bmatrix}187.5 &0\\0&10.5\end{bmatrix}
-```
-
-```math
-K = \dfrac {P_{k_{p}}H^{T}}{HP_{k_{p}}H^{T}+R}=\dfrac{\begin{bmatrix}187.5 &0\\0&10.5\end{bmatrix}}{\begin{bmatrix}187.5 &0\\0&10.5\end{bmatrix}+\begin{bmatrix}625 &0\\0&36\end{bmatrix}}=\dfrac{\begin{bmatrix}187.5 &0\\0&10.5\end{bmatrix}}{\begin{bmatrix}812.5 &0\\0&46.5\end{bmatrix}}\\ ~\\
-K=\begin{bmatrix}0.231 & 0 \\ 0 & 0.226\end{bmatrix}
-```
-
-```math
-Y_{k}=\begin{bmatrix}4860\\286\end{bmatrix}
-```
-
-```math
-X_{k}=X_{k_{p}}+K[Y_{k}-HX_{k_{p}}]\\ ~\\
-X_{k}=\begin{bmatrix}4839.1\\286.3\end{bmatrix}+\begin{bmatrix}0.231 &0\\0&0.226\end{bmatrix}\begin{bmatrix}\begin{bmatrix}4860\\286\end{bmatrix}-\begin{bmatrix}1 &0\\0&1\end{bmatrix}\begin{bmatrix}4839.1\\286.3\end{bmatrix}\end{bmatrix} \\ ~\\
-X_{k}=\begin{bmatrix}4839.1\\286.3\end{bmatrix}+\begin{bmatrix}0.231 &0\\0&0.226\end{bmatrix}\begin{bmatrix}20.9\\-0.3\end{bmatrix}\\ ~\\
-X_{k}=\begin{bmatrix}4839.1\\286.3\end{bmatrix}+\begin{bmatrix}4.8\\-0.1\end{bmatrix}=\begin{bmatrix}4843.9\\286.2\end{bmatrix}
-```
-
-```math
-P_{k}=(I-KH)P_{k_{p}}=\begin{bmatrix}\begin{bmatrix}1 &0\\0&1\end{bmatrix}-\begin{bmatrix}0.231 &0\\0&0.226\end{bmatrix}\begin{bmatrix}1 &0\\0&1\end{bmatrix}\end{bmatrix}\begin{bmatrix}187.5 &0\\0&10.5\end{bmatrix}\\ ~\\
-P_{k}=\begin{bmatrix}0.769 &0\\0&0.774\end{bmatrix}\begin{bmatrix}187.5 &0\\0&10.5\end{bmatrix}=\begin{bmatrix}144.2 &0\\0&8.1\end{bmatrix}
-```
-
----
+---------------------------------------------------------------------------------------
 
 ## 7. **Comparison with Other Filters**
 
@@ -782,11 +709,18 @@ P_{k}=\begin{bmatrix}0.769 &0\\0&0.774\end{bmatrix}\begin{bmatrix}187.5 &0\\0&10
 
   - *"Kalman Filtering: Theory and Practice"* by Mohinder S. Grewal and Angus P. Andrews.
   - *"Optimal State Estimation"* by Dan Simon.
+  - *Kalman Filter from the Ground up "* by Alex Becker
+
 - **Tutorials**:
 
   - *"An Introduction to the Kalman Filter"* by Greg Welch and Gary Bishop.
+  - *"THE KALMAN FILTER "* by Michel van Biezen
+
+
 - **Online Resources**:
 
   - *"How a Kalman Filter Works, in Pictures"* by Matt B. (For intuitive understanding).
+  - *"Sensor Fusion With Kalman Filter"* by Satya
+
 
 ---
