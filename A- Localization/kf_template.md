@@ -210,14 +210,12 @@ The state vector:
 
 1. 1D motion:
 <p align="center">
-  <img src="images/1d_state_vector.jpg
-" width="15%">
+  <img src="images/1d_state_vector.jpg" width="15%">
 </p>
 
 2. 2D motion:
 <p align="center">
-  <img src="images/2d_state_vector.jpg
-" width="15%">
+  <img src="images/2d_state_vector.jpg" width="15%">
 </p>
 
 ### **4.2. Process Model**
